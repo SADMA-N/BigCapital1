@@ -7,6 +7,7 @@ import {
   MenuDivider,
   Position,
 } from '@blueprintjs/core';
+import styled, { x } from '@xstyled/emotion';
 
 import { Icon, FormattedMessage as T } from '@/components';
 
@@ -23,6 +24,50 @@ const POPOVER_MODIFIERS = {
   offset: { offset: '28, 8' },
 };
 
+const DashboardOrganizationMenu = styled(Menu)`
+  padding: 10px;
+  min-width: 280px;
+  max-height: 500px;
+  overflow-y: auto;
+
+  .org-workspace-item {
+    padding: 8px 10px;
+
+    &.is-active {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    &:hover:not(.is-active):not(.bp4-disabled) {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    &.bp4-disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  .bp4-menu-divider {
+    margin: 8px 0;
+    border-top-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .bp4-menu-item {
+    color: rgba(255, 255, 255, 0.9);
+    border-radius: 4px;
+    line-height: 20px;
+
+    &:hover:not(.bp4-disabled) {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .bp4-icon {
+      color: rgba(255, 255, 255, 0.6);
+    }
+  }
+`;
+
 /**
  * Sidebar head.
  */
@@ -32,7 +77,6 @@ function SidebarHeadJSX({
   // #withDrawerActions
   openDrawer,
 }) {
-  // Retrieve authenticated user information.
   const { data: user } = useAuthenticatedAccount();
   const { data: workspaces } = useWorkspaces();
   const currentOrganizationId = useAuthOrganizationId();
@@ -57,18 +101,35 @@ function SidebarHeadJSX({
           modifiers={POPOVER_MODIFIERS}
           boundary={'window'}
           content={
-            <Menu className={'menu--dashboard-organization'}>
-              {/* Current Organization Header */}
-              <div className="org-item org-item--current">
-                <div className="org-item__logo">
+            <DashboardOrganizationMenu>
+              <x.div
+                display="flex"
+                alignItems="center"
+                gap={3}
+                py={'8px'}
+                px={'10px'}
+                backgroundColor="rgba(255, 255, 255, 0.05)"
+                borderRadius={4}
+              >
+                <x.div
+                  h={'60px'}
+                  w={'60px'}
+                  lineHeight="60px"
+                  borderRadius={10}
+                  backgroundColor="#CB22E5"
+                  textAlign="center"
+                  fontWeight={400}
+                  fontSize={16}
+                  color="#fff"
+                >
                   {firstLettersArgs(...(organization.name || '').split(' '))}
-                </div>
-                <div className="org-item__name">{organization.name}</div>
-              </div>
-
+                </x.div>
+                <x.div fontWeight={600} color="#fff">
+                  {organization.name}
+                </x.div>
+              </x.div>
               <MenuDivider />
 
-              {/* View All Workspaces */}
               <MenuItem
                 icon={<Icon icon={'list'} size={16} />}
                 text={
@@ -76,11 +137,9 @@ function SidebarHeadJSX({
                 }
                 onClick={() => openDrawer(DRAWERS.ORGANIZATIONS_LIST)}
               />
-
               <MenuDivider />
 
-              {/* Workspaces List */}
-              <div className="org-workspaces-list">
+              <x.div maxHeight="240px" overflowY="auto">
                 {workspaces?.map((workspace) => {
                   const name = workspace.metadata?.name || workspace.organizationId;
                   const initials = firstLettersArgs(...(name || '').split(' '));
@@ -94,41 +153,62 @@ function SidebarHeadJSX({
                       disabled={isDisabled}
                       onClick={() => handleSwitchWorkspace(workspace.organizationId)}
                       text={
-                        <div className="org-workspace-item__content">
-                          <div className="org-workspace-item__avatar">
+                        <x.div
+                          display="flex"
+                          alignItems="center"
+                          gap={3}
+                          w="100%"
+                        >
+                          <x.div
+                            w={'28px'}
+                            h={'28px'}
+                            borderRadius={'10px'}
+                            backgroundColor="#5c7c99"
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="center"
+                            fontSize={12}
+                            color="#fff"
+                            flexShrink={0}
+                          >
                             {initials}
-                          </div>
-                          <span className="org-workspace-item__name">{name}</span>
+                          </x.div>
+                          <x.span
+                            flex={1}
+                            overflow="hidden"
+                            textOverflow="ellipsis"
+                            whiteSpace="nowrap"
+                            fontWeight={isActive ? 500 : undefined}
+                          >
+                            {name}
+                          </x.span>
                           {isActive && (
                             <Icon
                               icon={'tick'}
-                              size={14}
-                              className="org-workspace-item__check"
+                              iconSize={14}
+                              color="#48aff0"
+                              style={{ flexShrink: 0 }}
                             />
                           )}
-                        </div>
+                        </x.div>
                       }
                     />
                   );
                 })}
-              </div>
+              </x.div>
 
               <MenuDivider />
-
-              {/* Create Workspace */}
               <MenuItem
                 icon={<Icon icon={'plus'} size={16} />}
                 text={<T id={'workspaces.create_workspace'} />}
                 onClick={() => openDrawer(DRAWERS.CREATE_WORKSPACE)}
               />
-
-              {/* Log out */}
               <MenuItem
                 icon={<Icon icon={'log-out'} size={16} />}
                 text={<T id={'logout'} />}
                 onClick={handleLogout}
               />
-            </Menu>
+            </DashboardOrganizationMenu>
           }
           position={Position.BOTTOM}
           minimal={true}

@@ -1,55 +1,27 @@
 // @ts-nocheck
 import React, { useState, useMemo, useCallback } from 'react';
+import intl from 'react-intl-universal';
 import {
   Button,
-  Checkbox,
-  Spinner,
   Intent,
-  Tag,
   Tooltip,
   Position,
   Icon,
+  Popover,
+  Menu,
+  MenuItem,
 } from '@blueprintjs/core';
+import { x } from '@xstyled/emotion';
+import styled from '@xstyled/emotion';
 import { DataTable, TableSkeletonRows } from '@/components';
-import { useWorkspaces, useSetDefaultWorkspace } from '@/hooks/query';
+import { useSetDefaultWorkspace } from '@/hooks/query';
 import { useAuthOrganizationId } from '@/hooks/state';
 import { useSwitchOrganization } from '@/hooks/useSwitchOrganization';
-import { firstLettersArgs, compose } from '@/utils';
+import { compose } from '@/utils';
+import { OrganizationsListWorkspaceCell } from './OrganizationsListWorkspaceCell';
 import { WorkspaceSwitchingOverlay } from '@/components';
 import { withDialogActions } from '@/containers/Dialog/withDialogActions';
 import { DialogsName } from '@/constants/dialogs';
-import classNames from 'classnames';
-import intl from 'react-intl-universal';
-
-// Avatar background colors similar to workspace sidebar style
-const AVATAR_COLORS = [
-  '#4A90E2', // Blue
-  '#7ED321', // Green
-  '#F5A623', // Orange
-  '#BD10E0', // Purple
-  '#D0021B', // Red
-  '#50E3C2', // Teal
-  '#9013FE', // Violet
-  '#417505', // Dark Green
-  '#B8E986', // Light Green
-  '#F8E71C', // Yellow
-  '#8B572A', // Brown
-  '#9B9B9B', // Gray
-];
-
-/**
- * Get a deterministic color for an organization based on its name
- */
-function getOrganizationColor(organizationId: string): string {
-  let hash = 0;
-  for (let i = 0; i < organizationId.length; i++) {
-    const char = organizationId.charCodeAt(i);
-    hash = (hash << 5) - hash + char;
-    hash = hash & hash;
-  }
-  const index = Math.abs(hash) % AVATAR_COLORS.length;
-  return AVATAR_COLORS[index];
-}
 
 /**
  * Format currency for display
@@ -66,7 +38,13 @@ function formatCurrency(amount: number): string {
 /**
  * Organizations list table component.
  */
-function OrganizationsListTable({ workspaces, isLoading, onClose, openDialog }) {
+function OrganizationsListTable({
+  workspaces,
+  isLoading,
+  onClose,
+  openDialog,
+  showDefaultControls = true,
+}) {
   const activeOrganizationId = useAuthOrganizationId();
   const switchOrganization = useSwitchOrganization();
   const setDefaultWorkspace = useSetDefaultWorkspace();
@@ -117,185 +95,119 @@ function OrganizationsListTable({ workspaces, isLoading, onClose, openDialog }) 
   const columns = useMemo(
     () => [
       {
-        Header: intl.get('name', { fallback: 'Account' }),
+        Header: intl.get('workspaces.column_workspace', { fallback: 'Workspace' }),
         accessor: 'metadata.name',
-        width: 300,
-        Cell: ({ row }) => {
-          const workspace = row.original;
-          const name = workspace.metadata?.name || workspace.organizationId;
-          const initials = firstLettersArgs(...(name || '').split(' '));
-          const isActive = workspace.organizationId === activeOrganizationId;
-          const bgColor = getOrganizationColor(workspace.organizationId);
-
-          return (
-            <div className="organizations-list-table__name">
-              <div
-                className={classNames('organizations-list-table__avatar', {
-                  'is-active': isActive,
-                })}
-                style={{ backgroundColor: bgColor }}
-              >
-                {workspace.isBuildRunning ? (
-                  <Spinner size={14} />
-                ) : (
-                  <span>{initials}</span>
-                )}
-              </div>
-              <div className="organizations-list-table__name-text">
-                <span className="organizations-list-table__name-label">{name}</span>
-                {isActive && (
-                  <Tag minimal intent={Intent.PRIMARY} className="organizations-list-table__current-tag">
-                    {intl.get('workspaces.current_organization', { fallback: 'Current' })}
-                  </Tag>
-                )}
-              </div>
-            </div>
-          );
-        },
+        width: 320,
+        Cell: ({ row }) => (
+          <OrganizationsListWorkspaceCell
+            workspace={row.original}
+            activeOrganizationId={activeOrganizationId}
+          />
+        ),
       },
       {
-        Header: intl.get('assets_balance', { fallback: 'Assets Balance' }),
-        accessor: 'balance',
-        width: 150,
-        Cell: ({ row }) => {
-          const workspace = row.original;
-          // Mock balance for now - in production this would come from the API
-          const mockBalance = workspace.metadata?.name
-            ? workspace.organizationId.charCodeAt(0) * 10000 + Math.random() * 50000
-            : 0;
-
-          return (
-            <div className="organizations-list-table__balance">
-              <span className="organizations-list-table__balance-amount">
-                {formatCurrency(mockBalance)}
-              </span>
-            </div>
-          );
-        },
+        id: 'assets',
+        Header: intl.get('workspaces.column_assets', { fallback: 'Assets' }),
+        accessor: 'assets',
+        Cell: ({ value }) => formatCurrency(value ?? 1000000),
+        align: 'right',
+        width: 100,
       },
       {
-        Header: intl.get('total_income', { fallback: 'Total Income' }),
-        accessor: 'totalIncome',
-        width: 150,
-        Cell: ({ row }) => {
-          const workspace = row.original;
-          const totalIncome = workspace.totalIncome ?? 0;
-
-          return (
-            <div className="organizations-list-table__income">
-              <span className="organizations-list-table__income-amount">
-                {formatCurrency(totalIncome)}
-              </span>
-            </div>
-          );
-        },
-      },
-      {
-        Header: intl.get('total_expenses', { fallback: 'Total Expenses' }),
-        accessor: 'totalExpenses',
-        width: 150,
-        Cell: ({ row }) => {
-          const workspace = row.original;
-          const totalExpenses = workspace.totalExpenses ?? 0;
-
-          return (
-            <div className="organizations-list-table__expenses">
-              <span className="organizations-list-table__expenses-amount">
-                {formatCurrency(totalExpenses)}
-              </span>
-            </div>
-          );
-        },
-      },
-      {
-        Header: intl.get('workspaces.default_workspace', { fallback: 'Default' }),
-        accessor: 'isDefault',
-        width: 80,
-        Cell: ({ row }) => {
-          const workspace = row.original;
-          const isDisabled = !workspace.isReady || workspace.isBuildRunning || !workspace.isActive;
-
-          return (
-            <Tooltip
-              content={intl.get('workspaces.set_as_default', { fallback: 'Set as default' })}
-              position={Position.TOP}
-              disabled={isDisabled}
-            >
-              <Checkbox
-                checked={workspace.isDefault}
-                disabled={isDisabled || workspace.isDefault}
-                onChange={() => handleSetDefault(workspace.organizationId)}
-                className="organizations-list-table__default-checkbox"
-              />
-            </Tooltip>
-          );
-        },
+        id: 'liabilities',
+        Header: intl.get('workspaces.column_liabilities', { fallback: 'Liabilities' }),
+        accessor: 'liabilities',
+        Cell: ({ value }) => formatCurrency(value ?? 1000000),
+        align: 'right',
+        width: 100,
       },
       {
         Header: '',
         accessor: 'actions',
-        width: 140,
+        width: 120,
         disableSortBy: true,
         Cell: ({ row }) => {
           const workspace = row.original;
-          const isActiveOrg = workspace.organizationId === activeOrganizationId;
           const isDisabled = !workspace.isReady || workspace.isBuildRunning || workspace.isDeleting;
           const isOwner = workspace.role === 'owner';
           const canSwitch = !isDisabled && workspace.isActive;
+          const defaultDisabled =
+            !workspace.isReady || workspace.isBuildRunning || !workspace.isActive || workspace.isDefault;
+          const canSetDefaultInMenu =
+            showDefaultControls && !workspace.isDefault && !defaultDisabled;
+
+          const menuContent = isOwner ? (
+            <Menu minimal>
+              {canSetDefaultInMenu && (
+                <MenuItem
+                  text={intl.get('workspaces.set_as_default', { fallback: 'Set as default' })}
+                  icon={<Icon icon="star" />}
+                  onClick={() => handleSetDefault(workspace.organizationId)}
+                />
+              )}
+              <MenuItem
+                text={
+                  workspace.isActive
+                    ? intl.get('workspaces.inactivate_workspace', { fallback: 'Inactivate Workspace' })
+                    : intl.get('workspaces.activate_workspace', { fallback: 'Activate Workspace' })
+                }
+                icon={<Icon icon={workspace.isActive ? 'disable' : 'tick'} />}
+                disabled={isDisabled}
+                onClick={() => !isDisabled && handleInactivateWorkspace(workspace)}
+              />
+              <MenuItem
+                text={intl.get('workspaces.delete_workspace', { fallback: 'Delete Workspace' })}
+                icon={<Icon icon="trash" />}
+                disabled={isDisabled}
+                intent={Intent.DANGER}
+                onClick={() => !isDisabled && handleDeleteWorkspace(workspace)}
+              />
+            </Menu>
+          ) : null;
 
           return (
-            <div className="organizations-list-table__actions">
+            <x.div display="flex" alignItems="center" justifyContent="flex-end" gap="8px">
               {isOwner && (
-                <>
-                  <Tooltip
-                    content={
-                      workspace.isActive
-                        ? intl.get('workspaces.inactivate_workspace', { fallback: 'Inactivate Workspace' })
-                        : intl.get('workspaces.activate_workspace', { fallback: 'Activate Workspace' })
-                    }
-                    position={Position.TOP}
-                  >
-                    <Button
-                      minimal
-                      disabled={isDisabled}
-                      onClick={() => handleInactivateWorkspace(workspace)}
-                      className="organizations-list-table__inactivate-btn"
-                      icon={<Icon
-                        icon={workspace.isActive ? 'pause' : 'play'}
-                        iconSize={16}
-                        intent={workspace.isActive ? Intent.WARNING : Intent.SUCCESS}
-                      />}
-                    />
-                  </Tooltip>
-                  <Tooltip
-                    content={intl.get('workspaces.delete_workspace', { fallback: 'Delete Workspace' })}
-                    position={Position.TOP}
-                  >
-                    <Button
-                      minimal
-                      disabled={isDisabled}
-                      onClick={() => handleDeleteWorkspace(workspace)}
-                      className="organizations-list-table__delete-btn"
-                      icon={<Icon icon="trash" iconSize={16} intent={Intent.DANGER} />}
-                    />
-                  </Tooltip>
-                </>
+                <Popover
+                  content={menuContent}
+                  position={Position.BOTTOM_RIGHT}
+                  boundary={'window'}
+                >
+                  <Button
+                    type="button"
+                    small
+                    disabled={isDisabled}
+                    icon={'more'}
+                  />
+                </Popover>
               )}
-              <Button
-                minimal
-                disabled={!canSwitch}
-                onClick={() =>
-                  handleSwitchWorkspace(workspace.organizationId, workspace.metadata?.name)
-                }
-                className="organizations-list-table__switch-btn"
-                icon={<Icon icon="arrow-right" iconSize={20} />}
-              />
-            </div>
+              <Tooltip
+                content={intl.get('workspaces.switch_to_organization', { fallback: 'Switch' })}
+                position={Position.TOP}
+              >
+                <Button
+                  type="button"
+                  small
+                  disabled={!canSwitch}
+                  onClick={() =>
+                    handleSwitchWorkspace(workspace.organizationId, workspace.metadata?.name)
+                  }
+                  icon={<Icon icon="arrow-right" iconSize={18} />}
+                />
+              </Tooltip>
+            </x.div>
           );
         },
       },
     ],
-    [activeOrganizationId, handleSwitchWorkspace, handleSetDefault, handleDeleteWorkspace, handleInactivateWorkspace],
+    [
+      activeOrganizationId,
+      handleSwitchWorkspace,
+      handleSetDefault,
+      handleDeleteWorkspace,
+      handleInactivateWorkspace,
+      showDefaultControls,
+    ],
   );
 
   return (

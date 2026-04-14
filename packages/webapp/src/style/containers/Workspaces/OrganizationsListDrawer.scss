@@ -1,242 +1,102 @@
 @import '@/style/_base.scss';
 
-.organizations-list-drawer {
-  padding: 24px 32px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  background: $dark-gray4;
-  color: $white;
+$organizations-drawer-bg: #1a1d23;
+$organizations-drawer-border: rgba(255, 255, 255, 0.08);
 
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
+.organizations-list-table.bigcapital-datatable {
+  --color-datatable-head-background: transparent;
+  --color-datatable-head-text: rgba(255, 255, 255, 0.45);
+  --color-datatable-head-border: #{$organizations-drawer-border};
+  --color-datatable-cell-border: #{$organizations-drawer-border};
+  --color-datatable-cell-hover-background: rgba(255, 255, 255, 0.04);
+  --color-datatable-no-results-text: rgba(255, 255, 255, 0.5);
+  --color-datatable-caret: rgba(255, 255, 255, 0.35);
+  --color-datatable-caret-hover: rgba(255, 255, 255, 0.55);
 
-    &-left {
-      display: flex;
-      align-items: baseline;
-      gap: 12px;
-    }
-  }
-
-  &__title {
-    margin: 0;
-    font-size: 24px;
-    font-weight: 600;
-    color: $white;
-  }
-
-  &__count {
-    font-size: 14px;
-    color: $gray5;
-  }
-
-  &__create-btn {
-    &.bp4-button.bp4-intent-primary {
-      background: $blue3;
-
-      &:hover {
-        background: $blue2;
-      }
-    }
-  }
-
-  &__toolbar {
-    margin-bottom: 16px;
-
-    .input-search {
-      width: 280px;
-      background: $dark-gray3;
-      border: 1px solid $dark-gray2;
-      color: $white;
-
-      &::placeholder {
-        color: $gray5;
-      }
-
-      .bp4-icon {
-        color: $gray5;
-      }
-    }
-  }
-
-  &__content {
-    flex: 1;
-    overflow: auto;
-  }
-}
-
-.organizations-list-table {
-  .rt-table {
-    background: transparent;
-    border: none;
-  }
-
-  .rt-thead {
-    background: transparent;
-    border-bottom: 1px solid $dark-gray2;
-
-    .rt-th {
-      color: $gray5;
-      font-size: 12px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      padding: 12px 16px;
-      border-right: none;
-      background: transparent;
-
-      &:last-child {
-        text-align: right;
-      }
-    }
-  }
-
-  .rt-tbody {
-    background: transparent;
-
-    .rt-tr-group {
-      border-bottom: 1px solid $dark-gray3;
-
-      &:last-child {
-        border-bottom: none;
-      }
-    }
-
-    .rt-tr {
-      background: transparent;
-
-      &:hover {
-        background: $dark-gray3;
-      }
-    }
-
-    .rt-td {
-      padding: 16px;
-      border-right: none;
-      color: $white;
-    }
-  }
-
-  &__name {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  &__avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    font-weight: 600;
-    flex-shrink: 0;
-
-    &.is-active {
-      box-shadow: 0 0 0 2px $blue3;
-    }
-
-    .bp4-spinner {
-      .bp4-spinner-head {
-        stroke: white;
-      }
-    }
-  }
-
-  &__name-text {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  &__name-label {
+  .table .thead .th {
+    font-size: 13px;
     font-weight: 500;
-    font-size: 14px;
-    color: $white;
+    text-transform: none;
+    letter-spacing: 0;
+    padding-top: 6px;
+    padding-bottom: 6px;
   }
 
-  &__current-tag {
-    font-size: 10px;
-    padding: 2px 8px;
-    width: fit-content;
+  .table .tbody .tr .td.td-liabilities,
+  .table .tbody .tr .td.td-assets {
+    font-size: 15px;
   }
 
-  &__balance {
+  .table .tbody .tr .td {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .sort-icon--desc {
+    border-bottom-color: rgba(255, 255, 255, 0.45) !important;
+  }
+
+  .sort-icon--asc {
+    border-top-color: rgba(255, 255, 255, 0.45) !important;
+  }
+
+  .th.align-right,
+  .td.align-right {
+    justify-content: flex-end;
+  }
+
+  .th.align-right .cell-inner {
+    text-align: right;
+    width: 100%;
+  }
+
+  .td.align-right .cell-inner {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+  }
+
+  // Use full BEM class names: `&__foo` under a compound parent would compile to
+  // `.organizations-list-table.bigcapital-datatable__foo`, which never matches the DOM.
+  // Workspace name row (avatar + label) is styled via @xstyled/emotion in OrganizationsListTable.
+
+  .organizations-list-table__current-indicator {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(17, 131, 218, 0.95);
+    letter-spacing: 0.02em;
+  }
+
+  .organizations-list-table__numeric {
     font-size: 14px;
     font-weight: 500;
-    color: $white;
+    text-align: right;
+    width: 100%;
   }
 
-  &__income {
-    font-size: 14px;
-    font-weight: 500;
-    color: $green4;
+  .organizations-list-table__numeric-amount {
+    color: rgba(255, 255, 255, 0.78);
+    font-variant-numeric: tabular-nums;
   }
 
-  &__expenses {
-    font-size: 14px;
-    font-weight: 500;
-    color: $red4;
-  }
-
-  &__default-checkbox {
-    margin: 0;
-
-    .bp4-control-indicator {
-      margin-left: 0;
-    }
-  }
-
-  &__switch-btn {
-    color: $gray5 !important;
-
-    &:hover:not(:disabled) {
-      color: $white !important;
-      background: $dark-gray2 !important;
-    }
-
-    &:disabled {
-      opacity: 0.3;
-    }
-  }
-
-  &__actions {
+  .organizations-list-table__actions {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 4px;
+    gap: 8px;
+    width: 100%;
   }
 
-  &__delete-btn {
-    color: $red4 !important;
-
-    &:hover:not(:disabled) {
-      color: $red3 !important;
-      background: rgba($red4, 0.1) !important;
-    }
-
-    &:disabled {
-      opacity: 0.3;
+  .organizations-list-table__row-menu-popover {
+    .bp4-popover-content {
+      padding: 0;
     }
   }
 
-  &__inactivate-btn {
-    color: $orange4 !important;
-
-    &:hover:not(:disabled) {
-      color: $orange3 !important;
-      background: rgba($orange4, 0.1) !important;
-    }
-
-    &:disabled {
-      opacity: 0.3;
-    }
+  .organizations-list-table__row-menu {
+    min-width: 200px;
   }
 }
 
