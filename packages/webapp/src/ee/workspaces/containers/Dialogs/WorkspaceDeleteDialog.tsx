@@ -3,8 +3,8 @@ import React from 'react';
 import { Button, Classes, Dialog, Intent, Callout } from '@blueprintjs/core';
 import { FormattedMessage as T, AppToaster } from '@/components';
 import intl from 'react-intl-universal';
-
-import { useDeleteWorkspace } from '@/hooks/query';
+import { x } from '@xstyled/emotion';
+import { useDeleteWorkspace } from '@/ee/workspaces/hooks/query/workspaces';
 import withDialogRedux from '@/components/DialogReduxConnect';
 import { withDialogActions } from '@/containers/Dialog/withDialogActions';
 import { compose } from '@/utils';
@@ -59,7 +59,7 @@ function WorkspaceDeleteDialog({
     >
       <div className={Classes.DIALOG_BODY}>
         <Callout intent={Intent.DANGER} icon="warning-sign">
-          <p
+          <span
             dangerouslySetInnerHTML={{
               __html: intl.get('workspaces.delete_workspace_confirmation', {
                 name: workspaceName || organizationId,
@@ -69,21 +69,23 @@ function WorkspaceDeleteDialog({
           />
         </Callout>
 
-        <div className="workspace-delete-dialog__details">
+        <x.div pt={4}>
           <p>{intl.get('workspaces.delete_workspace_details', {
             fallback: 'Deleting this workspace will permanently remove:',
           })}</p>
-          <ul>
-            <li>{intl.get('workspaces.delete_workspace_all_data', { fallback: 'All organization data including transactions, accounts, and contacts' })}</li>
-            <li>{intl.get('workspaces.delete_workspace_all_users', { fallback: 'All user associations and permissions' })}</li>
-            <li>{intl.get('workspaces.delete_workspace_database', { fallback: 'The entire database for this workspace' })}</li>
-          </ul>
-          <p className="workspace-delete-dialog__warning">
+
+          <x.ul pl={8} mb={4}>
+            <x.li mb={1}>{intl.get('workspaces.delete_workspace_all_data', { fallback: 'All organization data including transactions, accounts, and contacts' })}</x.li>
+            <x.li mb={1}>{intl.get('workspaces.delete_workspace_all_users', { fallback: 'All user associations and permissions' })}</x.li>
+            <x.li mb={1}>{intl.get('workspaces.delete_workspace_database', { fallback: 'The entire database for this workspace' })}</x.li>
+          </x.ul>
+         
+          <Callout intent={Intent.DANGER} icon="" mt={4}>
             {intl.get('workspaces.delete_workspace_irreversible', {
               fallback: 'This action is irreversible. Please make sure you have exported any important data before proceeding.',
             })}
-          </p>
-        </div>
+          </Callout>
+        </x.div>
       </div>
 
       <div className={Classes.DIALOG_FOOTER}>
@@ -96,9 +98,8 @@ function WorkspaceDeleteDialog({
             intent={Intent.DANGER}
             onClick={handleConfirmDelete}
             loading={isLoading}
-            icon="trash"
           >
-            <T id={'delete'} />
+            Delete Workspace
           </Button>
         </div>
       </div>

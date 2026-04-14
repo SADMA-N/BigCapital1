@@ -34,8 +34,8 @@ import { InvoiceSendMailDrawer } from '@/containers/Sales/Invoices/InvoiceSendMa
 import { EstimateSendMailDrawer } from '@/containers/Sales/Estimates/EstimateSendMailDrawer';
 import { ReceiptSendMailDrawer } from '@/containers/Sales/Receipts/ReceiptSendMailDrawer';
 import { PaymentReceivedSendMailDrawer } from '@/containers/Sales/PaymentsReceived/PaymentReceivedMailDrawer';
-import { CreateWorkspaceDrawer } from '@/containers/Workspaces/CreateWorkspaceDrawer/CreateWorkspaceDrawer';
-import { OrganizationsListDrawer } from '@/containers/Workspaces/OrganizationsListDrawer';
+import { CreateWorkspaceDrawer } from '@/ee/workspaces/containers/CreateWorkspaceDrawer/CreateWorkspaceDrawer';
+import { OrganizationsListDrawer } from '@/ee/workspaces/containers/OrganizationsListDrawer';
 
 /**
  * Drawers container of the dashboard.

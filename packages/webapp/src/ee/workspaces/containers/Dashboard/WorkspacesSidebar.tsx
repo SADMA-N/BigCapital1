@@ -2,16 +2,16 @@
 import React, { useState } from 'react';
 import * as R from 'ramda';
 import { Tooltip, Position, Spinner, Icon } from '@blueprintjs/core';
-import { useWorkspaces } from '@/hooks/query';
+import { useWorkspaces } from '@/ee/workspaces/hooks/query/workspaces';
 import { useAuthOrganizationId } from '@/hooks/state';
-import { useSwitchOrganization } from '@/hooks/useSwitchOrganization';
+import { useSwitchOrganization } from '@/ee/workspaces/hooks/useSwitchOrganization';
 import { withDrawerActions } from '@/containers/Drawer/withDrawerActions';
 import { DRAWERS } from '@/constants/drawers';
 import { firstLettersArgs } from '@/utils';
-import { WorkspaceSwitchingOverlay } from '@/components';
+import { WorkspaceSwitchingOverlay } from '@/ee/workspaces/components/WorkspaceSwitchingOverlay';
 import classNames from 'classnames';
 
-import '@/style/containers/Dashboard/WorkspacesSidebar.scss';
+import '@/ee/workspaces/style/containers/Dashboard/WorkspacesSidebar.scss';
 
 /**
  * Single workspace icon button.

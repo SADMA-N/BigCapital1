@@ -10,30 +10,19 @@ import {
   Popover,
   Menu,
   MenuItem,
+  MenuDivider,
 } from '@blueprintjs/core';
 import { x } from '@xstyled/emotion';
 import styled from '@xstyled/emotion';
 import { DataTable, TableSkeletonRows } from '@/components';
-import { useSetDefaultWorkspace } from '@/hooks/query';
+import { useSetDefaultWorkspace } from '@/ee/workspaces/hooks/query/workspaces';
 import { useAuthOrganizationId } from '@/hooks/state';
-import { useSwitchOrganization } from '@/hooks/useSwitchOrganization';
+import { useSwitchOrganization } from '@/ee/workspaces/hooks/useSwitchOrganization';
 import { compose } from '@/utils';
 import { OrganizationsListWorkspaceCell } from './OrganizationsListWorkspaceCell';
-import { WorkspaceSwitchingOverlay } from '@/components';
+import { WorkspaceSwitchingOverlay } from '@/ee/workspaces/components/WorkspaceSwitchingOverlay';
 import { withDialogActions } from '@/containers/Dialog/withDialogActions';
 import { DialogsName } from '@/constants/dialogs';
-
-/**
- * Format currency for display
- */
-function formatCurrency(amount: number): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(amount);
-}
 
 /**
  * Organizations list table component.
@@ -108,16 +97,16 @@ function OrganizationsListTable({
       {
         id: 'assets',
         Header: intl.get('workspaces.column_assets', { fallback: 'Assets' }),
-        accessor: 'assets',
-        Cell: ({ value }) => formatCurrency(value ?? 1000000),
+        accessor: 'formattedTotalAssets',
+        Cell: ({ value }) => value || '-',
         align: 'right',
         width: 100,
       },
       {
         id: 'liabilities',
         Header: intl.get('workspaces.column_liabilities', { fallback: 'Liabilities' }),
-        accessor: 'liabilities',
-        Cell: ({ value }) => formatCurrency(value ?? 1000000),
+        accessor: 'formattedTotalLiabilities',
+        Cell: ({ value }) => value || '-',
         align: 'right',
         width: 100,
       },
@@ -128,9 +117,11 @@ function OrganizationsListTable({
         disableSortBy: true,
         Cell: ({ row }) => {
           const workspace = row.original;
+          const workspaceName = workspace.metadata?.name || workspace.organizationId;
+          const isCurrentOrganization = workspace.organizationId === activeOrganizationId;
           const isDisabled = !workspace.isReady || workspace.isBuildRunning || workspace.isDeleting;
           const isOwner = workspace.role === 'owner';
-          const canSwitch = !isDisabled && workspace.isActive;
+          const canSwitch = !isCurrentOrganization && !isDisabled && workspace.isActive;
           const defaultDisabled =
             !workspace.isReady || workspace.isBuildRunning || !workspace.isActive || workspace.isDefault;
           const canSetDefaultInMenu =
@@ -155,6 +146,7 @@ function OrganizationsListTable({
                 disabled={isDisabled}
                 onClick={() => !isDisabled && handleInactivateWorkspace(workspace)}
               />
+              <MenuDivider />
               <MenuItem
                 text={intl.get('workspaces.delete_workspace', { fallback: 'Delete Workspace' })}
                 icon={<Icon icon="trash" />}
@@ -166,7 +158,21 @@ function OrganizationsListTable({
           ) : null;
 
           return (
-            <x.div display="flex" alignItems="center" justifyContent="flex-end" gap="8px">
+            <x.div display="flex" alignItems="center" justifyContent="flex-end" gap="6px">
+              {!isCurrentOrganization && (
+                <Tooltip
+                  content={`Switch to ${workspaceName}`}
+                  position={Position.TOP}
+                >
+                  <Button
+                    type="button"
+                    small
+                    disabled={!canSwitch}
+                    onClick={() => handleSwitchWorkspace(workspace.organizationId, workspaceName)}
+                    icon={<Icon icon="arrow-right" iconSize={18} />}
+                  />
+                </Tooltip>
+              )}
               {isOwner && (
                 <Popover
                   content={menuContent}
@@ -181,20 +187,6 @@ function OrganizationsListTable({
                   />
                 </Popover>
               )}
-              <Tooltip
-                content={intl.get('workspaces.switch_to_organization', { fallback: 'Switch' })}
-                position={Position.TOP}
-              >
-                <Button
-                  type="button"
-                  small
-                  disabled={!canSwitch}
-                  onClick={() =>
-                    handleSwitchWorkspace(workspace.organizationId, workspace.metadata?.name)
-                  }
-                  icon={<Icon icon="arrow-right" iconSize={18} />}
-                />
-              </Tooltip>
             </x.div>
           );
         },

@@ -5,14 +5,14 @@ import { debounce } from 'lodash';
 import { FormGroup, InputGroup, Button } from '@blueprintjs/core';
 import { withDrawerActions } from '@/containers/Drawer/withDrawerActions';
 import { DRAWERS } from '@/constants/drawers';
-import { useWorkspaces } from '@/hooks/query';
+import { useWorkspaces } from '@/ee/workspaces/hooks/query/workspaces';
 import OrganizationsListTable from './OrganizationsListTable';
 import { OrganizationsListDrawerHeader } from './OrganizationsListDrawerHeader';
 import intl from 'react-intl-universal';
 import { css } from '@emotion/css';
 import { x } from '@xstyled/emotion';
 
-import '@/style/containers/Workspaces/OrganizationsListDrawer.scss';
+import '@/ee/workspaces/style/containers/Workspaces/OrganizationsListDrawer.scss';
 
 const organizationsDrawerSearchFormGroupCss = css`
   margin: 0 !important;

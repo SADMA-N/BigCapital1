@@ -25,7 +25,7 @@ import WarehousesTransfersAlerts from '@/containers/WarehouseTransfers/Warehouse
 import BranchesAlerts from '@/containers/Preferences/Branches/BranchesAlerts';
 import ProjectAlerts from '@/containers/Projects/containers/ProjectAlerts';
 import TaxRatesAlerts from '@/containers/TaxRates/alerts';
-import WorkspacesAlerts from '@/containers/Alerts/Workspaces/WorkspacesAlerts';
+import WorkspacesAlerts from '@/ee/workspaces/containers/Alerts/WorkspacesAlerts';
 import { CashflowAlerts } from '../CashFlow/CashflowAlerts';
 import { BankRulesAlerts } from '../Banking/Rules/RulesList/BankRulesAlerts';
 import { SubscriptionAlerts } from '../Subscriptions/alerts/alerts';

@@ -10,6 +10,8 @@ interface WorkspaceFinancialData {
   tenantId: number;
   totalIncome: number;
   totalExpenses: number;
+  totalAssets: number;
+  totalLiabilities: number;
 }
 
 interface AccountTransaction {
@@ -17,6 +19,11 @@ interface AccountTransaction {
   debit: number;
   accountNormal: string;
   accountRootType: string;
+}
+
+interface AccountBalance {
+  accountRootType: string;
+  total: string;
 }
 
 /**
@@ -96,10 +103,27 @@ export class GetWorkspacesFinancialService {
       const totalIncome = this.calculateIncome(transactions);
       const totalExpenses = this.calculateExpenses(transactions);
 
+      // Query account balances for assets and liabilities
+      const balances = (await knex('accounts')
+        .whereIn('root_type', [ACCOUNT_ROOT_TYPE.ASSET, ACCOUNT_ROOT_TYPE.LIABILITY])
+        .select(
+          knex.raw('root_type as accountRootType'),
+          knex.raw('SUM(amount) as total'),
+        )
+        .groupBy('root_type')) as AccountBalance[];
+
+      const assetsRow = balances.find((b) => b.accountRootType === ACCOUNT_ROOT_TYPE.ASSET);
+      const liabilitiesRow = balances.find((b) => b.accountRootType === ACCOUNT_ROOT_TYPE.LIABILITY);
+
+      const totalAssets = assetsRow ? parseFloat(assetsRow.total) : 0;
+      const totalLiabilities = liabilitiesRow ? parseFloat(liabilitiesRow.total) : 0;
+
       return {
         tenantId,
         totalIncome: Math.max(0, totalIncome),
         totalExpenses: Math.max(0, totalExpenses),
+        totalAssets,
+        totalLiabilities,
       };
     } catch (error) {
       // If tenant database doesn't exist or other error, return zeros
@@ -107,6 +131,8 @@ export class GetWorkspacesFinancialService {
         tenantId,
         totalIncome: 0,
         totalExpenses: 0,
+        totalAssets: 0,
+        totalLiabilities: 0,
       };
     } finally {
       await knex.destroy();
@@ -150,6 +176,8 @@ export class GetWorkspacesFinancialService {
           tenantId: w.tenantId,
           totalIncome: 0,
           totalExpenses: 0,
+          totalAssets: 0,
+          totalLiabilities: 0,
         });
       });
 

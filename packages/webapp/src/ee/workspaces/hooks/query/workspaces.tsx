@@ -1,8 +1,8 @@
 // @ts-nocheck
 import { useMutation, useQueryClient } from 'react-query';
-import { useRequestQuery } from '../useQueryRequest';
-import useApiRequest from '../useRequest';
-import { useAuthOrganizationId } from '../state';
+import { useRequestQuery } from '@/hooks/useQueryRequest';
+import useApiRequest from '@/hooks/useRequest';
+import { useAuthOrganizationId } from '@/hooks/state';
 import { transformToCamelCase } from '@/utils';
 
 /**
@@ -41,7 +41,7 @@ export function useCreateWorkspace() {
       onSuccess: () => {
         queryClient.invalidateQueries(['workspaces']);
       },
-    }
+    },
   );
 }
 
@@ -61,7 +61,7 @@ export function useSetDefaultWorkspace() {
       onSuccess: () => {
         queryClient.invalidateQueries(['workspaces']);
       },
-    }
+    },
   );
 }
 
@@ -82,7 +82,7 @@ export function useDeleteWorkspace(props?: any) {
         queryClient.invalidateQueries(['workspaces']);
       },
       ...props,
-    }
+    },
   );
 }
 
@@ -105,7 +105,7 @@ export function useInactivateWorkspace(props?: any) {
         queryClient.invalidateQueries(['workspaces']);
       },
       ...props,
-    }
+    },
   );
 }
 
@@ -128,6 +128,6 @@ export function useActivateWorkspace(props?: any) {
         queryClient.invalidateQueries(['workspaces']);
       },
       ...props,
-    }
+    },
   );
 }

@@ -1,7 +1,7 @@
 // @ts-nocheck
 import React from 'react';
 import { firstLettersArgs } from '@/utils';
-import '@/style/components/WorkspaceSwitchingOverlay.scss';
+import '@/ee/workspaces/style/components/WorkspaceSwitchingOverlay.scss';
 
 interface WorkspaceSwitchingOverlayProps {
   workspaceName: string;

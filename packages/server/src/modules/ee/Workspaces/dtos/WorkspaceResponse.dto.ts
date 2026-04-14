@@ -22,6 +22,10 @@ export class WorkspaceDto {
   metadata?: WorkspaceMetadataDto;
   @ApiPropertyOptional() totalIncome?: number;
   @ApiPropertyOptional() totalExpenses?: number;
+  @ApiPropertyOptional() totalAssets?: number;
+  @ApiPropertyOptional() totalLiabilities?: number;
+  @ApiPropertyOptional() formattedTotalAssets?: string;
+  @ApiPropertyOptional() formattedTotalLiabilities?: string;
 }
 
 export class CreateWorkspaceResponseDto {

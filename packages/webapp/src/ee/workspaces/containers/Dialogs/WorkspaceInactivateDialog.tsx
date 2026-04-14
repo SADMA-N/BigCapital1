@@ -3,8 +3,8 @@ import React from 'react';
 import { Button, Classes, Dialog, Intent, Callout } from '@blueprintjs/core';
 import { FormattedMessage as T, AppToaster } from '@/components';
 import intl from 'react-intl-universal';
-
-import { useInactivateWorkspace, useActivateWorkspace } from '@/hooks/query';
+import { x } from '@xstyled/emotion';
+import { useInactivateWorkspace, useActivateWorkspace } from '@/ee/workspaces/hooks/query/workspaces';
 import withDialogRedux from '@/components/DialogReduxConnect';
 import { withDialogActions } from '@/containers/Dialog/withDialogActions';
 import { compose } from '@/utils';
@@ -89,7 +89,7 @@ function WorkspaceInactivateDialog({
     >
       <div className={Classes.DIALOG_BODY}>
         <Callout intent={intent} icon={icon}>
-          <p
+          <span
             dangerouslySetInnerHTML={{
               __html: intl.get(confirmationKey, {
                 name: workspaceName || organizationId,
@@ -100,16 +100,16 @@ function WorkspaceInactivateDialog({
         </Callout>
 
         {isInactivateAction && (
-          <div className="workspace-inactivate-dialog__details">
+          <x.div pl={2} mt={4}>
             <p>{intl.get('workspaces.inactivate_workspace_details', {
               fallback: 'Inactivating this workspace will:',
             })}</p>
-            <ul>
-              <li>{intl.get('workspaces.inactivate_workspace_effect_1', { fallback: 'Prevent all users from signing in' })}</li>
-              <li>{intl.get('workspaces.inactivate_workspace_effect_2', { fallback: 'Preserve all data and settings' })}</li>
-              <li>{intl.get('workspaces.inactivate_workspace_effect_3', { fallback: 'Allow reactivation at any time' })}</li>
-            </ul>
-          </div>
+            <x.ul pl={8}>
+              <x.li mb={1}>{intl.get('workspaces.inactivate_workspace_effect_1', { fallback: 'Prevent all users from signing in' })}</x.li>
+              <x.li mb={1}>{intl.get('workspaces.inactivate_workspace_effect_2', { fallback: 'Preserve all data and settings' })}</x.li>
+              <x.li mb={1}>{intl.get('workspaces.inactivate_workspace_effect_3', { fallback: 'Allow reactivation at any time' })}</x.li>
+            </x.ul>
+          </x.div>
         )}
       </div>
 
@@ -123,7 +123,6 @@ function WorkspaceInactivateDialog({
             intent={intent}
             onClick={handleConfirm}
             loading={isLoading}
-            icon={isInactivateAction ? 'pause' : 'play'}
           >
             {isInactivateAction
               ? intl.get('workspaces.inactivate_workspace', { fallback: 'Inactivate' })

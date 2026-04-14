@@ -1,11 +1,14 @@
 import { Transformer } from '@/modules/Transformer/Transformer';
 import { UserTenant } from '@/modules/System/models/UserTenant.model';
 import { WorkspaceDto } from '../dtos/WorkspaceResponse.dto';
+import { formatNumber } from '@/utils/format-number';
 
 interface FinancialData {
   tenantId: number;
   totalIncome: number;
   totalExpenses: number;
+  totalAssets: number;
+  totalLiabilities: number;
 }
 
 /**
@@ -31,6 +34,10 @@ export class WorkspaceTransformer extends Transformer<UserTenant> {
       'isDefault',
       'totalIncome',
       'totalExpenses',
+      'totalAssets',
+      'totalLiabilities',
+      'formattedTotalAssets',
+      'formattedTotalLiabilities',
     ];
   };
 
@@ -116,6 +123,42 @@ export class WorkspaceTransformer extends Transformer<UserTenant> {
   };
 
   /**
+   * Get total assets from financial data.
+   */
+  protected totalAssets = (): number => {
+    return this.financialData?.totalAssets ?? 0;
+  };
+
+  /**
+   * Get total liabilities from financial data.
+   */
+  protected totalLiabilities = (): number => {
+    return this.financialData?.totalLiabilities ?? 0;
+  };
+
+  /**
+   * Get formatted total assets.
+   */
+  protected formattedTotalAssets = (membership: UserTenant): string => {
+    const currencyCode = membership.tenant?.metadata?.baseCurrency;
+    return formatNumber(this.totalAssets(), {
+      currencyCode,
+      money: true,
+    });
+  };
+
+  /**
+   * Get formatted total liabilities.
+   */
+  protected formattedTotalLiabilities = (membership: UserTenant): string => {
+    const currencyCode = membership.tenant?.metadata?.baseCurrency;
+    return formatNumber(this.totalLiabilities(), {
+      currencyCode,
+      money: true,
+    });
+  };
+
+  /**
    * Transform single membership to WorkspaceDto.
    */
   transform = (
@@ -137,6 +180,10 @@ export class WorkspaceTransformer extends Transformer<UserTenant> {
       metadata: this.metadata(membership),
       totalIncome: this.totalIncome(),
       totalExpenses: this.totalExpenses(),
+      totalAssets: this.totalAssets(),
+      totalLiabilities: this.totalLiabilities(),
+      formattedTotalAssets: this.formattedTotalAssets(membership),
+      formattedTotalLiabilities: this.formattedTotalLiabilities(membership),
     };
   };
 }

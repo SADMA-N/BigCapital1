@@ -15,7 +15,7 @@ import {
 } from '@/components';
 import { Col, Row } from '@/components';
 import { useIsDarkMode } from '@/hooks/useDarkMode';
-import { useCreateWorkspace } from '@/hooks/query';
+import { useCreateWorkspace } from '@/ee/workspaces/hooks/query/workspaces';
 import { getFiscalYear } from '@/constants/fiscalYearOptions';
 import { getLanguages } from '@/constants/languagesOptions';
 import { getAllCurrenciesOptions } from '@/constants/currencies';

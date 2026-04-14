@@ -1,6 +1,5 @@
 @import '@/style/_base.scss';
 
-$organizations-drawer-bg: #1a1d23;
 $organizations-drawer-border: rgba(255, 255, 255, 0.08);
 
 .organizations-list-table.bigcapital-datatable {
@@ -102,22 +101,15 @@ $organizations-drawer-border: rgba(255, 255, 255, 0.08);
 
 // Workspace Delete Dialog Styles
 .workspace-delete-dialog {
-  .bp4-dialog-body {
-    padding: 20px;
-  }
-
   &__details {
-    margin-top: 16px;
 
     p {
       margin: 0 0 8px 0;
-      color: $gray1;
     }
 
     ul {
       margin: 8px 0;
       padding-left: 20px;
-      color: $gray1;
 
       li {
         margin-bottom: 4px;
@@ -138,22 +130,10 @@ $organizations-drawer-border: rgba(255, 255, 255, 0.08);
 
 // Workspace Inactivate Dialog Styles
 .workspace-inactivate-dialog {
-  .bp4-dialog-body {
-    padding: 20px;
-  }
-
   &__details {
-    margin-top: 16px;
-
-    p {
-      margin: 0 0 8px 0;
-      color: $gray1;
-    }
-
     ul {
       margin: 8px 0;
       padding-left: 20px;
-      color: $gray1;
 
       li {
         margin-bottom: 4px;

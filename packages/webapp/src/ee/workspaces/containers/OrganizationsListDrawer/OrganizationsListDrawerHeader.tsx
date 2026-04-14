@@ -5,7 +5,7 @@ import { x } from '@xstyled/emotion';
 import { css } from '@emotion/css';
 import intl from 'react-intl-universal';
 
-import '@/style/containers/Workspaces/OrganizationsListDrawer.scss';
+import '@/ee/workspaces/style/containers/Workspaces/OrganizationsListDrawer.scss';
 
 const organizationsSwitchLabelBpCss = css`
   .bp4-control.bp4-switch {
