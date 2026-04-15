@@ -14,7 +14,7 @@ import {
 } from '@blueprintjs/core';
 import { x } from '@xstyled/emotion';
 import styled from '@xstyled/emotion';
-import { DataTable, TableSkeletonRows } from '@/components';
+import { DataTable, TableSkeletonRows, AppToaster } from '@/components';
 import { useSetDefaultWorkspace } from '@/ee/workspaces/hooks/query/workspaces';
 import { useAuthOrganizationId } from '@/hooks/state';
 import { useSwitchOrganization } from '@/ee/workspaces/hooks/useSwitchOrganization';
@@ -32,7 +32,6 @@ function OrganizationsListTable({
   isLoading,
   onClose,
   openDialog,
-  showDefaultControls = true,
 }) {
   const activeOrganizationId = useAuthOrganizationId();
   const switchOrganization = useSwitchOrganization();
@@ -55,7 +54,16 @@ function OrganizationsListTable({
 
   const handleSetDefault = useCallback(
     (organizationId) => {
-      setDefaultWorkspace.mutate({ organizationId });
+      setDefaultWorkspace
+        .mutateAsync({ organizationId })
+        .then(() => {
+          AppToaster.show({
+            message: intl.get('workspaces.default_workspace_set_successfully', {
+              fallback: 'Default workspace has been set successfully',
+            }),
+            intent: Intent.SUCCESS,
+          });
+        });
     },
     [setDefaultWorkspace],
   );
@@ -124,8 +132,7 @@ function OrganizationsListTable({
           const canSwitch = !isCurrentOrganization && !isDisabled && workspace.isActive;
           const defaultDisabled =
             !workspace.isReady || workspace.isBuildRunning || !workspace.isActive || workspace.isDefault;
-          const canSetDefaultInMenu =
-            showDefaultControls && !workspace.isDefault && !defaultDisabled;
+          const canSetDefaultInMenu = !workspace.isDefault && !defaultDisabled;
 
           const menuContent = isOwner ? (
             <Menu minimal>
@@ -198,7 +205,6 @@ function OrganizationsListTable({
       handleSetDefault,
       handleDeleteWorkspace,
       handleInactivateWorkspace,
-      showDefaultControls,
     ],
   );
 

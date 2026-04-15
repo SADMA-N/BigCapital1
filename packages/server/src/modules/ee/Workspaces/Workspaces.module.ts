@@ -22,6 +22,8 @@ import { TenantModel } from '@/modules/System/models/TenantModel';
 import { TenantDBManagerModule } from '@/modules/TenantDBManager/TenantDBManager.module';
 import { GetBuildOrganizationBuildJob } from '@/modules/Organization/commands/GetBuildOrganizationJob.service';
 import { TenantRepository } from '@/modules/System/repositories/Tenant.repository';
+import { SocketModule } from '@/modules/Socket/Socket.module';
+import { WorkspaceDeletedSubscriber } from './subscribers/WorkspaceDeleted.subscriber';
 
 @Module({
   imports: [
@@ -31,6 +33,7 @@ import { TenantRepository } from '@/modules/System/repositories/Tenant.repositor
     ),
     TenantDBManagerModule,
     OrganizationModule,
+    SocketModule,
   ],
   controllers: [WorkspacesController],
   providers: [
@@ -48,6 +51,7 @@ import { TenantRepository } from '@/modules/System/repositories/Tenant.repositor
     GetWorkspaceBuildJobService,
     CreateUserTenantOnSignupSubscriber,
     WorkspaceCreatedSubscriber,
+    WorkspaceDeletedSubscriber,
     GetBuildOrganizationBuildJob,
     DeleteWorkspaceProcessor,
   ],

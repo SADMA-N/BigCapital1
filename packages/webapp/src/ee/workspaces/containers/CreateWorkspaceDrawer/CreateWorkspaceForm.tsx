@@ -71,14 +71,6 @@ export default function CreateWorkspaceForm({ onSubmitting, onCancel }) {
         <>
           <DrawerBody>
             <x.div maxWidth={'600px'} w="100%" mx="auto" pt="30px" pb="20px" px="25px">
-              <x.h3
-                color={isDarkMode ? 'rgba(255, 255, 255, 0.5)' : '#868f9f'}
-                mb="2rem"
-                fontWeight={600}
-              >
-                <T id={'create_new_workspace'} />
-              </x.h3>
-
               <Form>
                 {/* ---------- Organization name ----------  */}
                 <FFormGroup name={'name'} label={<T id={'legal_organization_name'} />} fastField>

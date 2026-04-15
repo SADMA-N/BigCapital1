@@ -1,13 +1,14 @@
 // @ts-nocheck
-import React from 'react';
-import { Button, Classes, Dialog, Intent, Callout } from '@blueprintjs/core';
+import React, { useState } from 'react';
+import { Button, Classes, Dialog, Intent, Callout, FormGroup, InputGroup } from '@blueprintjs/core';
 import { FormattedMessage as T, AppToaster } from '@/components';
 import intl from 'react-intl-universal';
-import { x } from '@xstyled/emotion';
+import { x, } from '@xstyled/emotion';
 import { useDeleteWorkspace } from '@/ee/workspaces/hooks/query/workspaces';
 import withDialogRedux from '@/components/DialogReduxConnect';
 import { withDialogActions } from '@/containers/Dialog/withDialogActions';
 import { compose } from '@/utils';
+import { css } from '@emotion/css';
 
 function WorkspaceDeleteDialog({
   dialogName,
@@ -18,8 +19,12 @@ function WorkspaceDeleteDialog({
   closeDialog,
 }) {
   const { mutateAsync: deleteWorkspace, isLoading } = useDeleteWorkspace();
+  const [confirmText, setConfirmText] = useState('');
+  const confirmationPhrase = `Delete ${workspaceName || organizationId}`;
+  const canDelete = confirmText === confirmationPhrase;
 
   const handleCancel = () => {
+    setConfirmText('');
     closeDialog(dialogName);
   };
 
@@ -32,18 +37,25 @@ function WorkspaceDeleteDialog({
           }),
           intent: Intent.SUCCESS,
         });
+        setConfirmText('');
         closeDialog(dialogName);
       })
       .catch((error) => {
+        const errorType = error?.response?.data?.errors?.[0]?.type;
         const errorMessage =
-          error?.response?.data?.errors?.[0]?.message ||
-          intl.get('workspaces.cannot_delete_workspace', {
-            fallback: 'Cannot delete workspace',
-          });
+          errorType === 'CANNOT_DELETE_CURRENT_ORGANIZATION'
+            ? intl.get('workspaces.cannot_delete_current_organization', {
+                fallback: 'Cannot delete the current organization',
+              })
+            : error?.response?.data?.errors?.[0]?.message ||
+              intl.get('workspaces.cannot_delete_workspace', {
+                fallback: 'Cannot delete workspace',
+              });
         AppToaster.show({
           message: errorMessage,
           intent: Intent.DANGER,
         });
+        setConfirmText('');
         closeDialog(dialogName);
       });
   };
@@ -80,11 +92,30 @@ function WorkspaceDeleteDialog({
             <x.li mb={1}>{intl.get('workspaces.delete_workspace_database', { fallback: 'The entire database for this workspace' })}</x.li>
           </x.ul>
          
-          <Callout intent={Intent.DANGER} icon="" mt={4}>
+          <Callout intent={Intent.DANGER} icon="">
             {intl.get('workspaces.delete_workspace_irreversible', {
               fallback: 'This action is irreversible. Please make sure you have exported any important data before proceeding.',
             })}
           </Callout>
+
+          <FormGroup
+            label={intl.get('workspaces.delete_workspace_confirmation_input_label', {
+              name: workspaceName || organizationId,
+              fallback: `Type "Delete ${workspaceName || organizationId}" to confirm`,
+            })}
+            className={css`margin-top: 20px; margin-bottom: 0;`}
+          >
+            <InputGroup
+              value={confirmText}
+              onChange={(e) => setConfirmText(e.target.value)}
+              placeholder={intl.get('workspaces.delete_workspace_confirmation_input_placeholder', {
+                name: workspaceName || organizationId,
+                fallback: `Delete ${workspaceName || organizationId}`,
+              })}
+              disabled={isLoading}
+              fill
+            />
+          </FormGroup>
         </x.div>
       </div>
 
@@ -98,8 +129,11 @@ function WorkspaceDeleteDialog({
             intent={Intent.DANGER}
             onClick={handleConfirmDelete}
             loading={isLoading}
+            disabled={!canDelete}
           >
-            Delete Workspace
+            {intl.get('workspaces.confirm_delete_workspace', {
+              fallback: 'Confirm Delete Workspace',
+            })}
           </Button>
         </div>
       </div>

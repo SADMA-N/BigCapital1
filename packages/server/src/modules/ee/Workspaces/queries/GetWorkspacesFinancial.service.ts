@@ -21,11 +21,6 @@ interface AccountTransaction {
   accountRootType: string;
 }
 
-interface AccountBalance {
-  accountRootType: string;
-  total: string;
-}
-
 /**
  * Service to retrieve financial data (income and expenses) for multiple workspaces.
  * This service creates dynamic connections to tenant databases to fetch aggregated data.
@@ -75,6 +70,26 @@ export class GetWorkspacesFinancialService {
   }
 
   /**
+   * Calculate total assets from account transactions.
+   * Asset accounts have debit normal, so assets = debit - credit.
+   */
+  private calculateAssets(transactions: AccountTransaction[]): number {
+    return transactions
+      .filter((t) => t.accountRootType === ACCOUNT_ROOT_TYPE.ASSET)
+      .reduce((sum, t) => sum + (t.debit - t.credit), 0);
+  }
+
+  /**
+   * Calculate total liabilities from account transactions.
+   * Liability accounts have credit normal, so liabilities = credit - debit.
+   */
+  private calculateLiabilities(transactions: AccountTransaction[]): number {
+    return transactions
+      .filter((t) => t.accountRootType === ACCOUNT_ROOT_TYPE.LIABILITY)
+      .reduce((sum, t) => sum + (t.credit - t.debit), 0);
+  }
+
+  /**
    * Fetch financial data for a single tenant.
    */
   private async fetchTenantFinancialData(
@@ -103,20 +118,20 @@ export class GetWorkspacesFinancialService {
       const totalIncome = this.calculateIncome(transactions);
       const totalExpenses = this.calculateExpenses(transactions);
 
-      // Query account balances for assets and liabilities
-      const balances = (await knex('accounts')
-        .whereIn('root_type', [ACCOUNT_ROOT_TYPE.ASSET, ACCOUNT_ROOT_TYPE.LIABILITY])
+      // Query account transactions for assets and liabilities (cumulative balance)
+      const assetLiabilityTransactions = await knex('accounts_transactions as at')
+        .join('accounts as a', 'at.account_id', 'a.id')
+        .whereIn('a.root_type', [ACCOUNT_ROOT_TYPE.ASSET, ACCOUNT_ROOT_TYPE.LIABILITY])
         .select(
-          knex.raw('root_type as accountRootType'),
-          knex.raw('SUM(amount) as total'),
+          knex.raw('SUM(at.credit) as credit'),
+          knex.raw('SUM(at.debit) as debit'),
+          'a.account_normal as accountNormal',
+          'a.root_type as accountRootType',
         )
-        .groupBy('root_type')) as AccountBalance[];
+        .groupBy('at.account_id', 'a.account_normal', 'a.root_type');
 
-      const assetsRow = balances.find((b) => b.accountRootType === ACCOUNT_ROOT_TYPE.ASSET);
-      const liabilitiesRow = balances.find((b) => b.accountRootType === ACCOUNT_ROOT_TYPE.LIABILITY);
-
-      const totalAssets = assetsRow ? parseFloat(assetsRow.total) : 0;
-      const totalLiabilities = liabilitiesRow ? parseFloat(liabilitiesRow.total) : 0;
+      const totalAssets = this.calculateAssets(assetLiabilityTransactions);
+      const totalLiabilities = this.calculateLiabilities(assetLiabilityTransactions);
 
       return {
         tenantId,

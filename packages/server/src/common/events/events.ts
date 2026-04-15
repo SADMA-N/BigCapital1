@@ -52,6 +52,7 @@ export const events = {
     created: 'onWorkspaceCreated',
     deleting: 'onWorkspaceDeleting',
     deleted: 'onWorkspaceDeleted',
+    setDefault: 'onWorkspaceSetDefault',
   },
 
   /**

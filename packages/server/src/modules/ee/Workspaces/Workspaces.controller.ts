@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -31,6 +30,7 @@ import {
   WorkspaceDto,
 } from './dtos/WorkspaceResponse.dto';
 import { WorkspaceBuildJobResponseDto } from './dtos/WorkspaceBuildJobResponse.dto';
+import { ServiceError } from '@/modules/Items/ServiceError';
 
 @ApiTags('Workspaces')
 @Controller('workspaces')
@@ -127,9 +127,11 @@ export class WorkspacesController {
     const currentOrganizationId = this.cls.get<string>('organizationId');
 
     if (organizationId === currentOrganizationId) {
-      throw new BadRequestException('Cannot delete the current organization');
+      throw new ServiceError(
+        'CANNOT_DELETE_CURRENT_ORGANIZATION',
+        'Cannot delete the current organization',
+      );
     }
-
     return this.deleteWorkspaceJobService.initiateDelete(userId, organizationId);
   }
 

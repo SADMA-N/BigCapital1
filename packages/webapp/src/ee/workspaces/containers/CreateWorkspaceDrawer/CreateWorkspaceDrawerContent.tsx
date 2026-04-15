@@ -1,6 +1,7 @@
 // @ts-nocheck
 import React from 'react';
 import * as R from 'ramda';
+import { DrawerHeaderContent, FormattedMessage as T } from '@/components';
 import { withDrawerActions } from '@/containers/Drawer/withDrawerActions';
 import { DRAWERS } from '@/constants/drawers';
 import { CreateWorkspaceStepper } from './CreateWorkspaceStepper';
@@ -13,7 +14,15 @@ function CreateWorkspaceDrawerContentRoot({ closeDrawer }) {
     closeDrawer(DRAWERS.CREATE_WORKSPACE);
   };
 
-  return <CreateWorkspaceStepper onClose={handleClose} />;
+  return (
+    <>
+      <DrawerHeaderContent
+        name={DRAWERS.CREATE_WORKSPACE}
+        title={<T id={'workspace.create_new_workspace'} />}
+      />
+      <CreateWorkspaceStepper onClose={handleClose} />
+    </>
+  );
 }
 
 export const CreateWorkspaceDrawerContent = R.compose(withDrawerActions)(

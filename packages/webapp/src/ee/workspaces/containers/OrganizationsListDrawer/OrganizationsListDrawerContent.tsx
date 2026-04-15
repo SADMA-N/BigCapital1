@@ -5,7 +5,8 @@ import { debounce } from 'lodash';
 import { FormGroup, InputGroup, Button } from '@blueprintjs/core';
 import { withDrawerActions } from '@/containers/Drawer/withDrawerActions';
 import { DRAWERS } from '@/constants/drawers';
-import { useWorkspaces } from '@/ee/workspaces/hooks/query/workspaces';
+import { useWorkspaces, useSetDefaultWorkspace } from '@/ee/workspaces/hooks/query/workspaces';
+import { useAuthOrganizationId } from '@/hooks/state';
 import OrganizationsListTable from './OrganizationsListTable';
 import { OrganizationsListDrawerHeader } from './OrganizationsListDrawerHeader';
 import intl from 'react-intl-universal';
@@ -61,8 +62,13 @@ const organizationsDrawerCreateBtnCss = css`
 function OrganizationsListDrawerContentRoot({ closeDrawer, openDrawer }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
-  const [showDefaultControls, setShowDefaultControls] = useState(true);
+  const activeOrganizationId = useAuthOrganizationId();
+  const setDefaultWorkspace = useSetDefaultWorkspace();
   const { data: workspaces, isLoading } = useWorkspaces({ includeInactive: true });
+
+  const isCurrentOrgDefault = useMemo(() => {
+    return workspaces?.find((w) => w.organizationId === activeOrganizationId)?.isDefault ?? false;
+  }, [workspaces, activeOrganizationId]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSetSearch = useCallback(
@@ -100,8 +106,9 @@ function OrganizationsListDrawerContentRoot({ closeDrawer, openDrawer }) {
   return (
     <x.div display="flex" flexDirection="column" height="100%" minHeight={0}>
       <OrganizationsListDrawerHeader
-        showDefaultControls={showDefaultControls}
-        onShowDefaultControlsChange={setShowDefaultControls}
+        isCurrentOrgDefault={isCurrentOrgDefault}
+        activeOrganizationId={activeOrganizationId}
+        onSetDefaultWorkspace={(organizationId) => setDefaultWorkspace.mutate({ organizationId })}
         onClose={handleClose}
       />
 
@@ -146,7 +153,6 @@ function OrganizationsListDrawerContentRoot({ closeDrawer, openDrawer }) {
           workspaces={filteredWorkspaces}
           isLoading={isLoading}
           onClose={handleClose}
-          showDefaultControls={showDefaultControls}
         />
       </x.div>
     </x.div>

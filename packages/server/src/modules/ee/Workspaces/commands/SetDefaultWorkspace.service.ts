@@ -1,8 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Inject } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { UserTenant } from '@/modules/System/models/UserTenant.model';
 import { SystemUser } from '@/modules/System/models/SystemUser';
 import { TenantModel } from '@/modules/System/models/TenantModel';
+import { events } from '@/common/events/events';
+import { IWorkspaceSetDefaultEventPayload } from '../Workspaces.types';
 
 @Injectable()
 export class SetDefaultWorkspaceService {
@@ -13,6 +16,7 @@ export class SetDefaultWorkspaceService {
     private readonly systemUserModel: typeof SystemUser,
     @Inject(TenantModel.name)
     private readonly tenantModel: typeof TenantModel,
+    private readonly eventEmitter: EventEmitter2,
   ) {}
 
   /**
@@ -53,5 +57,11 @@ export class SetDefaultWorkspaceService {
       .query()
       .where('id', userId)
       .patch({ defaultTenantId: tenant.id });
+
+    await this.eventEmitter.emitAsync(events.workspace.setDefault, {
+      tenantId: tenant.id,
+      organizationId,
+      userId,
+    } as IWorkspaceSetDefaultEventPayload);
   }
 }

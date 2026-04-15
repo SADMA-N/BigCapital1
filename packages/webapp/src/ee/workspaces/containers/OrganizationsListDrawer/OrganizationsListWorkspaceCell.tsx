@@ -1,5 +1,5 @@
 import React from 'react';
-import { Spinner, Tag } from '@blueprintjs/core';
+import { Spinner, Tag, Icon } from '@blueprintjs/core';
 import { x } from '@xstyled/emotion';
 import { firstLettersArgs } from '@/utils';
 
@@ -8,6 +8,7 @@ export type OrganizationsListWorkspaceRow = {
   organizationId: string;
   metadata?: { name?: string } | null;
   isBuildRunning?: boolean;
+  isDefault?: boolean;
 };
 
 export type OrganizationsListWorkspaceCellProps = {
@@ -56,17 +57,22 @@ export function OrganizationsListWorkspaceCell({
         minWidth={0}
         flex={1}
       >
-        <x.span
-          fontWeight={500}
-          fontSize="14px"
-          color="rgba(255, 255, 255, 0.88)"
-          overflow="hidden"
-          textOverflow="ellipsis"
-          whiteSpace="nowrap"
-          maxW="100%"
-        >
-          {name}
-        </x.span>
+        <x.div display="flex" alignItems="center" gap="6px" maxW="100%" minWidth={0}>
+          <x.span
+            fontWeight={500}
+            fontSize="14px"
+            color="rgba(255, 255, 255, 0.88)"
+            overflow="hidden"
+            textOverflow="ellipsis"
+            whiteSpace="nowrap"
+            maxW="100%"
+          >
+            {name}
+          </x.span>
+          {workspace.isDefault && (
+            <Icon icon="star" size={14} color="#f5a623" />
+          )}
+        </x.div>
       </x.div>
     </x.div>
   );

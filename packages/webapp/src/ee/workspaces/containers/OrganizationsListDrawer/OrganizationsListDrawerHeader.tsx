@@ -18,16 +18,24 @@ const organizationsSwitchLabelBpCss = css`
 `;
 
 type OrganizationsListDrawerHeaderProps = {
-  showDefaultControls: boolean;
-  onShowDefaultControlsChange: (checked: boolean) => void;
+  isCurrentOrgDefault: boolean;
+  activeOrganizationId: string | null;
+  onSetDefaultWorkspace: (organizationId: string) => void;
   onClose: () => void;
 };
 
 export function OrganizationsListDrawerHeader({
-  showDefaultControls,
-  onShowDefaultControlsChange,
+  isCurrentOrgDefault,
+  activeOrganizationId,
+  onSetDefaultWorkspace,
   onClose,
 }: OrganizationsListDrawerHeaderProps) {
+  const handleChange = (e) => {
+    if (e.currentTarget.checked && !isCurrentOrgDefault && activeOrganizationId) {
+      onSetDefaultWorkspace(activeOrganizationId);
+    }
+  };
+
   return (
     <x.div
       display="flex"
@@ -47,8 +55,8 @@ export function OrganizationsListDrawerHeader({
         userSelect="none"
       >
         <Switch
-          checked={showDefaultControls}
-          onChange={(e) => onShowDefaultControlsChange(e.currentTarget.checked)}
+          checked={isCurrentOrgDefault}
+          onChange={handleChange}
         />
         <x.span fontSize="14px" color="rgb(255, 255, 255)">
           {intl.get('workspaces.set_default_workspace', {

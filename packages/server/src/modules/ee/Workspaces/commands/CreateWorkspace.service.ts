@@ -16,15 +16,11 @@ export class CreateWorkspaceService {
   constructor(
     @Inject(UserTenant.name)
     private readonly userTenantModel: typeof UserTenant,
-
-    private readonly tenantRepository: TenantRepository,
-
-    private readonly eventEmitter: EventEmitter2,
-
-    private readonly buildOrganizationService: BuildOrganizationService,
-
     @Inject(SystemKnexConnection)
     private readonly systemKnex: Knex,
+    private readonly tenantRepository: TenantRepository,
+    private readonly eventEmitter: EventEmitter2,
+    private readonly buildOrganizationService: BuildOrganizationService,
   ) {}
 
   /**

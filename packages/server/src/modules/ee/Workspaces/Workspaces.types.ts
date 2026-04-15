@@ -13,3 +13,9 @@ export interface DeleteWorkspaceQueueJobPayload {
   organizationId: string;
   userId: number;
 }
+
+export interface IWorkspaceSetDefaultEventPayload {
+  tenantId: number;
+  organizationId: string;
+  userId: number;
+}
