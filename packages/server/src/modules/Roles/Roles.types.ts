@@ -61,6 +61,10 @@ export enum AbilitySubject {
   VendorCredit = 'VendorCredit',
   Project = 'Project',
   TaxRate = 'TaxRate',
+  AuditLog = 'AuditLog',
+  Role = 'Role',
+  Warehouse = 'Warehouse',
+  Branch = 'Branch',
   Attachment = 'Attachment',
 }
 
