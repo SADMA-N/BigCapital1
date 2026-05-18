@@ -8390,6 +8390,11 @@ export interface components {
              * @default true
              */
             active: boolean;
+            /**
+             * @description Customer code
+             * @example CUST-001
+             */
+            code?: string;
         };
         EditCustomerDto: {
             /** @description Billing address line 1 */
@@ -8448,6 +8453,8 @@ export interface components {
             note?: string;
             /** @description Active status */
             active?: boolean;
+            /** @description Customer code */
+            code?: string;
         };
         CustomerOpeningBalanceEditDto: {
             /**
@@ -8588,6 +8595,11 @@ export interface components {
              * @default true
              */
             active: boolean;
+            /**
+             * @description Vendor code
+             * @example VEND-001
+             */
+            code?: string;
         };
         EditVendorDto: {
             /** @description Billing address line 1 */
@@ -8644,6 +8656,8 @@ export interface components {
             note?: string;
             /** @description Whether the vendor is active */
             active?: boolean;
+            /** @description Vendor code */
+            code?: string;
         };
         VendorOpeningBalanceEditDto: {
             /**
@@ -14608,6 +14622,10 @@ export interface operations {
     ItemsController_getItems: {
         parameters: {
             query?: {
+                /** @description Page number for pagination */
+                page?: number;
+                /** @description Number of items per page */
+                pageSize?: number;
                 /** @description Custom view ID for filtering */
                 customViewId?: number;
                 /** @description Array of filter roles */
@@ -14624,10 +14642,6 @@ export interface operations {
                 viewSlug?: string;
                 /** @description Filter for inactive items */
                 inactiveMode?: boolean;
-                /** @description Number of items per page */
-                pageSize?: number;
-                /** @description Page number for pagination */
-                page?: number;
             };
             header: {
                 /** @description Value must be 'Bearer <token>' where <token> is an API key prefixed with 'bc_' or a JWT token. */
@@ -16083,6 +16097,10 @@ export interface operations {
     SaleInvoicesController_getSaleInvoices: {
         parameters: {
             query?: {
+                /** @description Page number (1-based) */
+                page?: number;
+                /** @description Page size */
+                pageSize?: number;
                 /** @description Custom view ID */
                 customViewId?: number;
                 /** @description Filter roles */
@@ -17210,6 +17228,10 @@ export interface operations {
     PaymentReceivesController_getPaymentsReceived: {
         parameters: {
             query?: {
+                /** @description Page number (1-based) */
+                page?: number;
+                /** @description Page size */
+                pageSize?: number;
                 /** @description Custom view ID */
                 customViewId?: number;
                 /** @description Filter roles */
@@ -17870,6 +17892,10 @@ export interface operations {
     ItemCategoryController_getItemCategories: {
         parameters: {
             query?: {
+                /** @description Page number (1-based) */
+                page?: number;
+                /** @description Page size */
+                pageSize?: number;
                 /** @description Custom view ID */
                 customViewId?: number;
                 /** @description Filter roles */
@@ -18071,6 +18097,10 @@ export interface operations {
     ExpensesController_getExpenses: {
         parameters: {
             query?: {
+                /** @description Page number (1-based) */
+                page?: number;
+                /** @description Page size */
+                pageSize?: number;
                 /** @description Custom view ID */
                 customViewId?: number;
                 /** @description Filter roles */
@@ -18510,6 +18540,10 @@ export interface operations {
     CustomersController_getCustomers: {
         parameters: {
             query?: {
+                /** @description Page number (1-based) */
+                page?: number;
+                /** @description Page size */
+                pageSize?: number;
                 /** @description Custom view ID */
                 customViewId?: number;
                 /** @description Filter roles */
@@ -18666,6 +18700,10 @@ export interface operations {
     VendorsController_getVendors: {
         parameters: {
             query?: {
+                /** @description Page number (1-based) */
+                page?: number;
+                /** @description Page size */
+                pageSize?: number;
                 /** @description Custom view ID */
                 customViewId?: number;
                 /** @description Filter roles */
@@ -18945,6 +18983,10 @@ export interface operations {
     SaleEstimatesController_getSaleEstimates: {
         parameters: {
             query?: {
+                /** @description Page number (1-based) */
+                page?: number;
+                /** @description Page size */
+                pageSize?: number;
                 /** @description Custom view ID */
                 customViewId?: number;
                 /** @description Filter roles */
@@ -19369,6 +19411,10 @@ export interface operations {
     SaleReceiptsController_getSaleReceipts: {
         parameters: {
             query?: {
+                /** @description Page number (1-based) */
+                page?: number;
+                /** @description Page size */
+                pageSize?: number;
                 /** @description Custom view ID */
                 customViewId?: number;
                 /** @description Filter roles */
@@ -19682,6 +19728,10 @@ export interface operations {
     BillsController_getBills: {
         parameters: {
             query?: {
+                /** @description Page number (1-based) */
+                page?: number;
+                /** @description Page size */
+                pageSize?: number;
                 /** @description Custom view ID */
                 customViewId?: number;
                 /** @description Filter roles */
@@ -20070,6 +20120,10 @@ export interface operations {
     ManualJournalsController_getManualJournals: {
         parameters: {
             query?: {
+                /** @description Page number (1-based) */
+                page?: number;
+                /** @description Page size */
+                pageSize?: number;
                 /** @description Custom view ID */
                 customViewId?: number;
                 /** @description Filter roles */
@@ -20288,6 +20342,10 @@ export interface operations {
     CreditNotesController_getCreditNotes: {
         parameters: {
             query?: {
+                /** @description Page number (1-based) */
+                page?: number;
+                /** @description Page size */
+                pageSize?: number;
                 /** @description Custom view ID */
                 customViewId?: number;
                 /** @description Filter roles */
@@ -20910,6 +20968,10 @@ export interface operations {
     VendorCreditsController_getVendorCredits: {
         parameters: {
             query?: {
+                /** @description Page number (1-based) */
+                page?: number;
+                /** @description Page size */
+                pageSize?: number;
                 /** @description Custom view ID */
                 customViewId?: number;
                 /** @description Filter roles */
@@ -23039,7 +23101,7 @@ export interface operations {
                      *               },
                      *               "children": [
                      *                 {
-                     *                   "name": "Current Liabilties",
+                     *                   "name": "Current Liabilities",
                      *                   "id": "CURRENT_LIABILITY",
                      *                   "node_type": "AGGREGATE",
                      *                   "type": "AGGREGATE",
@@ -23726,7 +23788,7 @@ export interface operations {
                      *                     "cells": [
                      *                       {
                      *                         "key": "name",
-                     *                         "value": "Current Liabilties"
+                     *                         "value": "Current Liabilities"
                      *                       },
                      *                       {
                      *                         "key": "total",
@@ -23854,7 +23916,7 @@ export interface operations {
                      *                         "cells": [
                      *                           {
                      *                             "key": "name",
-                     *                             "value": "Total Current Liabilties"
+                     *                             "value": "Total Current Liabilities"
                      *                           },
                      *                           {
                      *                             "key": "total",

@@ -20,14 +20,14 @@ export const TenantAgnosticRoute = () => SetMetadata(IS_TENANT_AGNOSTIC, true);
 @Injectable()
 export class TenancyGlobalGuard implements CanActivate {
   constructor(
-    private reflector: Reflector,
-    private readonly cls: ClsService,
-
     @Inject(UserTenant.name)
     private readonly userTenantModel: typeof UserTenant,
 
     @Inject(TenantModel.name)
     private readonly tenantModel: typeof TenantModel,
+
+    private readonly reflector: Reflector,
+    private readonly clsService: ClsService,
   ) {}
 
   /**
@@ -55,9 +55,8 @@ export class TenancyGlobalGuard implements CanActivate {
     if (!organizationId) {
       throw new UnauthorizedException('Organization ID is required.');
     }
-
     // Validate that the authenticated user is a member of the requested organization.
-    const userId = this.cls.get<number>('userId');
+    const userId = this.clsService.get<number>('userId');
 
     const tenant = await this.tenantModel.query().findOne({ organizationId });
     if (!tenant) {
@@ -73,7 +72,6 @@ export class TenancyGlobalGuard implements CanActivate {
         'You do not have access to this organization.',
       );
     }
-
     return true;
   }
 }
