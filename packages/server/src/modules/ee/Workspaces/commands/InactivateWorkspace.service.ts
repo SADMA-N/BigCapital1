@@ -16,8 +16,8 @@ export class InactivateWorkspaceService {
 
   /**
    * Inactivates a workspace. Only the owner can inactivate.
-   * @param {number} userId
-   * @param {string} organizationId
+   * @param {number} userId - User ID of the user who is inactivating the workspace.
+   * @param {string} organizationId - Organization ID of the workspace to inactivate.
    * @returns {Promise<void>}
    */
   async inactivateWorkspace(userId: number, organizationId: string): Promise<void> {
@@ -50,8 +50,8 @@ export class InactivateWorkspaceService {
 
   /**
    * Reactivates a workspace. Only the owner can reactivate.
-   * @param {number} userId
-   * @param {string} organizationId
+   * @param {number} userId - User ID of the user who is reactivating the workspace.
+   * @param {string} organizationId - Organization ID of the workspace to reactivate.
    * @returns {Promise<void>}
    */
   async activateWorkspace(userId: number, organizationId: string): Promise<void> {
@@ -60,7 +60,6 @@ export class InactivateWorkspaceService {
     if (!tenant) {
       throw new ServiceError(WorkspacesError.WORKSPACE_NOT_FOUND, 'Workspace not found');
     }
-
     const membership = await this.userTenantModel
       .query()
       .findOne({ userId, tenantId: tenant.id })

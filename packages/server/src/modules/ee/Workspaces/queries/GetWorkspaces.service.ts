@@ -11,8 +11,10 @@ export class GetWorkspacesService {
   constructor(
     @Inject(UserTenant.name)
     private readonly userTenantModel: typeof UserTenant,
+
     @Inject(SystemUser.name)
     private readonly systemUserModel: typeof SystemUser,
+
     private readonly financialService: GetWorkspacesFinancialService,
     private readonly transformer: TransformerInjectable,
   ) {}
