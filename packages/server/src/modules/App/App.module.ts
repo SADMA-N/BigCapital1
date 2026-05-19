@@ -18,7 +18,7 @@ import { createBullBoardAuthMiddleware } from '@/middleware/bull-board-auth.midd
 import { BullModule } from '@nestjs/bullmq';
 import { ScheduleModule } from '@nestjs/schedule';
 import { PassportModule } from '@nestjs/passport';
-import { ClsModule } from 'nestjs-cls';
+import { ClsModule, ClsService } from 'nestjs-cls';
 import { AppController } from './App.controller';
 import { AppService } from './App.service';
 import { ItemsModule } from '../Items/Items.module';
@@ -169,6 +169,9 @@ import { AppThrottleModule } from './AppThrottle.module';
     ClsModule.forRoot({
       global: true,
       middleware: {
+        setup: (cls: ClsService, req: Request, res: Response) => {
+          cls.set('organizationId', req.headers['organization-id']);
+        },
         mount: true,
         generateId: true,
         saveReq: true,

@@ -166,7 +166,6 @@ export class BuildOrganizationService {
     throwIfTenantInitizalized(tenant);
 
     // Set the tenant context for this build operation.
-    this.clsService.set('tenantId', tenantId);
     this.clsService.set('organizationId', tenant.organizationId);
     this.clsService.set('userId', userId);
 
