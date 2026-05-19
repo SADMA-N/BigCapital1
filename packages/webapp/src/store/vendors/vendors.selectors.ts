@@ -1,11 +1,11 @@
-// @ts-nocheck
 import { isEqual } from 'lodash';
 
 import { createDeepEqualSelector } from '@/utils';
 import { paginationLocationQuery } from '@/store/selectors';
 import { defaultTableQueryState } from './vendors.reducer';
+import type { RootState } from '@/store/reducers';
 
-const vendorsTableStateSelector = (state) => state.vendors.tableState;
+const vendorsTableStateSelector = (state: RootState) => state.vendors.tableState;
 
 /**
  * Retrieve vendors table state.

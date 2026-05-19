@@ -1,18 +1,23 @@
-// @ts-nocheck
 import { createReducer } from '@reduxjs/toolkit';
 import { persistReducer, purgeStoredState } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { createTableStateReducers } from '@/store/tableState.reducer';
+import { createTableStateReducers } from '@/store/table-state.reducer';
 import t from '@/store/types';
+import type { TableQuery } from '@/store/store.types';
 
-export const defaultTableQuery = {
+interface InvoicesState {
+  tableState: Partial<TableQuery>;
+  selectedRows: Array<unknown>;
+}
+
+export const defaultTableQuery: Partial<TableQuery> = {
   pageSize: 20,
   pageIndex: 0,
   filterRoles: [],
   viewSlug: null,
 };
 
-const initialState = {
+const initialState: InvoicesState = {
   tableState: defaultTableQuery,
   selectedRows: [],
 };
@@ -28,11 +33,11 @@ const CONFIG = {
 const reducerInstance = createReducer(initialState, {
   ...createTableStateReducers('INVOICES', defaultTableQuery),
 
-  [`INVOICES/SET_SELECTED_ROWS`]: (state, action) => {
+  [`INVOICES/SET_SELECTED_ROWS`]: (state: InvoicesState, action: { payload: Array<unknown> }) => {
     state.selectedRows = action.payload;
   },
 
-  [`INVOICES/RESET_SELECTED_ROWS`]: (state) => {
+  [`INVOICES/RESET_SELECTED_ROWS`]: (state: InvoicesState) => {
     state.selectedRows = [];
   },
 
@@ -41,4 +46,4 @@ const reducerInstance = createReducer(initialState, {
   },
 });
 
-export default persistReducer(CONFIG, reducerInstance);
+export const salesInvoicesPersistReducer = persistReducer(CONFIG, reducerInstance);

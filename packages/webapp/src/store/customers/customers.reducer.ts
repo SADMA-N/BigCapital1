@@ -1,21 +1,25 @@
-// @ts-nocheck
 import { createReducer } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { createTableStateReducers } from '@/store/tableState.reducer';
+import { createTableStateReducers } from '@/store/table-state.reducer';
 import t from '@/store/types';
+import type { TableQuery } from '@/store/store.types';
+
+interface CustomersState {
+  tableState: Partial<TableQuery>;
+  selectedRows: Array<unknown>;
+}
 
 // Default table query state.
-export const defaultTableQueryState = {
+export const defaultTableQueryState: Partial<TableQuery> = {
   pageSize: 20,
   pageIndex: 0,
-  inactiveMode: false,
   filterRoles: [],
   viewSlug: null,
 };
 
 // initial data.
-const initialState = {
+const initialState: CustomersState = {
   tableState: defaultTableQueryState,
   selectedRows: [],
 };
@@ -23,11 +27,11 @@ const initialState = {
 const reducerInstance = createReducer(initialState, {
   ...createTableStateReducers('CUSTOMERS', defaultTableQueryState),
 
-  ['CUSTOMERS/SET_SELECTED_ROWS']: (state, action) => {
+  ['CUSTOMERS/SET_SELECTED_ROWS']: (state: CustomersState, action: { payload: Array<unknown> }) => {
     state.selectedRows = action.payload;
   },
 
-  ['CUSTOMERS/RESET_SELECTED_ROWS']: (state) => {
+  ['CUSTOMERS/RESET_SELECTED_ROWS']: (state: CustomersState) => {
     state.selectedRows = [];
   },
 
@@ -36,7 +40,7 @@ const reducerInstance = createReducer(initialState, {
 
 const STORAGE_KEY = 'bigcapital:estimates';
 
-export default persistReducer(
+export const customersPersistReducer = persistReducer(
   {
     key: STORAGE_KEY,
     whitelist: [],

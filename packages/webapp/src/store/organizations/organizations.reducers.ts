@@ -1,40 +1,53 @@
-// @ts-nocheck
 import { createReducer } from '@reduxjs/toolkit';
 import { omit } from 'lodash';
 import t from '@/store/types';
 
-const initialState = {
+interface OrganizationsState {
+  data: Record<string, unknown>;
+  byOrganizationId: Record<string, unknown>;
+}
+
+const initialState: OrganizationsState = {
   data: {},
   byOrganizationId: {},
 };
 
-const reducer = createReducer(initialState, {
+type OrganizationsListAction = {
+  payload: { organizations: Array<Record<string, unknown>> };
+};
 
-  [t.ORGANIZATIONS_LIST_SET]: (state, action) => {
+type OrganizationCongratsAction = {
+  payload: { tenantId: string; congrats: boolean };
+};
+
+const reducer = createReducer(initialState, {
+  [t.ORGANIZATIONS_LIST_SET]: (state, action: OrganizationsListAction) => {
     const { organizations } = action.payload;
-    const _data = {};
-    const _dataByOrganizationId = {};
+    const _data: Record<string, unknown> = {};
+    const _dataByOrganizationId: Record<string, unknown> = {};
 
     organizations.forEach((organization) => {
-      _data[organization.id] = {
-        ...state.data[organization.id],
-        ...organization.metadata,
+      const id = organization['id'] as string;
+      const orgId = organization['organization_id'] as string;
+      _data[id] = {
+        ...(state.data[id] as Record<string, unknown>),
+        ...(organization['metadata'] as Record<string, unknown>),
         ...omit(organization, ['metadata']),
       };
-      _dataByOrganizationId[organization.organization_id] = organization.id;
+      _dataByOrganizationId[orgId] = id;
     });
     state.data = _data;
     state.byOrganizationId = _dataByOrganizationId;
   },
 
-  [t.SET_ORGANIZATION_CONGRATS]: (state, action) => {
+  [t.SET_ORGANIZATION_CONGRATS]: (state, action: OrganizationCongratsAction) => {
     const { tenantId, congrats } = action.payload;
 
     state.data[tenantId] = {
-      ...(state.data[tenantId] || {}),
+      ...(state.data[tenantId] as Record<string, unknown> || {}),
       is_congrats: !!congrats,
     };
-  }
-})
+  },
+});
 
-export default reducer;
+export const organizationsReducer = reducer;

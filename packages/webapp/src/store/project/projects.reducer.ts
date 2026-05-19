@@ -1,18 +1,22 @@
-// @ts-nocheck
 import { createReducer } from '@reduxjs/toolkit';
 import { persistReducer, purgeStoredState } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { createTableStateReducers } from '@/store/tableState.reducer';
+import { createTableStateReducers } from '@/store/table-state.reducer';
 import t from '@/store/types';
+import type { TableQuery } from '@/store/store.types';
 
-export const defaultTableQuery = {
+interface ProjectsState {
+  tableState: Partial<TableQuery>;
+}
+
+export const defaultTableQuery: Partial<TableQuery> = {
   pageSize: 20,
   pageIndex: 0,
   filterRoles: [],
   viewSlug: null,
 };
 
-const initialState = {
+const initialState: ProjectsState = {
   tableState: defaultTableQuery,
 };
 
@@ -25,10 +29,10 @@ const CONFIG = {
 };
 const reducerInstance = createReducer(initialState, {
   ...createTableStateReducers('PROJECTS', defaultTableQuery),
- 
-  [t.RESET]: () => {
+
+  [t.RESET]: (): void => {
     purgeStoredState(CONFIG);
   },
 });
 
-export default persistReducer(CONFIG, reducerInstance);
+export const projectsPersistReducer = persistReducer(CONFIG, reducerInstance);

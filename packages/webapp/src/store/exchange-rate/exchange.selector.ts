@@ -1,8 +1,8 @@
-// @ts-nocheck
 import { createDeepEqualSelector } from '@/utils';
 import { paginationLocationQuery } from '@/store/selectors';
+import type { RootState } from '@/store/reducers';
 
-const exchangeRateTableState = (state) => {
+const exchangeRateTableState = (state: RootState) => {
   return state.exchangeRates.tableState;
 };
 

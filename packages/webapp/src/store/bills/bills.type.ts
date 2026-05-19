@@ -1,6 +1,4 @@
-// @ts-nocheck
-
 export default {
   BILLS_TABLE_STATE_SET: 'BILLS/TABLE_STATE_SET',
   BILLS_TABLE_STATE_RESET: 'BILLS/TABLE_STATE_RESET',
-};
+} as const;

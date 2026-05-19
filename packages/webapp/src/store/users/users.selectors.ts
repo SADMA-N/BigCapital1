@@ -1,9 +1,9 @@
-// @ts-nocheck
 import { createSelector } from '@reduxjs/toolkit';
 import { pickItemsFromIds, getItemById } from '@/store/selectors';
+import type { RootState } from '@/store/reducers';
 
-const usersItemsSelector = (state) => state.users.items;
-const userIdPropSelector = (state, props) => props.userId;
+const usersItemsSelector = (state: RootState) => state.users.items;
+const userIdPropSelector = (state: RootState, props: { userId: string | number }) => props.userId;
 
 export const getExpensesCurrentPageFactory = createSelector(
   usersItemsSelector,

@@ -1,8 +1,8 @@
-// @ts-nocheck
-import {createReducer} from '@reduxjs/toolkit';
+import { createReducer } from '@reduxjs/toolkit';
 import t from '@/store/types';
+import type { CustomFieldsState, CustomFieldsAction } from './custom-fields.types';
 
-const initialState = {
+const initialState: CustomFieldsState = {
   custom_fields: {
     accounts: [{
       label_name: 'Label',
@@ -14,12 +14,17 @@ const initialState = {
   },
 };
 
-export default createReducer(initialState, {
-  [t.CUSTOM_FIELDS_RESOURCE_SET]: (state, action) => {
-    state.fields.custom_fields[action.resource_slug] = action.custom_field;
-  }
+export const customFieldsReducer = createReducer(initialState, {
+  [t.CUSTOM_FIELDS_RESOURCE_SET]: (state, action: CustomFieldsAction) => {
+    if (action.resource_slug !== undefined) {
+      state.custom_fields[action.resource_slug] = action.custom_field;
+    }
+  },
 });
 
-export const getCustomFieldsByResource = (state, resourceSlug) => {
+export const getCustomFieldsByResource = (
+  state: { fields: CustomFieldsState },
+  resourceSlug: string,
+) => {
   return state.fields.custom_fields[resourceSlug];
-}
+};

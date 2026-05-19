@@ -1,11 +1,15 @@
-// @ts-nocheck
 import { createReducer } from '@reduxjs/toolkit';
 import { persistReducer, purgeStoredState } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { createTableStateReducers } from '@/store/tableState.reducer';
+import { createTableStateReducers } from '@/store/table-state.reducer';
 import t from '@/store/types';
 
-const initialState = {
+interface InventoryAdjustmentsState {
+  tableState: { pageSize: number; pageIndex: number; sortBy: Array<unknown> };
+  selectedRows: Array<unknown>;
+}
+
+const initialState: InventoryAdjustmentsState = {
   tableState: {
     pageSize: 20,
     pageIndex: 0,
@@ -30,4 +34,4 @@ const reducerInstance = createReducer(initialState, {
   },
 });
 
-export default persistReducer(CONFIG, reducerInstance);
+export const inventoryAdjustmentsPersistReducer = persistReducer(CONFIG, reducerInstance);

@@ -1,10 +1,10 @@
-// @ts-nocheck
 import { camelCase } from 'lodash';
 import { createReducer } from '@reduxjs/toolkit';
 import storage from 'redux-persist/lib/storage';
-import { persistReducer, purgeStoredState } from 'redux-persist';
+import { persistReducer } from 'redux-persist';
 
 import t from '@/store/types';
+import type { SettingAction } from './settings.type';
 
 const initialState = {
   data: {
@@ -77,12 +77,12 @@ const PRESIST_CONFIG = {
 };
 
 const reducerInstance = createReducer(initialState, {
-  [t.SETTING_SET]: (state, action) => {
+  [t.SETTING_SET]: (state, action: SettingAction) => {
     const { options } = action;
-    const _data = {
-      ...state.data,
+    const _data: Record<string, Record<string, unknown>> = {
+      ...(state.data as Record<string, Record<string, unknown>>),
     };
-    options.forEach((option) => {
+    (options ?? []).forEach((option) => {
       const { key, group, value } = option;
       const _group = camelCase(group);
       const _key = camelCase(key);
@@ -92,16 +92,16 @@ const reducerInstance = createReducer(initialState, {
       }
       _data[_group][_key] = value;
     });
-    state.data = _data;
+    state.data = _data as typeof state.data;
   },
 
-  [t.SETTING_ADD]: (state, action) => {
-    const { group, key, value } = action.payload;
+  [t.SETTING_ADD]: (state, action: SettingAction) => {
+    const { group, key, value } = action.payload!;
 
     const newData = {
       ...state.data,
       [group]: {
-        ...state.data[group],
+        ...(state.data[group] as Record<string, unknown>),
         [key]: value,
       },
     };
@@ -109,4 +109,4 @@ const reducerInstance = createReducer(initialState, {
   },
 });
 
-export default persistReducer(PRESIST_CONFIG, reducerInstance);
+export const settingsPersistReducer = persistReducer(PRESIST_CONFIG, reducerInstance);

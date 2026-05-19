@@ -1,4 +1,9 @@
-// @ts-nocheck
+export interface UsersState {
+  items: Record<string, unknown>;
+  userById: Record<string, unknown>;
+  loading: boolean;
+}
+
 export default {
   USERS_LIST_SET: 'USERS_LIST_SET',
   USERS_TABLE_LOADING: 'USERS_TABLE_LOADING',

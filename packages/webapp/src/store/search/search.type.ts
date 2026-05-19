@@ -1,4 +1,3 @@
-// @ts-nocheck
 export default {
   SEARCH_TYPE: 'SEARCH_TYPE',
   OPEN_SEARCH: 'OPEN_SEARCH',

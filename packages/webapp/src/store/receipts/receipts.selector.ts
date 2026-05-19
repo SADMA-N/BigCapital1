@@ -1,12 +1,12 @@
-// @ts-nocheck
 import { isEqual } from 'lodash';
 
 import { paginationLocationQuery } from '@/store/selectors';
 import { createDeepEqualSelector } from '@/utils';
 import { defaultTableQuery } from './receipts.reducer';
 import { createSelector } from 'reselect';
+import type { RootState } from '@/store/reducers';
 
-const receiptTableStateSelector = (state) => state.salesReceipts.tableState;
+const receiptTableStateSelector = (state: RootState) => state.salesReceipts.tableState;
 
 // Retrieve receipts table query.
 export const getReceiptsTableStateFactory = () =>
@@ -28,6 +28,6 @@ export const receiptsTableStateChangedFactory = () =>
 
 export const getReceiptsSelectedRowsFactory = () =>
   createSelector(
-    (state) => state.salesReceipts.selectedRows,
+    (state: RootState) => state.salesReceipts.selectedRows,
     (selectedRows) => selectedRows,
   );

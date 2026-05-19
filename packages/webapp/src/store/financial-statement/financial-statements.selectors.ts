@@ -1,291 +1,157 @@
-// @ts-nocheck
 import { createSelector } from 'reselect';
+import type { RootState } from '@/store/reducers';
 
-// Financial Statements selectors.
-export const sheetByTypeSelector = (sheetType) => (state, props) => {
-  return state.financialStatements[sheetType];
-};
+export const sheetByTypeSelector =
+  (sheetType: string) => (state: RootState) => {
+    return state.financialStatements[sheetType];
+  };
 
-export const filterDrawerByTypeSelector = (sheetType) => (state) => {
-  return sheetByTypeSelector(sheetType)(state)?.displayFilterDrawer;
-};
+export const filterDrawerByTypeSelector =
+  (sheetType: string) => (state: RootState) => {
+    return sheetByTypeSelector(sheetType)(state)?.displayFilterDrawer;
+  };
 
-export const balanceSheetFilterDrawerSelector = (state) => {
-  return filterDrawerByTypeSelector('balanceSheet')(state);
-};
+export const balanceSheetFilterDrawerSelector = (state: RootState) =>
+  filterDrawerByTypeSelector('balanceSheet')(state);
 
-export const profitLossSheetFilterDrawerSelector = (state) => {
-  return filterDrawerByTypeSelector('profitLoss')(state);
-};
+export const profitLossSheetFilterDrawerSelector = (state: RootState) =>
+  filterDrawerByTypeSelector('profitLoss')(state);
 
-export const generalLedgerFilterDrawerSelector = (state) => {
-  return filterDrawerByTypeSelector('generalLedger')(state);
-};
+export const generalLedgerFilterDrawerSelector = (state: RootState) =>
+  filterDrawerByTypeSelector('generalLedger')(state);
 
-// Trial balance filter drawer selector.
-export const trialBalanceFilterDrawerSelector = (state) => {
-  return filterDrawerByTypeSelector('trialBalance')(state);
-};
+export const trialBalanceFilterDrawerSelector = (state: RootState) =>
+  filterDrawerByTypeSelector('trialBalance')(state);
 
-export const journalFilterDrawerSelector = (state) => {
-  return filterDrawerByTypeSelector('journal')(state);
-};
+export const journalFilterDrawerSelector = (state: RootState) =>
+  filterDrawerByTypeSelector('journal')(state);
 
-export const ARAgingSummaryFilterDrawerSelector = (state) => {
-  return filterDrawerByTypeSelector('ARAgingSummary')(state);
-};
+export const ARAgingSummaryFilterDrawerSelector = (state: RootState) =>
+  filterDrawerByTypeSelector('ARAgingSummary')(state);
 
-export const APAgingSummaryFilterDrawerSelector = (state) => {
-  return filterDrawerByTypeSelector('APAgingSummary')(state);
-};
+export const APAgingSummaryFilterDrawerSelector = (state: RootState) =>
+  filterDrawerByTypeSelector('APAgingSummary')(state);
 
-export const purchasesByItemsFilterDrawerSelector = (state) => {
-  return filterDrawerByTypeSelector('purchasesByItems')(state);
-};
+export const purchasesByItemsFilterDrawerSelector = (state: RootState) =>
+  filterDrawerByTypeSelector('purchasesByItems')(state);
 
-export const salesByItemsFilterDrawerSelector = (state) => {
-  return filterDrawerByTypeSelector('salesByItems')(state);
-};
-export const inventoryValuationFilterDrawerSelector = (state) => {
-  return filterDrawerByTypeSelector('inventoryValuation')(state);
-};
+export const salesByItemsFilterDrawerSelector = (state: RootState) =>
+  filterDrawerByTypeSelector('salesByItems')(state);
 
-export const customerBalanceSummaryFilterDrawerSelector = (state) => {
-  return filterDrawerByTypeSelector('customersBalanceSummary')(state);
-};
+export const inventoryValuationFilterDrawerSelector = (state: RootState) =>
+  filterDrawerByTypeSelector('inventoryValuation')(state);
 
-export const vendorsBalanceSummaryFilterDrawerSelector = (state) => {
-  return filterDrawerByTypeSelector('vendorsBalanceSummary')(state);
-};
+export const customerBalanceSummaryFilterDrawerSelector = (state: RootState) =>
+  filterDrawerByTypeSelector('customersBalanceSummary')(state);
 
-export const customersTransactionsFilterDrawerSelector = (state) => {
-  return filterDrawerByTypeSelector('customersTransactions')(state);
-};
+export const vendorsBalanceSummaryFilterDrawerSelector = (state: RootState) =>
+  filterDrawerByTypeSelector('vendorsBalanceSummary')(state);
 
-export const vendorsTransactionsFilterDrawerSelector = (state) => {
-  return filterDrawerByTypeSelector('vendorsTransactions')(state);
-};
+export const customersTransactionsFilterDrawerSelector = (state: RootState) =>
+  filterDrawerByTypeSelector('customersTransactions')(state);
 
-export const cashFlowStatementFilterDrawerSelector = (state) => {
-  return filterDrawerByTypeSelector('cashFlowStatement')(state);
-};
+export const vendorsTransactionsFilterDrawerSelector = (state: RootState) =>
+  filterDrawerByTypeSelector('vendorsTransactions')(state);
 
-export const inventoryItemDetailsDrawerFilter = (state) => {
-  return filterDrawerByTypeSelector('inventoryItemDetails')(state);
-};
+export const cashFlowStatementFilterDrawerSelector = (state: RootState) =>
+  filterDrawerByTypeSelector('cashFlowStatement')(state);
 
-export const realizedGainOrLossFilterDrawerSelector = (state) => {
-  return filterDrawerByTypeSelector('realizedGainOrLoss')(state);
-};
+export const inventoryItemDetailsDrawerFilter = (state: RootState) =>
+  filterDrawerByTypeSelector('inventoryItemDetails')(state);
 
-export const unrealizedGainOrLossFilterDrawerSelector = (state) => {
-  return filterDrawerByTypeSelector('unrealizedGainOrLoss')(state);
-};
+export const realizedGainOrLossFilterDrawerSelector = (state: RootState) =>
+  filterDrawerByTypeSelector('realizedGainOrLoss')(state);
 
-export const projectProfitabilitySummaryFilterDrawerSelector = (state) => {
-  return filterDrawerByTypeSelector('projectProfitabilitySummary')(state);
-};
+export const unrealizedGainOrLossFilterDrawerSelector = (state: RootState) =>
+  filterDrawerByTypeSelector('unrealizedGainOrLoss')(state);
 
-export const salesTaxLiabilitySummaryFilterDrawerSelector = (state) => {
-  return filterDrawerByTypeSelector('salesTaxLiabilitySummary')(state);
-};
+export const projectProfitabilitySummaryFilterDrawerSelector = (
+  state: RootState,
+) => filterDrawerByTypeSelector('projectProfitabilitySummary')(state);
 
-/**
- * Retrieve balance sheet filter drawer.
- */
+export const salesTaxLiabilitySummaryFilterDrawerSelector = (state: RootState) =>
+  filterDrawerByTypeSelector('salesTaxLiabilitySummary')(state);
+
 export const getBalanceSheetFilterDrawer = createSelector(
   balanceSheetFilterDrawerSelector,
-  (isOpen) => {
-    return isOpen;
-  },
+  (isOpen) => isOpen,
 );
-
-/**
- * Retrieve whether trial balance sheet display filter drawer.
- */
 export const getTrialBalanceSheetFilterDrawer = createSelector(
   trialBalanceFilterDrawerSelector,
-  (isOpen) => {
-    return isOpen;
-  },
+  (isOpen) => isOpen,
 );
-
-/**
- * Retrieve profit/loss filter drawer.
- */
 export const getProfitLossFilterDrawer = createSelector(
   profitLossSheetFilterDrawerSelector,
-  (isOpen) => {
-    return isOpen;
-  },
+  (isOpen) => isOpen,
 );
-
-/**
- * Retrieve whether display general ledger (GL) filter drawer.
- */
 export const getGeneralLedgerFilterDrawer = createSelector(
   generalLedgerFilterDrawerSelector,
-  (isOpen) => {
-    return isOpen;
-  },
+  (isOpen) => isOpen,
 );
-
-/**
- * Retrieve whether display journal sheet filter drawer.
- */
 export const getJournalFilterDrawer = createSelector(
   journalFilterDrawerSelector,
-  (isOpen) => {
-    return isOpen;
-  },
+  (isOpen) => isOpen,
 );
-
-/**
- * Retrieve whether display AR aging summary drawer filter.
- */
 export const getARAgingSummaryFilterDrawer = createSelector(
   ARAgingSummaryFilterDrawerSelector,
-  (isOpen) => {
-    return isOpen;
-  },
+  (isOpen) => isOpen,
 );
-
-/**
- * Retrieve whether display AR aging summary drawer filter.
- */
 export const getAPAgingSummaryFilterDrawer = createSelector(
   APAgingSummaryFilterDrawerSelector,
-  (isOpen) => {
-    return isOpen;
-  },
+  (isOpen) => isOpen,
 );
-
-/**
- * Retrieve financial statement query by the given sheet index.
- */
-export const getFinancialSheetQueryFactory = (sheetType) =>
+export const getFinancialSheetQueryFactory = (sheetType: string) =>
   createSelector(sheetByTypeSelector(sheetType), (sheet) => {
-    return sheet && sheet.query ? sheet.query : {};
+    return sheet && (sheet as any).query ? (sheet as any).query : {};
   });
-
-/**
- * Retrieve whether purchases by items display filter drawer.
- */
 export const getPurchasesByItemsFilterDrawer = createSelector(
   purchasesByItemsFilterDrawerSelector,
-  (isOpen) => {
-    return isOpen;
-  },
+  (isOpen) => isOpen,
 );
-
-/**
- * Retrieve whether sales by items display filter drawer.
- */
 export const getSalesByItemsFilterDrawer = createSelector(
   salesByItemsFilterDrawerSelector,
-  (isOpen) => {
-    return isOpen;
-  },
+  (isOpen) => isOpen,
 );
-
-/**
- * Retrieve whether sells by items display filter drawer.
- */
 export const getInventoryValuationFilterDrawer = createSelector(
   inventoryValuationFilterDrawerSelector,
-  (isOpen) => {
-    return isOpen;
-  },
+  (isOpen) => isOpen,
 );
-
-/**
- * Retrieve customers balance summary filter drawer.
- */
 export const getCustomersBalanceSummaryFilterDrawer = createSelector(
   customerBalanceSummaryFilterDrawerSelector,
-  (isOpen) => {
-    return isOpen;
-  },
+  (isOpen) => isOpen,
 );
-/**
- * Retrieve vendors balance summary filter drawer.
- */
 export const getVendorsBalanceSummaryFilterDrawer = createSelector(
   vendorsBalanceSummaryFilterDrawerSelector,
-  (isOpen) => {
-    return isOpen;
-  },
+  (isOpen) => isOpen,
 );
-
-/**
- * Retrieve customers transactions filter drawer.
- */
 export const getCustomersTransactionsFilterDrawer = createSelector(
   customersTransactionsFilterDrawerSelector,
-  (isOpen) => {
-    return isOpen;
-  },
+  (isOpen) => isOpen,
 );
-
-/**
- * Retrieve vendors transactions filter drawer.
- */
 export const getVendorsTransactionsFilterDrawer = createSelector(
   vendorsTransactionsFilterDrawerSelector,
-  (isOpen) => {
-    return isOpen;
-  },
+  (isOpen) => isOpen,
 );
-
-/**
- * Retrieve cash flow statement filter drawer.
- */
 export const getCashFlowStatementFilterDrawer = createSelector(
   cashFlowStatementFilterDrawerSelector,
-  (isOpen) => {
-    return isOpen;
-  },
+  (isOpen) => isOpen,
 );
-
-/**
- * Retrieve inventory item details filter drawer.
- */
 export const getInventoryItemDetailsFilterDrawer = createSelector(
   inventoryItemDetailsDrawerFilter,
-  (isOpen) => {
-    return isOpen;
-  },
+  (isOpen) => isOpen,
 );
-
-/**
- * Retrieve Realized Gain or Loss filter drawer.
- */
 export const getRealizedGainOrLossFilterDrawer = createSelector(
   realizedGainOrLossFilterDrawerSelector,
-  (isOpen) => {
-    return isOpen;
-  },
+  (isOpen) => isOpen,
 );
-/**
- * Retrieve Unrealized Gain or Loss filter drawer.
- */
 export const getUnrealizedGainOrLossFilterDrawer = createSelector(
   unrealizedGainOrLossFilterDrawerSelector,
-  (isOpen) => {
-    return isOpen;
-  },
+  (isOpen) => isOpen,
 );
-
 export const getProjectProfitabilitySummaryFilterDrawer = createSelector(
   projectProfitabilitySummaryFilterDrawerSelector,
-  (isOpen) => {
-    return isOpen;
-  },
+  (isOpen) => isOpen,
 );
-
-/**
- * Retrieve sales tax liability summary filter drawer.
- */
 export const getSalesTaxLiabilitySummaryFilterDrawer = createSelector(
   salesTaxLiabilitySummaryFilterDrawerSelector,
   (isOpen) => isOpen,

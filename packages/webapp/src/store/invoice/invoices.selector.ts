@@ -1,11 +1,11 @@
-// @ts-nocheck
 import { isEqual } from 'lodash';
 import { paginationLocationQuery } from '@/store/selectors';
 import { createDeepEqualSelector } from '@/utils';
 import { defaultTableQuery } from './invoices.reducer';
 import { createSelector } from 'reselect';
+import type { RootState } from '@/store/reducers';
 
-const invoicesTableStateSelector = (state) => state.salesInvoices.tableState;
+const invoicesTableStateSelector = (state: RootState) => state.salesInvoices.tableState;
 
 /**
  * Retrieve invoices table state.
@@ -35,6 +35,6 @@ export const isInvoicesTableStateChangedFactory = () =>
  */
 export const getInvoicesSelectedRowsFactory = () =>
   createSelector(
-    (state) => state.salesInvoices.selectedRows,
+    (state: RootState) => state.salesInvoices.selectedRows,
     (selectedRows) => selectedRows,
   );

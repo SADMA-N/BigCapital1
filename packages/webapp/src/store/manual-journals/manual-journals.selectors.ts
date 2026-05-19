@@ -1,11 +1,11 @@
-// @ts-nocheck
 import { isEqual } from 'lodash';
 import { createSelector } from 'reselect';
 import { paginationLocationQuery } from '@/store/selectors';
 import { createDeepEqualSelector } from '@/utils';
-import { defaultTableQuery } from './manualJournals.reducers';
+import { defaultTableQuery } from './manual-journals.reducers';
+import type { RootState } from '@/store/reducers';
 
-const manualJournalsTableState = (state) => state.manualJournals.tableState;
+const manualJournalsTableState = (state: RootState) => state.manualJournals.tableState;
 
 // Retrieve manual jouranls table state.
 export const getManualJournalsTableStateFactory = () =>
@@ -27,6 +27,6 @@ export const manualJournalTableStateChangedFactory = () =>
 
 export const getManualJournalsSelectedRowsFactory = () =>
   createSelector(
-    (state) => state.manualJournals.selectedRows,
+    (state: RootState) => state.manualJournals.selectedRows,
     (selectedRows) => selectedRows,
   );

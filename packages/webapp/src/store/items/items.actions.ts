@@ -1,7 +1,7 @@
-// @ts-nocheck
 import t from '@/store/types';
+import type { TableQuery } from '@/store/store.types';
 
-export const setItemsTableState = (queries) => {
+export const setItemsTableState = (queries: Partial<TableQuery>) => {
   return {
     type: t.ITEMS_TABLE_STATE_SET,
     payload: { queries },
@@ -15,7 +15,7 @@ export const resetItemsTableState = () => {
   };
 }
 
-export const setItemsSelectedRows = (selectedRows) => {
+export const setItemsSelectedRows = (selectedRows: Array<unknown>) => {
   return {
     type: 'ITEMS/SET_SELECTED_ROWS',
     payload: selectedRows,

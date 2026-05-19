@@ -1,6 +1,4 @@
-// @ts-nocheck
-
 export default {
   INVOICES_TABLE_STATE_SET: 'INVOICES/TABLE_STATE_SET',
   INVOICES_TABLE_STATE_RESET: 'INVOICES/TABLE_STATE_RESET',
-};
+} as const;

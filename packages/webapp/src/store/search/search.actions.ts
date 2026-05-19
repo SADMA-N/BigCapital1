@@ -1,28 +1,27 @@
-// @ts-nocheck
 import t from '@/store/types';
 
-export function openSearch(result) {
+export function openSearch(result?: unknown) {
   return {
     type: t.OPEN_SEARCH,
     result,
   };
 }
 
-export function closeSearch(result) {
+export function closeSearch(result?: unknown) {
   return {
-    type: t.ClOSE_SEARCH,
+    type: t.CLOSE_SEARCH,
     result,
   };
 }
 
-export function generalSearch(name, result) {
+export function generalSearch(_name: string, result?: unknown) {
   return {
-    type: t.SEARCH_SUCCESS,
+    type: 'SEARCH_SUCCESS',
     result,
   };
 }
 
-export function universalSearchSetResourceType(resourceType) {
+export function universalSearchSetResourceType(resourceType: string) {
   return {
     type: t.UNIVERSAL_SEARCH_SET_RESOURCE_TYPE,
     payload: {
@@ -37,20 +36,19 @@ export function universalSearchResetResourceType() {
   };
 }
 
-
-export function universalSearchSetSelectedItem(resourceType, resourceId) {
+export function universalSearchSetSelectedItem(resourceType: string, resourceId: string | number) {
   return {
     type: t.UNIVERSAL_SEARCH_SET_ITEM_SELECT,
     payload: {
       resourceType,
-      resourceId
-    }
+      resourceId,
+    },
   };
 }
 
 export function universalSearchResetSelectedItem() {
   return {
     type: t.UNIVERSAL_SEARCH_RESET_ITEM_SELECT,
-    payload: {}
+    payload: {},
   };
 }

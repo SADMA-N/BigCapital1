@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 export default {
   INVENTORY_ADJUSTMENTS_TABLE_STATE_SET:
     'INVENTORY_ADJUSTMENTS/TABLE_STATE_SET',

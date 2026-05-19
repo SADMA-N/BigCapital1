@@ -1,7 +1,7 @@
-// @ts-nocheck
 import t from '@/store/types';
+import type { TableQuery } from '@/store/store.types';
 
-export const setPaymentReceivesTableState = (queries) => {
+export const setPaymentReceivesTableState = (queries: Partial<TableQuery>) => {
   return {
     type: t.PAYMENT_RECEIVES_TABLE_STATE_SET,
     payload: { queries },
@@ -14,7 +14,7 @@ export const resetPaymentReceivesTableState = () => {
   };
 }
 
-export const setPaymentReceivesSelectedRows = (selectedRows) => {
+export const setPaymentReceivesSelectedRows = (selectedRows: Array<unknown>) => {
   return {
     type: 'PAYMENT_RECEIVES/SET_SELECTED_ROWS',
     payload: selectedRows,

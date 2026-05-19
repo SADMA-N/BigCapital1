@@ -1,7 +1,7 @@
-// @ts-nocheck
 import t from '@/store/types';
+import type { TableQuery } from '@/store/store.types';
 
-export const setVendorCreditTableState = (queries) => {
+export const setVendorCreditTableState = (queries: Partial<TableQuery>) => {
   return {
     type: t.VENDOR_CREDITS_TABLE_STATE_SET,
     payload: { queries },
@@ -14,7 +14,7 @@ export const resetVendorCreditTableState = () => {
   };
 };
 
-export const setVendorCreditsSelectedRows = (selectedRows) => {
+export const setVendorCreditsSelectedRows = (selectedRows: Array<unknown>) => {
   return {
     type: 'VENDOR_CREDITS/SET_SELECTED_ROWS',
     payload: selectedRows,

@@ -1,16 +1,19 @@
-// @ts-nocheck
 import { createReducer } from '@reduxjs/toolkit';
 import { persistReducer, purgeStoredState } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import {
   createTableStateReducers,
-} from '@/store/tableState.reducer';
+} from '@/store/table-state.reducer';
 import t from '@/store/types';
 
+interface ItemCategoriesState {
+  tableState: { filterRoles: Array<unknown> };
+}
+
 // Initial state.
-const initialState = {
+const initialState: ItemCategoriesState = {
   tableState: {
-    filterRoles: []
+    filterRoles: [],
   },
 };
 
@@ -30,7 +33,7 @@ const reducerInstance = createReducer(initialState, {
   },
 });
 
-export default persistReducer(
+export const itemsCategoriesPersistReducer = persistReducer(
   CONFIG,
   reducerInstance,
 );

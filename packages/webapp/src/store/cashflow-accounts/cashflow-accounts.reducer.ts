@@ -1,17 +1,21 @@
-// @ts-nocheck
 import { createReducer } from '@reduxjs/toolkit';
 import { persistReducer, purgeStoredState } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { createTableStateReducers } from '@/store/tableState.reducer';
+import { createTableStateReducers } from '@/store/table-state.reducer';
 import t from '@/store/types';
+import type { TableQuery } from '@/store/store.types';
 
-export const defaultTableQuery = {
+interface CashflowAccountsState {
+  tableState: Partial<TableQuery>;
+}
+
+export const defaultTableQuery: Partial<TableQuery> = {
   pageSize: 9999,
   pageIndex: 0,
   filterRoles: [],
 };
 
-const initialState = {
+const initialState: CashflowAccountsState = {
   tableState: defaultTableQuery,
 };
 
@@ -31,4 +35,4 @@ const reducerInstance = createReducer(initialState, {
   },
 });
 
-export default persistReducer(CONFIG, reducerInstance);
+export const cashflowAccountsPersistReducer = persistReducer(CONFIG, reducerInstance);

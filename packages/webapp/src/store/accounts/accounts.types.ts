@@ -1,6 +1,4 @@
-// @ts-nocheck
-
 export default {
   ACCOUNTS_TABLE_STATE_SET: 'ACCOUNTS/TABLE_STATE_SET',
   ACCOUNTS_TABLE_STATE_RESET: 'ACCOUNTS/TABLE_STATE_RESET',
-};
+} as const;

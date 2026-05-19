@@ -1,11 +1,11 @@
-// @ts-nocheck
 import { isEqual } from 'lodash';
 import { createDeepEqualSelector } from '@/utils';
 import { paginationLocationQuery } from '@/store/selectors';
 import { defaultTableQuery } from './estimates.reducer';
 import { createSelector } from 'reselect';
+import type { RootState } from '@/store/reducers';
 
-const estimatesTableState = (state) => state.salesEstimates.tableState;
+const estimatesTableState = (state: RootState) => state.salesEstimates.tableState;
 
 // Retrieve estimates table query.
 export const getEstimatesTableStateFactory = () =>
@@ -26,6 +26,6 @@ export const isEstimatesTableStateChangedFactory = () =>
   });
 
 export const getEstimatesSelectedRowsFactory = () => createSelector(
-  (state) => state.salesEstimates.selectedRows,
+  (state: RootState) => state.salesEstimates.selectedRows,
   (selectedRows) => selectedRows,
 );

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { PayloadAction, createReducer } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import purgeStoredState from 'redux-persist/es/purgeStoredState';
@@ -7,76 +6,87 @@ import { isUndefined } from 'lodash';
 import { getCookie } from '@/utils';
 import t from '@/store/types';
 
-// Read stored data in cookies and merge it with the initial state.
-const initialState = {
-  token: getCookie('token') || null,
-  organizationId: getCookie('organization_id') || null,
-  userId: getCookie('authenticated_user_id') || null,
-  locale: getCookie('locale') || 'en',
-  verified: true, // Let's be optimistic and assume the user's email is confirmed.
+export interface AuthenticationState {
+  token: string | null;
+  organizationId: string | null;
+  userId: string | null;
+  locale: string;
+  verified: boolean;
+  verifyEmail: string | null;
+  errors: Array<{ type: string; [key: string]: unknown }>;
+}
+
+const initialState: AuthenticationState = {
+  token: getCookie('token', null) || null,
+  organizationId: getCookie('organization_id', null) || null,
+  userId: getCookie('authenticated_user_id', null) || null,
+  locale: getCookie('locale', 'en') as string,
+  verified: true,
   verifyEmail: null,
   errors: [],
 };
 
 const STORAGE_KEY = 'bigcapital:authentication';
-const CONFIG = {
-  key: STORAGE_KEY,
-  whitelist: [],
-  storage,
-};
+const CONFIG = { key: STORAGE_KEY, whitelist: [], storage };
 
 const reducerInstance = createReducer(initialState, {
-  [t.LOGIN_FAILURE]: (state, action) => {
+  [t.LOGIN_FAILURE]: (
+    state: AuthenticationState,
+    action: { errors: Array<{ type: string; [key: string]: unknown }> },
+  ) => {
     state.errors = action.errors;
   },
 
-  [t.LOGIN_CLEAR_ERRORS]: (state) => {
+  [t.LOGIN_CLEAR_ERRORS]: (state: AuthenticationState) => {
     state.errors = [];
   },
 
   [t.SET_EMAIL_VERIFIED]: (
-    state,
-    payload: PayloadAction<{ verified?: boolean; email?: string }>,
+    state: AuthenticationState,
+    action: PayloadAction<{ verified?: boolean; email?: string }>,
   ) => {
-    state.verified = !isUndefined(payload.action.verified)
-      ? payload.action.verified
+    state.verified = !isUndefined(action.payload.verified)
+      ? action.payload.verified!
       : true;
-    state.verifyEmail = payload.action.email || null;
+    state.verifyEmail = action.payload.email || null;
 
     if (state.verified) {
       state.verifyEmail = null;
     }
   },
 
-  [t.SET_AUTH_TOKEN]: (state, payload: PayloadAction<{ token: string }>) => {
-    state.token = payload.action.token;
+  [t.SET_AUTH_TOKEN]: (
+    state: AuthenticationState,
+    action: PayloadAction<{ token: string }>,
+  ) => {
+    state.token = action.payload.token;
   },
 
   [t.SET_ORGANIZATIOIN_ID]: (
-    state,
-    payload: PayloadAction<{ organizationId: string }>,
+    state: AuthenticationState,
+    action: PayloadAction<{ organizationId: string }>,
   ) => {
-    state.organizationId = payload.action.organizationId;
+    state.organizationId = action.payload.organizationId;
   },
 
-  [t.SET_USER_ID]: (state, payload: PayloadAction<{ userId: string }>) => {
-    state.userId = payload.action.userId;
+  [t.SET_USER_ID]: (
+    state: AuthenticationState,
+    action: PayloadAction<{ userId: string }>,
+  ) => {
+    state.userId = action.payload.userId;
   },
 
-  [t.RESET]: (state) => {
+  [t.RESET]: () => {
     purgeStoredState(CONFIG);
   },
 });
 
-export default persistReducer(CONFIG, reducerInstance);
+export const authenticationPersistReducer = persistReducer(CONFIG, reducerInstance);
 
-export const isAuthenticated = (state) => !!state.authentication.token;
-export const hasErrorType = (state, errorType) => {
-  return state.authentication.errors.find((e) => e.type === errorType);
-};
+export const isAuthenticated = (state: { authentication: AuthenticationState }) =>
+  !!state.authentication.token;
 
-export const isTenantSeeded = (state) => !!state.tenant.seeded_at;
-export const isTenantBuilt = (state) => !!state.tenant.initialized_at;
-
-export const isTenantHasSubscription = () => false;
-export const isTenantSubscriptionExpired = () => false;
+export const hasErrorType = (
+  state: { authentication: AuthenticationState },
+  errorType: string,
+) => state.authentication.errors.find((e) => e.type === errorType);

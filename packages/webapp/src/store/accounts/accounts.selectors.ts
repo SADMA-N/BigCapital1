@@ -1,12 +1,12 @@
-// @ts-nocheck
 import { isEqual } from 'lodash';
 
 import { paginationLocationQuery } from '@/store/selectors';
 import { createDeepEqualSelector } from '@/utils';
 import { defaultTableQuery } from './accounts.reducer';
+import type { RootState } from '@/store/reducers';
 
 // Accounts table state selector
-const accountsTableStateSelector = (state, props) => state.accounts.tableState;
+const accountsTableStateSelector = (state: RootState) => state.accounts.tableState;
 
 // Get accounts table state marged with location query.
 export const getAccountsTableStateFactory = () =>

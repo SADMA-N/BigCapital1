@@ -1,11 +1,20 @@
-// @ts-nocheck
 import { createReducer } from '@reduxjs/toolkit';
 import { persistReducer, purgeStoredState } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { createTableStateReducers } from '@/store/tableState.reducer';
+import { createTableStateReducers } from '@/store/table-state.reducer';
 import t from '@/store/types';
+import type { TableQuery } from '@/store/store.types';
 
-export const defaultTableQuery = {
+interface ItemsTableQuery extends Partial<TableQuery> {
+  inactiveMode?: boolean;
+}
+
+interface ItemsState {
+  tableState: ItemsTableQuery;
+  selectedRows: Array<unknown>;
+}
+
+export const defaultTableQuery: ItemsTableQuery = {
   pageSize: 20,
   pageIndex: 0,
   filterRoles: [],
@@ -13,7 +22,7 @@ export const defaultTableQuery = {
   viewSlug: null,
 };
 
-const initialState = {
+const initialState: ItemsState = {
   tableState: defaultTableQuery,
   selectedRows: [],
 };
@@ -29,7 +38,7 @@ const CONFIG = {
 const reducerInstance = createReducer(initialState, {
   ...createTableStateReducers('ITEMS', defaultTableQuery),
 
-  [`ITEMS/SET_SELECTED_ROWS`]: (state, action) => {
+  [`ITEMS/SET_SELECTED_ROWS`]: (state: ItemsState, action: { payload: Array<unknown> }) => {
     state.selectedRows = action.payload;
   },
 
@@ -38,7 +47,7 @@ const reducerInstance = createReducer(initialState, {
   },
 });
 
-export default persistReducer(
+export const itemsPersistReducer = persistReducer(
   CONFIG,
   reducerInstance,
 );

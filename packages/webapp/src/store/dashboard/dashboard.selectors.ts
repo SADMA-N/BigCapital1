@@ -1,50 +1,40 @@
-// @ts-nocheck
 import { createSelector } from '@reduxjs/toolkit';
+import type { RootState } from '@/store/reducers';
 
-const dialogByNameSelector = (state, props) =>
-  state.dashboard.dialogs?.[props.dialogName];
+const dialogByNameSelector = (
+  state: RootState,
+  props: { dialogName: string },
+) => state.dashboard.dialogs?.[props.dialogName];
 
 export const isDialogOpenFactory = () =>
-  createSelector(dialogByNameSelector, (dialog) => {
-    return dialog && dialog.isOpen;
-  });
+  createSelector(dialogByNameSelector, (dialog) => dialog && dialog.isOpen);
 
 export const getDialogPayloadFactory = () =>
-  createSelector(dialogByNameSelector, (dialog) => {
-    return { ...dialog?.payload };
-  });
+  createSelector(dialogByNameSelector, (dialog) => ({ ...dialog?.payload }));
 
-const alertByNameSelector = (state, props) =>
-  state.dashboard.alerts?.[props.name];
+const alertByNameSelector = (
+  state: RootState,
+  props: { name: string },
+) => state.dashboard.alerts?.[props.name];
 
 export const isAlertOpenFactory = () =>
-  createSelector(alertByNameSelector, (alert) => {
-    return alert && alert.isOpen;
-  });
+  createSelector(alertByNameSelector, (alert) => alert && alert.isOpen);
 
 export const getAlertPayloadFactory = () =>
-  createSelector(alertByNameSelector, (alert) => {
-    return { ...alert?.payload };
-  });
+  createSelector(alertByNameSelector, (alert) => ({ ...alert?.payload }));
 
-const drawerByNameSelector = (state, props) =>
-  state.dashboard.drawers?.[props.name];
+const drawerByNameSelector = (
+  state: RootState,
+  props: { name: string },
+) => state.dashboard.drawers?.[props.name];
 
 export const isDrawerOpenFactory = () =>
-  createSelector(drawerByNameSelector, (drawer) => {
-    return drawer && drawer.isOpen;
-  });
+  createSelector(drawerByNameSelector, (drawer) => drawer && drawer.isOpen);
 
 export const getDrawerPayloadFactory = () =>
-  createSelector(drawerByNameSelector, (drawer) => {
-    return { ...drawer?.payload };
-  });
+  createSelector(drawerByNameSelector, (drawer) => ({ ...drawer?.payload }));
 
-const featuresSelector = (state, props) => {
-  return state.dashboard.features;
-};
+const featuresSelector = (state: RootState) => state.dashboard.features;
 
 export const getDashboardFeaturesSelector = () =>
-  createSelector(featuresSelector, (features) => {
-    return features;
-  });
+  createSelector(featuresSelector, (features) => features);

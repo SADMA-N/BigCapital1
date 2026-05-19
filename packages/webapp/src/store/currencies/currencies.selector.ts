@@ -1,10 +1,9 @@
-// @ts-nocheck
-// @flow
 import { createSelector } from 'reselect';
 import { getItemById } from '@/store/selectors';
+import type { RootState } from '@/store/reducers';
 
-const currenciesItemsSelector = (state) => state.currencies.data;
-const currenciesCodePropSelector = (state, props) => props.currencyId;
+const currenciesItemsSelector = (state: RootState) => state.currencies.data;
+const currenciesCodePropSelector = (state: RootState, props: { currencyId: string }) => props.currencyId;
 
 export const getCurrenciesList = createSelector(
   currenciesItemsSelector,

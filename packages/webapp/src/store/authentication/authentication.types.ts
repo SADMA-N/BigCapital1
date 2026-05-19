@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 export default {
   LOGIN_REQUEST: 'LOGIN_REQUEST',
   LOGIN_SUCCESS: 'LOGIN_SUCCESS',
@@ -12,4 +10,4 @@ export default {
   SET_ORGANIZATIOIN_ID: 'SET_ORGANIZATIOIN_ID',
   SET_USER_ID: 'SET_USER_ID',
   SET_LOCALE: 'SET_LOCALE',
-};
+} as const;

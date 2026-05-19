@@ -1,8 +1,8 @@
-// @ts-nocheck
 import { createReducer } from "@reduxjs/toolkit";
 import t from '@/store/types';
+import type { CustomViewsState, CustomViewsAction } from './custom-views.types';
 
-const initialState = {
+const initialState: CustomViewsState = {
   views: {},
   resourceViews: {
     'accounts': [],
@@ -11,20 +11,24 @@ const initialState = {
   viewsMeta: {},
 };
 
-export default createReducer(initialState, {
-  [t.VIEW_META_SET]: (state, action) => {
-    state.viewsMeta[action.view.id] = action.view;
+export const customViewsReducer = createReducer(initialState, {
+  [t.VIEW_META_SET]: (state, action: CustomViewsAction) => {
+    if (action.view) {
+      state.viewsMeta[action.view.id as string] = action.view;
+    }
   },
 
-  [t.RESOURCE_VIEWS_SET]: (state, action) => {
-    state.resourceViews[action.resource] = action.views.map(v => v.id);
+  [t.RESOURCE_VIEWS_SET]: (state, action: CustomViewsAction) => {
+    if (action.resource && action.views) {
+      state.resourceViews[action.resource] = action.views.map((v) => v.id);
+    }
   },
 
-  [t.VIEW_ITEMS_SET]: (state, action) => {
-    const _views = {};
+  [t.VIEW_ITEMS_SET]: (state, action: CustomViewsAction) => {
+    const _views: Record<string, unknown> = {};
 
-    action.views.forEach((view) => {
-      _views[view.id] = view;
+    (action.views ?? []).forEach((view) => {
+      _views[view.id as string] = view;
     });
     state.views = { ...state.views, ..._views };
   },

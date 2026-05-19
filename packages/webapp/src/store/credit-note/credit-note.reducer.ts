@@ -1,9 +1,14 @@
-// @ts-nocheck
 import { createReducer } from '@reduxjs/toolkit';
 import { persistReducer, purgeStoredState } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { createTableStateReducers } from '@/store/tableState.reducer';
+import { createTableStateReducers } from '@/store/table-state.reducer';
 import t from '@/store/types';
+import type { TableQuery } from '@/store/store.types';
+
+interface CreditNoteState {
+  tableState: Partial<TableQuery>;
+  selectedRows: Array<unknown>;
+}
 
 export const defaultTableQuery = {
   pageSize: 20,
@@ -12,7 +17,7 @@ export const defaultTableQuery = {
   viewSlug: null,
 };
 
-const initialState = {
+const initialState: CreditNoteState = {
   tableState: defaultTableQuery,
   selectedRows: [],
 };
@@ -28,7 +33,7 @@ const CONFIG = {
 const reducerInstance = createReducer(initialState, {
   ...createTableStateReducers('CREDIT_NOTES', defaultTableQuery),
 
-  [`CREDIT_NOTES/SET_SELECTED_ROWS`]: (state, action) => {
+  [`CREDIT_NOTES/SET_SELECTED_ROWS`]: (state: CreditNoteState, action: { payload: Array<unknown> }) => {
     state.selectedRows = action.payload;
   },
 
@@ -37,4 +42,4 @@ const reducerInstance = createReducer(initialState, {
   },
 });
 
-export default persistReducer(CONFIG, reducerInstance);
+export const creditNotesPersistReducer = persistReducer(CONFIG, reducerInstance);

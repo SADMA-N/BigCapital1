@@ -1,10 +1,10 @@
-// @ts-nocheck
 import t from '@/store/types';
+import type { TableQuery } from '@/store/store.types';
 
 /**
  * Sets the cashflow accounts table state.
  */
-export const setCashflowAccountsTableState = (queries) => {
+export const setCashflowAccountsTableState = (queries: Partial<TableQuery>) => {
   return {
     type: t.CASHFLOW_ACCOUNTS_TABLE_STATE_SET,
     payload: { queries },

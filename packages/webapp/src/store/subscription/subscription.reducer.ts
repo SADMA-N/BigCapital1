@@ -1,19 +1,24 @@
-// @ts-nocheck
 import { createReducer } from '@reduxjs/toolkit';
 import t from '@/store/types';
 
-const initialState = {
+interface SubscriptionsState {
+  data: Record<string, unknown>;
+}
+
+const initialState: SubscriptionsState = {
   data: {},
 };
 
-export default createReducer(initialState, {
-
-  [t.SET_PLAN_SUBSCRIPTIONS_LIST]: (state, action) => {
+export const subscriptionsReducer = createReducer(initialState, {
+  [t.SET_PLAN_SUBSCRIPTIONS_LIST]: (
+    state,
+    action: { payload: { subscriptions: Array<Record<string, unknown>> } },
+  ) => {
     const { subscriptions } = action.payload;
-    const _data = {};
+    const _data: Record<string, unknown> = {};
 
     subscriptions.forEach((subscription) => {
-      _data[subscription.id] = subscription;
+      _data[subscription.id as string] = subscription;
     });
     state.data = _data;
   },

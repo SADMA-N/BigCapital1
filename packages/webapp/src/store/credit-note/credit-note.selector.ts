@@ -1,10 +1,10 @@
-// @ts-nocheck
 import { isEqual } from 'lodash';
 import { paginationLocationQuery } from '@/store/selectors';
 import { createDeepEqualSelector } from '@/utils';
-import { defaultTableQuery } from './creditNote.reducer';
+import { defaultTableQuery } from './credit-note.reducer';
+import type { RootState } from '@/store/reducers';
 
-const creditsTableStateSelector = (state) => state.creditNotes.tableState;
+const creditsTableStateSelector = (state: RootState) => state.creditNotes.tableState;
 
 /**
  * Retrieve credit notes table state.

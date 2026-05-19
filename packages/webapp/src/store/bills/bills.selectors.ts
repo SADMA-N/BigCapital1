@@ -1,12 +1,12 @@
-// @ts-nocheck
 import { isEqual } from 'lodash';
 
 import { paginationLocationQuery } from '@/store/selectors';
 import { createDeepEqualSelector } from '@/utils';
 import { defaultTableQuery } from './bills.reducer';
 import { createSelector } from 'reselect';
+import type { RootState } from '@/store/reducers';
 
-const billsTableStateSelector = (state) => state.bills.tableState;
+const billsTableStateSelector = (state: RootState) => state.bills.tableState;
 
 // Get bills table state marged with location query.
 export const getBillsTableStateFactory = () =>
@@ -28,6 +28,6 @@ export const billsTableStateChangedFactory = () =>
 
 export const getBillsSelectedRowsFactory = () =>
   createSelector(
-    (state) => state.bills.selectedRows,
+    (state: RootState) => state.bills.selectedRows,
     (selectedRows) => selectedRows,
   );

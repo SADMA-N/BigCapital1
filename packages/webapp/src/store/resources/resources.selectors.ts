@@ -1,78 +1,47 @@
-// @ts-nocheck
 import { createSelector } from 'reselect';
 import { pickItemsFromIds } from '@/store/selectors';
+import type { RootState } from '@/store/reducers';
 
-const resourceDataIdsSelector = (state, props) => {
-  return state.resources.data.resources[props.resourceName]?.order;
-}
-const resourceDataSelector = (state, props) => {
-  return state.resources.data.resources[props.resourceName]?.data;
-}
-
-const resourceFieldsIdsSelector = (state, props) => state.resources.resourceFields[props.resourceName];
-const resourceFieldsItemsSelector = (state) => state.resources.fields;
-
-/**
- * Retrieve resource fields of the given resource slug.
- * @param {Object} state 
- * @param {String} resourceSlug 
- * @return {Array}
- */
-export const getResourceFieldsFactory = () => createSelector(
-  resourceFieldsIdsSelector,
-  resourceFieldsItemsSelector,
-  (fieldsIds, fieldsItems) => {
-    return pickItemsFromIds(fieldsItems, fieldsIds);
-  }
-);
-
-/**
- * Retrieve resource data of the given resource name in component properties.
- * @return {Array}
- */
-export const getResourceDataFactory = () => createSelector(
-  resourceDataSelector,
-  resourceDataIdsSelector,
-  (resourceData, resourceDataIds) => {
-    return pickItemsFromIds(resourceData, resourceDataIds);   
-  }
-);
-
-/**
- * Retrieve resource columns of the given resource slug.
- * @param {State} state 
- * @param {String} resourceSlug -
- * @return {Array}
- */
-export const getResourceColumns = (state, resourceSlug) => {
-  const resourceIds = state.resources.resourceColumns[resourceSlug];
-  const items = state.resources.columns;
-  return pickItemsFromIds(items, resourceIds);
+const resourceDataIdsSelector = (state: RootState, props: { resourceName: string }) => {
+  return (state.resources.data.resources[props.resourceName] as Record<string, unknown> | undefined)?.['order'] as Array<string | number> | undefined;
+};
+const resourceDataSelector = (state: RootState, props: { resourceName: string }) => {
+  return (state.resources.data.resources[props.resourceName] as Record<string, unknown> | undefined)?.['data'] as Record<string, unknown> | undefined;
 };
 
-/**
- * 
- * @param {State} state 
- * @param {Number} fieldId 
- */
-export const getResourceField = (state, fieldId) => {
-  return state.resources.fields[fieldId];
+const resourceFieldsIdsSelector = (state: RootState, props: { resourceName: string }) =>
+  state.resources.resourceFields[props.resourceName] as Array<string> | undefined;
+const resourceFieldsItemsSelector = (state: RootState) => state.resources.fields;
+
+export const getResourceFieldsFactory = () =>
+  createSelector(
+    resourceFieldsIdsSelector,
+    resourceFieldsItemsSelector,
+    (fieldsIds, fieldsItems) =>
+      pickItemsFromIds(fieldsItems, (fieldsIds ?? []) as Array<string | number>),
+  );
+
+export const getResourceDataFactory = () =>
+  createSelector(
+    resourceDataSelector,
+    resourceDataIdsSelector,
+    (resourceData, resourceDataIds) =>
+      pickItemsFromIds(resourceData ?? {}, (resourceDataIds ?? []) as Array<string | number>),
+  );
+
+export const getResourceColumns = (state: RootState, resourceSlug: string) => {
+  const resourceIds = state.resources.resourceColumns[resourceSlug] as Array<string | number> | undefined;
+  return pickItemsFromIds(state.resources.columns, resourceIds ?? []);
 };
 
-/**
- * 
- * @param {State} state 
- * @param {Number} columnId 
- */
-export const getResourceColumn = (state, columnId) => {
-  return state.resources.columns[columnId];
-};
+export const getResourceField = (state: RootState, fieldId: string | number) =>
+  state.resources.fields[fieldId as string];
 
-export const getResourceMetadata = (state, resourceSlug) => {
-  return state.resources.metadata[resourceSlug];
-};
+export const getResourceColumn = (state: RootState, columnId: string | number) =>
+  state.resources.columns[columnId as string];
 
+export const getResourceMetadata = (state: RootState, resourceSlug: string) =>
+  state.resources.metadata[resourceSlug];
 
-export const getResourceData = (state, resourceSlug) => {
-  return state.resources.data[resourceSlug] || {};
-};
+export const getResourceData = (state: RootState, resourceSlug: string) =>
+  (state.resources.data as Record<string, unknown>)[resourceSlug] || {};

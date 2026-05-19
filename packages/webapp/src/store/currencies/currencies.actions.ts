@@ -1,15 +1,12 @@
-// @ts-nocheck
 import ApiService from '@/services/ApiService';
 import t from '@/store/types';
 
-export const submitCurrencies = ({ form }) => {
-  return (dispatch) => {
-    return ApiService.post('currencies', form);
-  };
+export const submitCurrencies = ({ form }: { form: unknown }) => {
+  return (_dispatch: any) => ApiService.post('currencies', form);
 };
 
-export const deleteCurrency = ({ currency_code }) => {
-  return (dispatch) =>
+export const deleteCurrency = ({ currency_code }: { currency_code: string }) => {
+  return (dispatch: any) =>
     new Promise((resolve, reject) => {
       ApiService.delete(`currencies/${currency_code}`)
         .then((response) => {
@@ -22,8 +19,8 @@ export const deleteCurrency = ({ currency_code }) => {
     });
 };
 
-export const editCurrency = ({ id, form }) => {
-  return (dispatch) =>
+export const editCurrency = ({ id, form }: { id: string | number; form: unknown }) => {
+  return (dispatch: any) =>
     new Promise((resolve, reject) => {
       ApiService.post(`currencies/${id}`, form)
         .then((response) => {
@@ -34,7 +31,6 @@ export const editCurrency = ({ id, form }) => {
           const { response } = error;
           const { data } = response;
           const { errors } = data;
-
           dispatch({ type: t.CLEAR_CURRENCY_FORM_ERRORS });
           if (errors) {
             dispatch({ type: t.CLEAR_CURRENCY_FORM_ERRORS, errors });
@@ -45,26 +41,15 @@ export const editCurrency = ({ id, form }) => {
 };
 
 export const fetchCurrencies = () => {
-  return (dispatch) =>
+  return (dispatch: any) =>
     new Promise((resolve, reject) => {
-      dispatch({
-        type: t.CURRENCIES_TABLE_LOADING,
-        loading: true,
-      });
+      dispatch({ type: t.CURRENCIES_TABLE_LOADING, loading: true });
       ApiService.get('currencies')
         .then((response) => {
-          dispatch({
-            type: t.CURRENCIES_REGISTERED_SET,
-            currencies: response.data.currencies,
-          });
-          dispatch({
-            type: t.CURRENCIES_TABLE_LOADING,
-            loading: false,
-          });
+          dispatch({ type: t.CURRENCIES_REGISTERED_SET, currencies: response.data.currencies });
+          dispatch({ type: t.CURRENCIES_TABLE_LOADING, loading: false });
           resolve(response);
         })
-        .catch((error) => {
-          reject(error);
-        });
+        .catch((error) => reject(error));
     });
 };

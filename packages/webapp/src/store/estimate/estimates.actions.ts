@@ -1,7 +1,7 @@
-// @ts-nocheck
 import t from '@/store/types';
+import type { TableQuery } from '@/store/store.types';
 
-export const setEstimatesTableState = (queries) => {
+export const setEstimatesTableState = (queries: Partial<TableQuery>) => {
   return {
     type: t.ESTIMATES_TABLE_STATE_SET,
     payload: { queries },
@@ -14,7 +14,7 @@ export const resetEstimatesTableState = () => {
   };
 }
 
-export const setEstimatesSelectedRows = (selectedRows) => {
+export const setEstimatesSelectedRows = (selectedRows: Array<unknown>) => {
   return {
     type: 'ESTIMATES/SET_SELECTED_ROWS',
     payload: selectedRows,

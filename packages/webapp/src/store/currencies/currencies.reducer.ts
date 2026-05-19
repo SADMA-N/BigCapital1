@@ -1,29 +1,30 @@
-// @ts-nocheck
 import { createReducer } from '@reduxjs/toolkit';
 import t from '@/store/types';
+import type { CurrenciesState, CurrencyAction } from './currencies.types';
 
-const initialState = {
+const initialState: CurrenciesState = {
   data: {},
   loading: false,
 };
 
-export default createReducer(initialState, {
-  [t.CURRENCIES_REGISTERED_SET]: (state, action) => {
-    const _currencies = {};
+export const currenciesReducer = createReducer(initialState, {
+  [t.CURRENCIES_REGISTERED_SET]: (state, action: CurrencyAction) => {
+    const _currencies: Record<string, unknown> = {};
 
-    action.currencies.forEach((currency) => {
-      _currencies[currency.currency_code] = currency;
+    (action.currencies ?? []).forEach((currency) => {
+      const code = (currency as Record<string, unknown>).currency_code as string;
+      _currencies[code] = currency;
     });
     state.data = {
       ...state.data,
       ..._currencies,
     };
   },
-  [t.CURRENCIES_TABLE_LOADING]: (state, action) => {
-    state.loading = action.loading;
+  [t.CURRENCIES_TABLE_LOADING]: (state, action: CurrencyAction) => {
+    state.loading = action.loading ?? false;
   },
-  [t.CURRENCY_CODE_DELETE]: (state, action) => {
-    if (typeof state.data[action.currency_code] !== 'undefined') {
+  [t.CURRENCY_CODE_DELETE]: (state, action: CurrencyAction) => {
+    if (action.currency_code !== undefined && typeof state.data[action.currency_code] !== 'undefined') {
       delete state.data[action.currency_code];
     }
   },
