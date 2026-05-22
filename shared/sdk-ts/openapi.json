@@ -399,6 +399,24 @@
             }
           },
           {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number for pagination",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "Number of items per page",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
             "name": "customViewId",
             "required": false,
             "in": "query",
@@ -475,24 +493,6 @@
             "description": "Filter for inactive items",
             "schema": {
               "type": "boolean"
-            }
-          },
-          {
-            "name": "pageSize",
-            "required": false,
-            "in": "query",
-            "description": "Number of items per page",
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "page",
-            "required": false,
-            "in": "query",
-            "description": "Page number for pagination",
-            "schema": {
-              "type": "number"
             }
           }
         ],
@@ -3000,6 +3000,24 @@
             }
           },
           {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number (1-based)",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "Page size",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
             "name": "customViewId",
             "required": false,
             "in": "query",
@@ -4849,6 +4867,24 @@
             }
           },
           {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number (1-based)",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "Page size",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
             "name": "customViewId",
             "required": false,
             "in": "query",
@@ -5970,6 +6006,24 @@
             }
           },
           {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number (1-based)",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "Page size",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
             "name": "customViewId",
             "required": false,
             "in": "query",
@@ -6360,6 +6414,24 @@
             "required": true,
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number (1-based)",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "Page size",
+            "schema": {
+              "type": "number"
             }
           },
           {
@@ -7146,6 +7218,24 @@
             }
           },
           {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number (1-based)",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "Page size",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
             "name": "customViewId",
             "required": false,
             "in": "query",
@@ -7461,6 +7551,24 @@
             "required": true,
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number (1-based)",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "Page size",
+            "schema": {
+              "type": "number"
             }
           },
           {
@@ -8030,6 +8138,24 @@
             "required": true,
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number (1-based)",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "Page size",
+            "schema": {
+              "type": "number"
             }
           },
           {
@@ -8806,6 +8932,24 @@
             }
           },
           {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number (1-based)",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "Page size",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
             "name": "customViewId",
             "required": false,
             "in": "query",
@@ -9393,6 +9537,24 @@
             "required": true,
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number (1-based)",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "Page size",
+            "schema": {
+              "type": "number"
             }
           },
           {
@@ -10125,6 +10287,24 @@
             }
           },
           {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number (1-based)",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "Page size",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
             "name": "customViewId",
             "required": false,
             "in": "query",
@@ -10497,6 +10677,24 @@
             "required": true,
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number (1-based)",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "Page size",
+            "schema": {
+              "type": "number"
             }
           },
           {
@@ -11526,6 +11724,24 @@
             "required": true,
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number (1-based)",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "Page size",
+            "schema": {
+              "type": "number"
             }
           },
           {
@@ -15272,7 +15488,7 @@
                           },
                           "children": [
                             {
-                              "name": "Current Liabilties",
+                              "name": "Current Liabilities",
                               "id": "CURRENT_LIABILITY",
                               "node_type": "AGGREGATE",
                               "type": "AGGREGATE",
@@ -15961,7 +16177,7 @@
                                 "cells": [
                                   {
                                     "key": "name",
-                                    "value": "Current Liabilties"
+                                    "value": "Current Liabilities"
                                   },
                                   {
                                     "key": "total",
@@ -16089,7 +16305,7 @@
                                     "cells": [
                                       {
                                         "key": "name",
-                                        "value": "Total Current Liabilties"
+                                        "value": "Total Current Liabilities"
                                       },
                                       {
                                         "key": "total",
@@ -22798,6 +23014,116 @@
         ]
       }
     },
+    "/api/workspaces": {
+      "get": {
+        "operationId": "WorkspacesController_listWorkspaces",
+        "summary": "List workspaces the authenticated user belongs to",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Returns the list of workspaces",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkspaceDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Workspaces"
+        ]
+      },
+      "post": {
+        "operationId": "WorkspacesController_createWorkspace",
+        "summary": "Create a new workspace",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateWorkspaceDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns the created workspace details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateWorkspaceResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Workspaces"
+        ]
+      }
+    },
+    "/api/workspaces/{organizationId}": {
+      "delete": {
+        "operationId": "WorkspacesController_deleteWorkspace",
+        "summary": "Delete a workspace (owner only)",
+        "parameters": [
+          {
+            "name": "organizationId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Workspace deleted successfully"
+          }
+        },
+        "tags": [
+          "Workspaces"
+        ]
+      }
+    },
+    "/api/workspaces/build/{buildJobId}": {
+      "get": {
+        "operationId": "WorkspacesController_buildJobStatus",
+        "summary": "Get workspace build job status",
+        "parameters": [
+          {
+            "name": "buildJobId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the workspace build job details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkspaceBuildJobResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Workspaces"
+        ]
+      }
+    },
     "/api/payment-services": {
       "get": {
         "operationId": "PaymentServicesController_getPaymentServicesSpecificInvoice",
@@ -23755,6 +24081,166 @@
         },
         "tags": [
           "Contacts"
+        ]
+      }
+    },
+    "/api/audit-logs/filter-options": {
+      "get": {
+        "operationId": "AuditLogsController_getAuditLogFilterOptions",
+        "summary": "Distinct subject and action values for audit log filters.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Value must be 'Bearer <token>' where <token> is an API key prefixed with 'bc_' or a JWT token.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer bc_1234567890abcdef"
+            }
+          },
+          {
+            "name": "organization-id",
+            "in": "header",
+            "description": "Required if Authorization is a JWT token. The organization ID to operate within.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAuditLogFilterOptionsResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Audit logs"
+        ]
+      }
+    },
+    "/api/audit-logs": {
+      "get": {
+        "operationId": "AuditLogsController_getAuditLogs",
+        "summary": "List financial audit log entries for the tenant.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Value must be 'Bearer <token>' where <token> is an API key prefixed with 'bc_' or a JWT token.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer bc_1234567890abcdef"
+            }
+          },
+          {
+            "name": "organization-id",
+            "in": "header",
+            "description": "Required if Authorization is a JWT token. The organization ID to operate within.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20,
+              "type": "number"
+            }
+          },
+          {
+            "name": "subject",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "a"
+                }
+              }
+            }
+          },
+          {
+            "name": "action",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "a"
+                }
+              }
+            }
+          },
+          {
+            "name": "userId",
+            "required": false,
+            "in": "query",
+            "description": "System user id",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "from",
+            "required": false,
+            "in": "query",
+            "description": "ISO date (inclusive), start of day",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "required": false,
+            "in": "query",
+            "description": "ISO date (inclusive), end of day",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAuditLogsResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Audit logs"
         ]
       }
     },
@@ -29084,6 +29570,11 @@
             "type": "boolean",
             "description": "Active status",
             "default": true
+          },
+          "code": {
+            "type": "string",
+            "description": "Customer code",
+            "example": "CUST-001"
           }
         },
         "required": [
@@ -29206,6 +29697,10 @@
           "active": {
             "type": "boolean",
             "description": "Active status"
+          },
+          "code": {
+            "type": "string",
+            "description": "Customer code"
           }
         },
         "required": [
@@ -29441,6 +29936,11 @@
             "type": "boolean",
             "description": "Whether the vendor is active",
             "default": true
+          },
+          "code": {
+            "type": "string",
+            "description": "Vendor code",
+            "example": "VEND-001"
           }
         },
         "required": [
@@ -29557,6 +30057,10 @@
           "active": {
             "type": "boolean",
             "description": "Whether the vendor is active"
+          },
+          "code": {
+            "type": "string",
+            "description": "Vendor code"
           }
         }
       },
@@ -39591,6 +40095,172 @@
           }
         }
       },
+      "WorkspaceMetadataDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "baseCurrency": {
+            "type": "string"
+          },
+          "industry": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "timezone": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "baseCurrency"
+        ]
+      },
+      "WorkspaceDto": {
+        "type": "object",
+        "properties": {
+          "organizationId": {
+            "type": "string"
+          },
+          "isReady": {
+            "type": "boolean"
+          },
+          "isBuildRunning": {
+            "type": "boolean"
+          },
+          "buildJobId": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/WorkspaceMetadataDto"
+          }
+        },
+        "required": [
+          "organizationId",
+          "isReady",
+          "isBuildRunning",
+          "role"
+        ]
+      },
+      "CreateWorkspaceResponseDto": {
+        "type": "object",
+        "properties": {
+          "organizationId": {
+            "type": "string"
+          },
+          "jobId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "organizationId",
+          "jobId"
+        ]
+      },
+      "WorkspaceBuildJobResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "123"
+          },
+          "state": {
+            "type": "string",
+            "example": "active"
+          },
+          "progress": {
+            "type": "object",
+            "example": 50
+          },
+          "isCompleted": {
+            "type": "boolean",
+            "example": false
+          },
+          "isRunning": {
+            "type": "boolean",
+            "example": true
+          },
+          "isWaiting": {
+            "type": "boolean",
+            "example": false
+          },
+          "isFailed": {
+            "type": "boolean",
+            "example": false
+          }
+        },
+        "required": [
+          "id",
+          "state",
+          "progress",
+          "isCompleted",
+          "isRunning",
+          "isWaiting",
+          "isFailed"
+        ]
+      },
+      "CreateWorkspaceDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Organization name",
+            "example": "Acme Inc."
+          },
+          "industry": {
+            "type": "string",
+            "description": "Industry of the organization",
+            "example": "Technology"
+          },
+          "location": {
+            "type": "string",
+            "description": "Country location in ISO 3166-1 alpha-2 format",
+            "example": "US"
+          },
+          "baseCurrency": {
+            "type": "string",
+            "description": "Base currency in ISO 4217 format",
+            "example": "USD"
+          },
+          "timezone": {
+            "type": "string",
+            "description": "Timezone of the organization",
+            "example": "America/New_York"
+          },
+          "fiscalYear": {
+            "type": "string",
+            "description": "Starting month of fiscal year",
+            "example": "January"
+          },
+          "language": {
+            "type": "string",
+            "description": "Language/locale of the organization",
+            "example": "en-US"
+          },
+          "dateFormat": {
+            "type": "string",
+            "description": "Date format used by the organization",
+            "example": "MM/DD/YYYY"
+          }
+        },
+        "required": [
+          "name",
+          "location",
+          "baseCurrency",
+          "timezone",
+          "fiscalYear",
+          "language"
+        ]
+      },
       "EditPaymentMethodOptionsDto": {
         "type": "object",
         "properties": {}
@@ -39871,6 +40541,153 @@
           "firstName",
           "lastName",
           "password"
+        ]
+      },
+      "AuditLogFilterOptionDto": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "example": "SaleInvoice"
+          },
+          "label": {
+            "type": "string",
+            "example": "Sale Invoice"
+          }
+        },
+        "required": [
+          "key",
+          "label"
+        ]
+      },
+      "GetAuditLogFilterOptionsResponseDto": {
+        "type": "object",
+        "properties": {
+          "subjects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AuditLogFilterOptionDto"
+            }
+          },
+          "actions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AuditLogFilterOptionDto"
+            }
+          }
+        },
+        "required": [
+          "subjects",
+          "actions"
+        ]
+      },
+      "AuditLogListItemDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "userId": {
+            "type": "number",
+            "example": 5,
+            "nullable": true
+          },
+          "userName": {
+            "type": "string",
+            "example": "John Doe",
+            "nullable": true
+          },
+          "userEmail": {
+            "type": "string",
+            "example": "john@example.com",
+            "nullable": true
+          },
+          "action": {
+            "type": "string",
+            "example": "created"
+          },
+          "subject": {
+            "type": "string",
+            "example": "sale_invoice"
+          },
+          "subjectId": {
+            "type": "number",
+            "example": 42,
+            "nullable": true
+          },
+          "metadata": {
+            "type": "object",
+            "nullable": true,
+            "example": {
+              "invoiceNumber": "INV-001"
+            }
+          },
+          "summary": {
+            "type": "string",
+            "example": "Invoice INV-001 was created for $500.00"
+          },
+          "ip": {
+            "type": "string",
+            "example": "192.168.1.1",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2025-04-12T18:30:00.000Z"
+          },
+          "createdAtFormatted": {
+            "type": "string",
+            "example": "Apr 12, 2025 at 06:30 PM"
+          }
+        },
+        "required": [
+          "id",
+          "action",
+          "subject",
+          "summary",
+          "createdAt",
+          "createdAtFormatted"
+        ]
+      },
+      "PaginationMetaDto": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "number",
+            "example": 100
+          },
+          "page": {
+            "type": "number",
+            "example": 1
+          },
+          "pageSize": {
+            "type": "number",
+            "example": 20
+          }
+        },
+        "required": [
+          "total",
+          "page",
+          "pageSize"
+        ]
+      },
+      "GetAuditLogsResponseDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AuditLogListItemDto"
+            }
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/PaginationMetaDto"
+          }
+        },
+        "required": [
+          "data",
+          "pagination"
         ]
       },
       "ExchangeRateLatestResponseDto": {

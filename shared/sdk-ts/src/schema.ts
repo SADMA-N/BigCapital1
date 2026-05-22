@@ -4254,6 +4254,58 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/workspaces": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List workspaces the authenticated user belongs to */
+        get: operations["WorkspacesController_listWorkspaces"];
+        put?: never;
+        /** Create a new workspace */
+        post: operations["WorkspacesController_createWorkspace"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/workspaces/{organizationId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete a workspace (owner only) */
+        delete: operations["WorkspacesController_deleteWorkspace"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/workspaces/build/{buildJobId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get workspace build job status */
+        get: operations["WorkspacesController_buildJobStatus"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/payment-services": {
         parameters: {
             query?: never;
@@ -4641,6 +4693,40 @@ export interface paths {
         head?: never;
         /** Inactivate a contact */
         patch: operations["ContactsController_inactivateContact"];
+        trace?: never;
+    };
+    "/api/audit-logs/filter-options": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Distinct subject and action values for audit log filters. */
+        get: operations["AuditLogsController_getAuditLogFilterOptions"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/audit-logs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List financial audit log entries for the tenant. */
+        get: operations["AuditLogsController_getAuditLogs"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/api/exchange-rates/latest": {
@@ -8345,6 +8431,11 @@ export interface components {
              * @default true
              */
             active: boolean;
+            /**
+             * @description Customer code
+             * @example CUST-001
+             */
+            code?: string;
         };
         EditCustomerDto: {
             /** @description Billing address line 1 */
@@ -8403,6 +8494,8 @@ export interface components {
             note?: string;
             /** @description Active status */
             active?: boolean;
+            /** @description Customer code */
+            code?: string;
         };
         CustomerOpeningBalanceEditDto: {
             /**
@@ -8543,6 +8636,11 @@ export interface components {
              * @default true
              */
             active: boolean;
+            /**
+             * @description Vendor code
+             * @example VEND-001
+             */
+            code?: string;
         };
         EditVendorDto: {
             /** @description Billing address line 1 */
@@ -8599,6 +8697,8 @@ export interface components {
             note?: string;
             /** @description Whether the vendor is active */
             active?: boolean;
+            /** @description Vendor code */
+            code?: string;
         };
         VendorOpeningBalanceEditDto: {
             /**
@@ -14023,6 +14123,84 @@ export interface components {
              */
             taxNumber?: string;
         };
+        WorkspaceMetadataDto: {
+            name: string;
+            baseCurrency: string;
+            industry?: string;
+            location?: string;
+            timezone?: string;
+            language?: string;
+        };
+        WorkspaceDto: {
+            organizationId: string;
+            isReady: boolean;
+            isBuildRunning: boolean;
+            buildJobId?: string;
+            role: string;
+            metadata?: components["schemas"]["WorkspaceMetadataDto"];
+        };
+        CreateWorkspaceResponseDto: {
+            organizationId: string;
+            jobId: string;
+        };
+        WorkspaceBuildJobResponseDto: {
+            /** @example 123 */
+            id: string;
+            /** @example active */
+            state: string;
+            /** @example 50 */
+            progress: Record<string, never>;
+            /** @example false */
+            isCompleted: boolean;
+            /** @example true */
+            isRunning: boolean;
+            /** @example false */
+            isWaiting: boolean;
+            /** @example false */
+            isFailed: boolean;
+        };
+        CreateWorkspaceDto: {
+            /**
+             * @description Organization name
+             * @example Acme Inc.
+             */
+            name: string;
+            /**
+             * @description Industry of the organization
+             * @example Technology
+             */
+            industry?: string;
+            /**
+             * @description Country location in ISO 3166-1 alpha-2 format
+             * @example US
+             */
+            location: string;
+            /**
+             * @description Base currency in ISO 4217 format
+             * @example USD
+             */
+            baseCurrency: string;
+            /**
+             * @description Timezone of the organization
+             * @example America/New_York
+             */
+            timezone: string;
+            /**
+             * @description Starting month of fiscal year
+             * @example January
+             */
+            fiscalYear: string;
+            /**
+             * @description Language/locale of the organization
+             * @example en-US
+             */
+            language: string;
+            /**
+             * @description Date format used by the organization
+             * @example MM/DD/YYYY
+             */
+            dateFormat?: string;
+        };
         EditPaymentMethodOptionsDto: Record<string, never>;
         EditPaymentMethodDTO: {
             /** @description Edit payment method options */
@@ -14185,6 +14363,58 @@ export interface components {
              * @example StrongPassword123!
              */
             password: string;
+        };
+        AuditLogFilterOptionDto: {
+            /** @example SaleInvoice */
+            key: string;
+            /** @example Sale Invoice */
+            label: string;
+        };
+        GetAuditLogFilterOptionsResponseDto: {
+            subjects: components["schemas"]["AuditLogFilterOptionDto"][];
+            actions: components["schemas"]["AuditLogFilterOptionDto"][];
+        };
+        AuditLogListItemDto: {
+            /** @example 1 */
+            id: number;
+            /** @example 5 */
+            userId?: number | null;
+            /** @example John Doe */
+            userName?: string | null;
+            /** @example john@example.com */
+            userEmail?: string | null;
+            /** @example created */
+            action: string;
+            /** @example sale_invoice */
+            subject: string;
+            /** @example 42 */
+            subjectId?: number | null;
+            /**
+             * @example {
+             *       "invoiceNumber": "INV-001"
+             *     }
+             */
+            metadata?: Record<string, never> | null;
+            /** @example Invoice INV-001 was created for $500.00 */
+            summary: string;
+            /** @example 192.168.1.1 */
+            ip?: string | null;
+            /** @example 2025-04-12T18:30:00.000Z */
+            createdAt: string;
+            /** @example Apr 12, 2025 at 06:30 PM */
+            createdAtFormatted: string;
+        };
+        PaginationMetaDto: {
+            /** @example 100 */
+            total: number;
+            /** @example 1 */
+            page: number;
+            /** @example 20 */
+            pageSize: number;
+        };
+        GetAuditLogsResponseDto: {
+            data: components["schemas"]["AuditLogListItemDto"][];
+            pagination: components["schemas"]["PaginationMetaDto"];
         };
         ExchangeRateLatestResponseDto: {
             /**
@@ -14492,6 +14722,10 @@ export interface operations {
     ItemsController_getItems: {
         parameters: {
             query?: {
+                /** @description Page number for pagination */
+                page?: number;
+                /** @description Number of items per page */
+                pageSize?: number;
                 /** @description Custom view ID for filtering */
                 customViewId?: number;
                 /** @description Array of filter roles */
@@ -14508,10 +14742,6 @@ export interface operations {
                 viewSlug?: string;
                 /** @description Filter for inactive items */
                 inactiveMode?: boolean;
-                /** @description Number of items per page */
-                pageSize?: number;
-                /** @description Page number for pagination */
-                page?: number;
             };
             header: {
                 /** @description Value must be 'Bearer <token>' where <token> is an API key prefixed with 'bc_' or a JWT token. */
@@ -15967,6 +16197,10 @@ export interface operations {
     SaleInvoicesController_getSaleInvoices: {
         parameters: {
             query?: {
+                /** @description Page number (1-based) */
+                page?: number;
+                /** @description Page size */
+                pageSize?: number;
                 /** @description Custom view ID */
                 customViewId?: number;
                 /** @description Filter roles */
@@ -17094,6 +17328,10 @@ export interface operations {
     PaymentReceivesController_getPaymentsReceived: {
         parameters: {
             query?: {
+                /** @description Page number (1-based) */
+                page?: number;
+                /** @description Page size */
+                pageSize?: number;
                 /** @description Custom view ID */
                 customViewId?: number;
                 /** @description Filter roles */
@@ -17755,6 +17993,10 @@ export interface operations {
     ItemCategoryController_getItemCategories: {
         parameters: {
             query?: {
+                /** @description Page number (1-based) */
+                page?: number;
+                /** @description Page size */
+                pageSize?: number;
                 /** @description Custom view ID */
                 customViewId?: number;
                 /** @description Filter roles */
@@ -17956,6 +18198,10 @@ export interface operations {
     ExpensesController_getExpenses: {
         parameters: {
             query?: {
+                /** @description Page number (1-based) */
+                page?: number;
+                /** @description Page size */
+                pageSize?: number;
                 /** @description Custom view ID */
                 customViewId?: number;
                 /** @description Filter roles */
@@ -18395,6 +18641,10 @@ export interface operations {
     CustomersController_getCustomers: {
         parameters: {
             query?: {
+                /** @description Page number (1-based) */
+                page?: number;
+                /** @description Page size */
+                pageSize?: number;
                 /** @description Custom view ID */
                 customViewId?: number;
                 /** @description Filter roles */
@@ -18551,6 +18801,10 @@ export interface operations {
     VendorsController_getVendors: {
         parameters: {
             query?: {
+                /** @description Page number (1-based) */
+                page?: number;
+                /** @description Page size */
+                pageSize?: number;
                 /** @description Custom view ID */
                 customViewId?: number;
                 /** @description Filter roles */
@@ -18830,6 +19084,10 @@ export interface operations {
     SaleEstimatesController_getSaleEstimates: {
         parameters: {
             query?: {
+                /** @description Page number (1-based) */
+                page?: number;
+                /** @description Page size */
+                pageSize?: number;
                 /** @description Custom view ID */
                 customViewId?: number;
                 /** @description Filter roles */
@@ -19255,6 +19513,10 @@ export interface operations {
     SaleReceiptsController_getSaleReceipts: {
         parameters: {
             query?: {
+                /** @description Page number (1-based) */
+                page?: number;
+                /** @description Page size */
+                pageSize?: number;
                 /** @description Custom view ID */
                 customViewId?: number;
                 /** @description Filter roles */
@@ -19568,6 +19830,10 @@ export interface operations {
     BillsController_getBills: {
         parameters: {
             query?: {
+                /** @description Page number (1-based) */
+                page?: number;
+                /** @description Page size */
+                pageSize?: number;
                 /** @description Custom view ID */
                 customViewId?: number;
                 /** @description Filter roles */
@@ -19956,6 +20222,10 @@ export interface operations {
     ManualJournalsController_getManualJournals: {
         parameters: {
             query?: {
+                /** @description Page number (1-based) */
+                page?: number;
+                /** @description Page size */
+                pageSize?: number;
                 /** @description Custom view ID */
                 customViewId?: number;
                 /** @description Filter roles */
@@ -20174,6 +20444,10 @@ export interface operations {
     CreditNotesController_getCreditNotes: {
         parameters: {
             query?: {
+                /** @description Page number (1-based) */
+                page?: number;
+                /** @description Page size */
+                pageSize?: number;
                 /** @description Custom view ID */
                 customViewId?: number;
                 /** @description Filter roles */
@@ -20796,6 +21070,10 @@ export interface operations {
     VendorCreditsController_getVendorCredits: {
         parameters: {
             query?: {
+                /** @description Page number (1-based) */
+                page?: number;
+                /** @description Page size */
+                pageSize?: number;
                 /** @description Custom view ID */
                 customViewId?: number;
                 /** @description Filter roles */
@@ -22925,7 +23203,7 @@ export interface operations {
                      *               },
                      *               "children": [
                      *                 {
-                     *                   "name": "Current Liabilties",
+                     *                   "name": "Current Liabilities",
                      *                   "id": "CURRENT_LIABILITY",
                      *                   "node_type": "AGGREGATE",
                      *                   "type": "AGGREGATE",
@@ -23612,7 +23890,7 @@ export interface operations {
                      *                     "cells": [
                      *                       {
                      *                         "key": "name",
-                     *                         "value": "Current Liabilties"
+                     *                         "value": "Current Liabilities"
                      *                       },
                      *                       {
                      *                         "key": "total",
@@ -23740,7 +24018,7 @@ export interface operations {
                      *                         "cells": [
                      *                           {
                      *                             "key": "name",
-                     *                             "value": "Total Current Liabilties"
+                     *                             "value": "Total Current Liabilities"
                      *                           },
                      *                           {
                      *                             "key": "total",
@@ -28347,6 +28625,92 @@ export interface operations {
             };
         };
     };
+    WorkspacesController_listWorkspaces: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Returns the list of workspaces */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkspaceDto"][];
+                };
+            };
+        };
+    };
+    WorkspacesController_createWorkspace: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateWorkspaceDto"];
+            };
+        };
+        responses: {
+            /** @description Returns the created workspace details */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CreateWorkspaceResponseDto"];
+                };
+            };
+        };
+    };
+    WorkspacesController_deleteWorkspace: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                organizationId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Workspace deleted successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    WorkspacesController_buildJobStatus: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                buildJobId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Returns the workspace build job details */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkspaceBuildJobResponseDto"];
+                };
+            };
+        };
+    };
     PaymentServicesController_getPaymentServicesSpecificInvoice: {
         parameters: {
             query?: never;
@@ -28998,6 +29362,65 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    AuditLogsController_getAuditLogFilterOptions: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description Value must be 'Bearer <token>' where <token> is an API key prefixed with 'bc_' or a JWT token. */
+                Authorization: string;
+                /** @description Required if Authorization is a JWT token. The organization ID to operate within. */
+                "organization-id": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GetAuditLogFilterOptionsResponseDto"];
+                };
+            };
+        };
+    };
+    AuditLogsController_getAuditLogs: {
+        parameters: {
+            query?: {
+                page?: number;
+                pageSize?: number;
+                subject?: Record<string, never>[][];
+                action?: Record<string, never>[][];
+                /** @description System user id */
+                userId?: number;
+                /** @description ISO date (inclusive), start of day */
+                from?: string;
+                /** @description ISO date (inclusive), end of day */
+                to?: string;
+            };
+            header: {
+                /** @description Value must be 'Bearer <token>' where <token> is an API key prefixed with 'bc_' or a JWT token. */
+                Authorization: string;
+                /** @description Required if Authorization is a JWT token. The organization ID to operate within. */
+                "organization-id": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GetAuditLogsResponseDto"];
+                };
             };
         };
     };

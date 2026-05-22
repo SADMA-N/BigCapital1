@@ -249,11 +249,27 @@ const EXCHANGE_RATE = {
   EXCHANGE_RATE: 'EXCHANGE_RATE',
 };
 
+<<<<<<< HEAD
 // ==========================================
 // Legacy `t` object (for backward compatibility)
 // @deprecated Import specific {Module}QueryKeys instead
 // ==========================================
 const t = {
+=======
+export const API_KEYS = {
+  API_KEYS: 'API_KEYS',
+};
+
+const AUDIT_LOGS = {
+  AUDIT_LOGS: 'AUDIT_LOGS',
+};
+
+const AUDIT_LOG_FILTER_OPTIONS = {
+  AUDIT_LOG_FILTER_OPTIONS: 'AUDIT_LOG_FILTER_OPTIONS',
+};
+
+export default {
+>>>>>>> develop
   ...Authentication,
   ...ACCOUNTS,
   ...BILLS,
@@ -288,6 +304,7 @@ const t = {
   ...ORGANIZATION,
   ...TAX_RATES,
   ...EXCHANGE_RATE,
+<<<<<<< HEAD
 } as const;
 
 export default t;
@@ -339,3 +356,9 @@ export { JobsQueryKeys } from './jobs';
 export { PdfTemplatesQueryKeys } from './pdf-templates';
 export { SubscriptionQueryKeys } from './subscription';
 export { ViewsQueryKeys } from './views';
+=======
+  ...API_KEYS,
+  ...AUDIT_LOGS,
+  ...AUDIT_LOG_FILTER_OPTIONS,
+};
+>>>>>>> develop

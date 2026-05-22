@@ -14,6 +14,7 @@ import {
   useSetTenantId,
 } from '../../state';
 import { setAuthLoginCookies } from '../authentication/queries';
+import { setAuthLoginCookies } from './authentication';
 import { batch } from 'react-redux';
 
 interface CreateOneClickDemoValues { }
@@ -70,7 +71,6 @@ export function useOneClickDemoSignin(
   const setAuthToken = useSetAuthToken();
   const setOrganizationId = useSetOrganizationId();
   const setUserId = useSetAuthUserId();
-  const setTenantId = useSetTenantId();
   const setLocale = useSetLocale();
 
   return useMutation<OneClickSigninDemoRes, Error, OneClickSigninDemoValues>({
@@ -86,7 +86,6 @@ export function useOneClickDemoSignin(
         setAuthToken(res.data.token);
         setOrganizationId(res.data.tenant.organization_id);
         setUserId(res.data.user.id);
-        setTenantId(res.data.tenant.id);
 
         if (res.data?.tenant?.metadata?.language) {
           setLocale(res.data?.tenant?.metadata?.language);
