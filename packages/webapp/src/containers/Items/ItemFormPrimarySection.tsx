@@ -22,10 +22,9 @@ import {
   FInputGroup,
 } from '@/components';
 import classNames from 'classnames';
-
 import { useItemFormContext } from './ItemFormProvider';
 import { handleStringChange, inputIntent } from '@/utils';
-// import { categoriesFieldShouldUpdate } from './utils';
+import intl from 'react-intl-universal';
 
 /**
  * Item form primary section.
@@ -61,7 +60,7 @@ export default function ItemFormPrimarySection() {
         {({ form, field: { value }, meta: { touched, error } }) => (
           <FormGroup
             medium={true}
-            label={<T id={'item_type'} />}
+            label={intl.get('item_type')}
             labelInfo={
               <span>
                 <FieldRequiredHint />
@@ -84,8 +83,8 @@ export default function ItemFormPrimarySection() {
               selectedValue={value}
               disabled={!isNewMode && item.type === 'inventory'}
             >
-              <Radio label={<T id={'service'} />} value="service" />
-              <Radio label={<T id={'inventory'} />} value="inventory" />
+              <Radio label={intl.get('service')} value="service" />
+              <Radio label={intl.get('inventory')} value="inventory" />
             </RadioGroup>
           </FormGroup>
         )}
@@ -96,7 +95,7 @@ export default function ItemFormPrimarySection() {
           {/*----------- Item name ----------*/}
           <FFormGroup
             name={'name'}
-            label={<T id={'item_name'} />}
+            label={intl.get('item_name')}
             labelInfo={<FieldRequiredHint />}
             inline={true}
             fastField
@@ -112,7 +111,7 @@ export default function ItemFormPrimarySection() {
           {/*----------- SKU ----------*/}
           <FFormGroup
             name={'code'}
-            label={<T id={'item_code'} />}
+            label={intl.get('item_code')}
             inline={true}
             fastField
           >
@@ -122,7 +121,7 @@ export default function ItemFormPrimarySection() {
           {/*----------- Item category ----------*/}
           <FFormGroup
             name={'category_id'}
-            label={<T id={'category'} />}
+            label={intl.get('category')}
             inline={true}
           >
             <FSelect

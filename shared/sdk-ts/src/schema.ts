@@ -4228,6 +4228,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /** Retrieves the base currency mutation lock abilities. */
         get: operations["OrganizationController_baseCurrencyMutate"];
         put?: never;
         post?: never;
@@ -4289,6 +4290,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/workspaces/{organizationId}/inactivate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Inactivate a workspace (owner only) */
+        put: operations["WorkspacesController_inactivateWorkspace"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/workspaces/{organizationId}/activate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Reactivate a workspace (owner only) */
+        put: operations["WorkspacesController_activateWorkspace"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/workspaces/build/{buildJobId}": {
         parameters: {
             query?: never;
@@ -4299,6 +4334,23 @@ export interface paths {
         /** Get workspace build job status */
         get: operations["WorkspacesController_buildJobStatus"];
         put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/workspaces/default": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Set default workspace */
+        put: operations["WorkspacesController_setDefaultWorkspace"];
         post?: never;
         delete?: never;
         options?: never;
@@ -4587,6 +4639,23 @@ export interface paths {
         put?: never;
         /** Resend an invitation to an existing user. */
         post: operations["UsersInviteController_resendInvite"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/invite/bulk": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Send invitations to multiple users. */
+        post: operations["UsersInviteController_sendBulkInvites"];
         delete?: never;
         options?: never;
         head?: never;
@@ -6329,6 +6398,78 @@ export interface components {
             /** @description List of item costs */
             costs: components["schemas"]["InventoryItemCostDto"][];
         };
+        InvoicePaymentTransactionDto: {
+            /**
+             * @description The invoice ID
+             * @example 1
+             */
+            invoiceId: number;
+            /**
+             * @description The payment receive ID
+             * @example 1
+             */
+            paymentReceiveId: number;
+            /**
+             * @description The payment date
+             * @example 2024-03-15
+             */
+            paymentDate: string;
+            /**
+             * @description The formatted payment date
+             * @example 15/03/2024
+             */
+            formattedPaymentDate: string;
+            /**
+             * @description The payment amount
+             * @example 1000
+             */
+            paymentAmount: number;
+            /**
+             * @description The formatted payment amount
+             * @example $1,000.00
+             */
+            formattedPaymentAmount: string;
+            /**
+             * @description The currency code
+             * @example USD
+             */
+            currencyCode: string;
+            /**
+             * @description The payment receive number
+             * @example RCV-001
+             */
+            paymentNumber: string;
+            /**
+             * @description The payment reference no.
+             * @example REF-001
+             */
+            paymentReferenceNo: string | null;
+            /**
+             * @description The invoice number
+             * @example INV-001
+             */
+            invoiceNumber: string;
+            /**
+             * @description The invoice reference no.
+             * @example REF-002
+             */
+            invoiceReferenceNo: string | null;
+            /**
+             * @description The deposit account ID
+             * @example 5
+             */
+            depositAccountId: number;
+            /**
+             * @description The deposit account name
+             * @example Undeposited Funds
+             */
+            depositAccountName: string;
+            /**
+             * @description The deposit account slug
+             * @example undeposited-funds
+             */
+            depositAccountSlug: string;
+        };
         GenerateSaleInvoiceSharableLinkResponseDto: {
             /**
              * @description Sharable payment link for the sale invoice
@@ -6971,6 +7112,13 @@ export interface components {
              * @example false
              */
             active: boolean;
+        };
+        PaymentReceivedHtmlContentResponseDto: {
+            /**
+             * @description The HTML content of the payment received
+             * @example <html>...</html>
+             */
+            htmlContent: string;
         };
         PaymentReceivedStateResponseDto: {
             /**
@@ -8227,6 +8375,17 @@ export interface components {
              */
             nonDeletableIds: number[];
         };
+        CustomersListResponseDto: {
+            data: components["schemas"]["CustomerResponseDto"][];
+            pagination: {
+                /** @example 1 */
+                page: number;
+                /** @example 12 */
+                pageSize: number;
+                /** @example 42 */
+                total: number;
+            };
+        };
         CustomerResponseDto: {
             /** @example 1500 */
             balance: number;
@@ -8731,13 +8890,6 @@ export interface components {
              */
             skipUndeletable: boolean;
         };
-        SaleEstiamteStateResponseDto: {
-            /**
-             * @description The ID of the default PDF template for sale estimates
-             * @example 1
-             */
-            defaultTemplateId: number | null;
-        };
         SaleEstimateResponseDto: {
             /**
              * @description Unique identifier of the customer
@@ -8928,6 +9080,66 @@ export interface components {
             entries: components["schemas"]["ItemEntryDto"][];
             /** @description Attachments of the sale estimate */
             attachments: components["schemas"]["AttachmentLinkDto"][];
+        };
+        SaleEstiamteStateResponseDto: {
+            /**
+             * @description The ID of the default PDF template for sale estimates
+             * @example 1
+             */
+            defaultTemplateId: number | null;
+        };
+        SaleEstimateHtmlContentResponseDto: {
+            /**
+             * @description The HTML content of the estimate
+             * @example <html>...</html>
+             */
+            htmlContent: string;
+        };
+        AddressItemDto: {
+            label: string;
+            mail: string;
+            primary?: boolean;
+        };
+        SaleEstimateEntryMailDto: {
+            name: string;
+            quantity: number;
+            unitPrice: number;
+            unitPriceFormatted: string;
+            total: number;
+            totalFormatted: string;
+        };
+        SaleEstimateMailStateResponseDto: {
+            from: string[];
+            to: string[];
+            cc?: string[];
+            bcc?: string[];
+            subject: string;
+            message: string;
+            formatArgs?: Record<string, never>;
+            toOptions: components["schemas"]["AddressItemDto"][];
+            fromOptions: components["schemas"]["AddressItemDto"][];
+            attachEstimate?: boolean;
+            estimateDate: string;
+            estimateDateFormatted: string;
+            expirationDate: string;
+            expirationDateFormatted: string;
+            total: number;
+            totalFormatted: string;
+            subtotal: number;
+            subtotalFormatted: string;
+            discountAmount: number;
+            discountAmountFormatted: string;
+            discountPercentage: number;
+            discountPercentageFormatted: string;
+            discountLabel: string;
+            adjustment: number;
+            adjustmentFormatted: string;
+            estimateNumber: string;
+            entries: components["schemas"]["SaleEstimateEntryMailDto"][];
+            companyName: string;
+            companyLogoUri: string;
+            primaryColor: string;
+            customerName: string;
         };
         CreateSaleEstimateDto: {
             /**
@@ -9507,6 +9719,78 @@ export interface components {
              * @example 1
              */
             adjustment: number;
+        };
+        BillPaymentTransactionDto: {
+            /**
+             * @description The bill ID
+             * @example 1
+             */
+            billId: number;
+            /**
+             * @description The bill payment ID
+             * @example 1
+             */
+            billPaymentId: number;
+            /**
+             * @description The payment date
+             * @example 2024-03-15
+             */
+            paymentDate: string;
+            /**
+             * @description The formatted payment date
+             * @example 15/03/2024
+             */
+            formattedPaymentDate: string;
+            /**
+             * @description The payment amount
+             * @example 1000
+             */
+            paymentAmount: number;
+            /**
+             * @description The formatted payment amount
+             * @example $1,000.00
+             */
+            formattedPaymentAmount: string;
+            /**
+             * @description The currency code
+             * @example USD
+             */
+            currencyCode: string;
+            /**
+             * @description The payment reference number
+             * @example PAY-001
+             */
+            paymentNumber: string;
+            /**
+             * @description The payment reference no.
+             * @example REF-001
+             */
+            paymentReferenceNo: string | null;
+            /**
+             * @description The bill number
+             * @example BILL-001
+             */
+            billNumber: string;
+            /**
+             * @description The bill reference no.
+             * @example REF-002
+             */
+            billReferenceNo: string | null;
+            /**
+             * @description The payment account ID
+             * @example 5
+             */
+            paymentAccountId: number;
+            /**
+             * @description The payment account name
+             * @example Accounts Payable
+             */
+            paymentAccountName: string;
+            /**
+             * @description The payment account slug
+             * @example accounts-payable
+             */
+            paymentAccountSlug: string;
         };
         BillResponseDto: {
             /**
@@ -10984,6 +11268,59 @@ export interface components {
             /** @description The attachments of the bill payment */
             attachments?: components["schemas"]["AttachmentLinkDto"][];
         };
+        BillPaymentPageEntryDto: {
+            /**
+             * @description The bill ID
+             * @example 1
+             */
+            billId: number;
+            /**
+             * @description The entry type
+             * @example invoice
+             */
+            entryType: string;
+            /**
+             * @description The bill number
+             * @example BILL-001
+             */
+            billNo: string;
+            /**
+             * @description The total bill amount
+             * @example 2000
+             */
+            amount: number;
+            /**
+             * @description The outstanding due amount
+             * @example 1500
+             */
+            dueAmount: number;
+            /**
+             * @description The total payment amount applied
+             * @example 500
+             */
+            totalPaymentAmount: number;
+            /**
+             * @description The payment amount for this entry
+             * @example 500
+             */
+            paymentAmount: number;
+            /**
+             * @description The currency code
+             * @example USD
+             */
+            currencyCode: string;
+            /**
+             * @description The bill date
+             * @example 2024-03-15
+             */
+            date: string;
+        };
+        BillPaymentEditPageResponseDto: {
+            /** @description The bill payment details */
+            billPayment: components["schemas"]["BillPaymentResponseDto"];
+            /** @description The payable bill entries */
+            entries: components["schemas"]["BillPaymentPageEntryDto"][];
+        };
         CreateBillPaymentDto: {
             /**
              * @description The id of the vendor
@@ -12170,6 +12507,23 @@ export interface components {
         };
         TransactionsLockingDto: Record<string, never>;
         CancelTransactionsLockingDto: Record<string, never>;
+        SettingItemDto: {
+            /**
+             * @description The setting key
+             * @example invoices_from_name
+             */
+            key: string;
+            /**
+             * @description The setting value
+             * @example My Company
+             */
+            value: Record<string, never>;
+            /**
+             * @description The settings group
+             * @example sale_invoices
+             */
+            group: string;
+        };
         NumberFormatQueryDto: {
             /**
              * @description Number of decimal places to display
@@ -13853,6 +14207,22 @@ export interface components {
             /** @description The permissions of the role */
             permissions: components["schemas"]["EditRolePermissionDto"][];
         };
+        OrgBaseCurrencyMutateLockDto: {
+            /**
+             * @description The model name that prevents base currency mutation
+             * @example SaleInvoice
+             */
+            modelName: string;
+            /**
+             * @description The plural display name of the model
+             * @example Sale Invoices
+             */
+            pluralName?: string;
+        };
+        OrgBaseCurrencyMutateAbilitiesResponseDto: {
+            /** @description List of models preventing base currency mutation */
+            abilities: components["schemas"]["OrgBaseCurrencyMutateLockDto"][];
+        };
         OrganizationBuildJobResponseDto: {
             /** @example 123 */
             id: string;
@@ -14116,14 +14486,25 @@ export interface components {
             location?: string;
             timezone?: string;
             language?: string;
+            logoKey?: string;
+            logoUri?: string;
         };
         WorkspaceDto: {
             organizationId: string;
             isReady: boolean;
             isBuildRunning: boolean;
+            isDeleting: boolean;
+            isActive: boolean;
             buildJobId?: string;
             role: string;
+            isDefault?: boolean;
             metadata?: components["schemas"]["WorkspaceMetadataDto"];
+            totalIncome?: number;
+            totalExpenses?: number;
+            totalAssets?: number;
+            totalLiabilities?: number;
+            formattedTotalAssets?: string;
+            formattedTotalLiabilities?: string;
         };
         CreateWorkspaceResponseDto: {
             organizationId: string;
@@ -14186,6 +14567,10 @@ export interface components {
              * @example MM/DD/YYYY
              */
             dateFormat?: string;
+        };
+        SetDefaultWorkspaceDto: {
+            /** @description The organization ID to set as default */
+            organizationId: string;
         };
         EditPaymentMethodOptionsDto: Record<string, never>;
         EditPaymentMethodDTO: {
@@ -14299,6 +14684,53 @@ export interface components {
             /** @example MM/DD/YYYY */
             key: string;
         };
+        UserDto: {
+            /**
+             * @description The user ID
+             * @example 1
+             */
+            id: number;
+            /**
+             * @description The first name
+             * @example John
+             */
+            firstName: string;
+            /**
+             * @description The last name
+             * @example Doe
+             */
+            lastName: string;
+            /**
+             * @description The email address
+             * @example john@example.com
+             */
+            email: string;
+            /**
+             * @description Whether the user is active
+             * @example true
+             */
+            active: boolean;
+            /**
+             * @description The system user ID
+             * @example 10
+             */
+            systemUserId: number;
+            /**
+             * @description The role name
+             * @example Administrator
+             */
+            roleName: string;
+            /**
+             * @description The role description
+             * @example Full access to all features
+             */
+            roleDescription: string;
+            /**
+             * @description The role slug
+             * @example administrator
+             */
+            roleSlug: string;
+        };
         EditUserDto: {
             /**
              * @description First name of the user
@@ -14332,6 +14764,22 @@ export interface components {
              * @example 2
              */
             roleId: number;
+        };
+        BulkInviteItemDto: {
+            /**
+             * @description Email address of the user to invite
+             * @example john.doe@example.com
+             */
+            email: string;
+            /**
+             * @description Role ID to assign to the invited user
+             * @example 2
+             */
+            roleId: number;
+        };
+        BulkSendInviteUserDto: {
+            /** @description List of users to invite */
+            invites: components["schemas"]["BulkInviteItemDto"][];
         };
         InviteUserDto: {
             /**
@@ -15162,7 +15610,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ItemReceiptsResponseDto"];
+                    "application/json": components["schemas"]["ItemReceiptsResponseDto"][];
                 };
             };
             /** @description The item not found. */
@@ -16606,6 +17054,15 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
+            /** @description List of payment transactions for the invoice. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InvoicePaymentTransactionDto"][];
+                };
+            };
             /** @description The sale invoice not found. */
             404: {
                 headers: {
@@ -17407,6 +17864,7 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["PaymentReceivedResponseDto"];
+                    "application/json+html": components["schemas"]["PaymentReceivedHtmlContentResponseDto"];
                 };
             };
         };
@@ -18662,7 +19120,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["CustomerResponseDto"][];
+                    "application/json": components["schemas"]["CustomersListResponseDto"];
                 };
             };
         };
@@ -19013,12 +19471,7 @@ export interface operations {
     SaleEstimatesController_validateBulkDeleteSaleEstimates: {
         parameters: {
             query?: never;
-            header: {
-                /** @description Value must be 'Bearer <token>' where <token> is an API key prefixed with 'bc_' or a JWT token. */
-                Authorization: string;
-                /** @description Required if Authorization is a JWT token. The organization ID to operate within. */
-                "organization-id": string;
-            };
+            header?: never;
             path?: never;
             cookie?: never;
         };
@@ -19042,12 +19495,7 @@ export interface operations {
     SaleEstimatesController_bulkDeleteSaleEstimates: {
         parameters: {
             query?: never;
-            header: {
-                /** @description Value must be 'Bearer <token>' where <token> is an API key prefixed with 'bc_' or a JWT token. */
-                Authorization: string;
-                /** @description Required if Authorization is a JWT token. The organization ID to operate within. */
-                "organization-id": string;
-            };
+            header?: never;
             path?: never;
             cookie?: never;
         };
@@ -19088,12 +19536,7 @@ export interface operations {
                 /** @description View slug */
                 viewSlug?: string;
             };
-            header: {
-                /** @description Value must be 'Bearer <token>' where <token> is an API key prefixed with 'bc_' or a JWT token. */
-                Authorization: string;
-                /** @description Required if Authorization is a JWT token. The organization ID to operate within. */
-                "organization-id": string;
-            };
+            header?: never;
             path?: never;
             cookie?: never;
         };
@@ -19105,7 +19548,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["SaleEstimateResponseDto"] & {
+                    "application/json": components["schemas"]["PaginatedResponseDto"] & {
                         data?: components["schemas"]["SaleEstimateResponseDto"][];
                     };
                 };
@@ -19115,12 +19558,7 @@ export interface operations {
     SaleEstimatesController_createSaleEstimate: {
         parameters: {
             query?: never;
-            header: {
-                /** @description Value must be 'Bearer <token>' where <token> is an API key prefixed with 'bc_' or a JWT token. */
-                Authorization: string;
-                /** @description Required if Authorization is a JWT token. The organization ID to operate within. */
-                "organization-id": string;
-            };
+            header?: never;
             path?: never;
             cookie?: never;
         };
@@ -19143,10 +19581,6 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description Value must be 'Bearer <token>' where <token> is an API key prefixed with 'bc_' or a JWT token. */
-                Authorization: string;
-                /** @description Required if Authorization is a JWT token. The organization ID to operate within. */
-                "organization-id": string;
                 accept: string;
             };
             path: {
@@ -19164,6 +19598,7 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["SaleEstimateResponseDto"];
+                    "application/json+html": components["schemas"]["SaleEstimateHtmlContentResponseDto"];
                 };
             };
         };
@@ -19171,12 +19606,7 @@ export interface operations {
     SaleEstimatesController_editSaleEstimate: {
         parameters: {
             query?: never;
-            header: {
-                /** @description Value must be 'Bearer <token>' where <token> is an API key prefixed with 'bc_' or a JWT token. */
-                Authorization: string;
-                /** @description Required if Authorization is a JWT token. The organization ID to operate within. */
-                "organization-id": string;
-            };
+            header?: never;
             path: {
                 /** @description The sale estimate id */
                 id: number;
@@ -19208,12 +19638,7 @@ export interface operations {
     SaleEstimatesController_deleteSaleEstimate: {
         parameters: {
             query?: never;
-            header: {
-                /** @description Value must be 'Bearer <token>' where <token> is an API key prefixed with 'bc_' or a JWT token. */
-                Authorization: string;
-                /** @description Required if Authorization is a JWT token. The organization ID to operate within. */
-                "organization-id": string;
-            };
+            header?: never;
             path: {
                 /** @description The sale estimate id */
                 id: number;
@@ -19241,12 +19666,7 @@ export interface operations {
     SaleEstimatesController_getSaleEstimateState: {
         parameters: {
             query?: never;
-            header: {
-                /** @description Value must be 'Bearer <token>' where <token> is an API key prefixed with 'bc_' or a JWT token. */
-                Authorization: string;
-                /** @description Required if Authorization is a JWT token. The organization ID to operate within. */
-                "organization-id": string;
-            };
+            header?: never;
             path?: never;
             cookie?: never;
         };
@@ -19266,12 +19686,7 @@ export interface operations {
     SaleEstimatesController_deliverSaleEstimate: {
         parameters: {
             query?: never;
-            header: {
-                /** @description Value must be 'Bearer <token>' where <token> is an API key prefixed with 'bc_' or a JWT token. */
-                Authorization: string;
-                /** @description Required if Authorization is a JWT token. The organization ID to operate within. */
-                "organization-id": string;
-            };
+            header?: never;
             path: {
                 /** @description The sale estimate id */
                 id: number;
@@ -19292,12 +19707,7 @@ export interface operations {
     SaleEstimatesController_approveSaleEstimate: {
         parameters: {
             query?: never;
-            header: {
-                /** @description Value must be 'Bearer <token>' where <token> is an API key prefixed with 'bc_' or a JWT token. */
-                Authorization: string;
-                /** @description Required if Authorization is a JWT token. The organization ID to operate within. */
-                "organization-id": string;
-            };
+            header?: never;
             path: {
                 /** @description The sale estimate id */
                 id: number;
@@ -19317,12 +19727,7 @@ export interface operations {
     SaleEstimatesController_rejectSaleEstimate: {
         parameters: {
             query?: never;
-            header: {
-                /** @description Value must be 'Bearer <token>' where <token> is an API key prefixed with 'bc_' or a JWT token. */
-                Authorization: string;
-                /** @description Required if Authorization is a JWT token. The organization ID to operate within. */
-                "organization-id": string;
-            };
+            header?: never;
             path: {
                 /** @description The sale estimate id */
                 id: number;
@@ -19342,12 +19747,7 @@ export interface operations {
     SaleEstimatesController_notifySaleEstimateBySms: {
         parameters: {
             query?: never;
-            header: {
-                /** @description Value must be 'Bearer <token>' where <token> is an API key prefixed with 'bc_' or a JWT token. */
-                Authorization: string;
-                /** @description Required if Authorization is a JWT token. The organization ID to operate within. */
-                "organization-id": string;
-            };
+            header?: never;
             path: {
                 /** @description The sale estimate id */
                 id: number;
@@ -19367,12 +19767,7 @@ export interface operations {
     SaleEstimatesController_getSaleEstimateSmsDetails: {
         parameters: {
             query?: never;
-            header: {
-                /** @description Value must be 'Bearer <token>' where <token> is an API key prefixed with 'bc_' or a JWT token. */
-                Authorization: string;
-                /** @description Required if Authorization is a JWT token. The organization ID to operate within. */
-                "organization-id": string;
-            };
+            header?: never;
             path: {
                 id: number;
             };
@@ -19391,12 +19786,7 @@ export interface operations {
     SaleEstimatesController_getSaleEstimateMail: {
         parameters: {
             query?: never;
-            header: {
-                /** @description Value must be 'Bearer <token>' where <token> is an API key prefixed with 'bc_' or a JWT token. */
-                Authorization: string;
-                /** @description Required if Authorization is a JWT token. The organization ID to operate within. */
-                "organization-id": string;
-            };
+            header?: never;
             path: {
                 /** @description The sale estimate id */
                 id: number;
@@ -19405,23 +19795,21 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
+            /** @description Retrieves the sale estimate mail state. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["SaleEstimateMailStateResponseDto"];
+                };
             };
         };
     };
     SaleEstimatesController_sendSaleEstimateMail: {
         parameters: {
             query?: never;
-            header: {
-                /** @description Value must be 'Bearer <token>' where <token> is an API key prefixed with 'bc_' or a JWT token. */
-                Authorization: string;
-                /** @description Required if Authorization is a JWT token. The organization ID to operate within. */
-                "organization-id": string;
-            };
+            header?: never;
             path: {
                 /** @description The sale estimate id */
                 id: number;
@@ -19990,7 +20378,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["BillPaymentTransactionDto"][];
+                };
             };
         };
     };
@@ -21470,11 +21860,14 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
+            /** @description List of payable bill entries for the new payment page. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["BillPaymentPageEntryDto"][];
+                };
             };
         };
     };
@@ -21520,11 +21913,14 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
+            /** @description The bill payment edit page data. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["BillPaymentEditPageResponseDto"];
+                };
             };
         };
     };
@@ -21837,7 +22233,9 @@ export interface operations {
     BankingPlaidWebhooksController_webhooks: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "plaid-verification": string;
+            };
             path?: never;
             cookie?: never;
         };
@@ -21847,7 +22245,7 @@ export interface operations {
             };
         };
         responses: {
-            201: {
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -22814,11 +23212,14 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
+            /** @description The settings list. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["SettingItemDto"][];
+                };
             };
         };
     };
@@ -28574,11 +28975,14 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
+            /** @description The base currency mutation abilities. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["OrgBaseCurrencyMutateAbilitiesResponseDto"];
+                };
             };
         };
     };
@@ -28611,7 +29015,10 @@ export interface operations {
     };
     WorkspacesController_listWorkspaces: {
         parameters: {
-            query?: never;
+            query: {
+                includeInactive: string;
+                currentOrganizationId: string;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -28664,7 +29071,52 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Workspace deleted successfully */
+            /** @description Workspace deletion initiated successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        jobId?: string;
+                        organizationId?: string;
+                    };
+                };
+            };
+        };
+    };
+    WorkspacesController_inactivateWorkspace: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                organizationId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Workspace inactivated successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    WorkspacesController_activateWorkspace: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                organizationId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Workspace reactivated successfully */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -28692,6 +29144,28 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["WorkspaceBuildJobResponseDto"];
                 };
+            };
+        };
+    };
+    WorkspacesController_setDefaultWorkspace: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SetDefaultWorkspaceDto"];
+            };
+        };
+        responses: {
+            /** @description Default workspace set successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
@@ -29047,7 +29521,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["UserDto"];
+                };
             };
         };
     };
@@ -29131,7 +29607,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["UserDto"][];
+                };
             };
         };
     };
@@ -29220,6 +29698,27 @@ export interface operations {
             cookie?: never;
         };
         requestBody?: never;
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    UsersInviteController_sendBulkInvites: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BulkSendInviteUserDto"];
+            };
+        };
         responses: {
             201: {
                 headers: {

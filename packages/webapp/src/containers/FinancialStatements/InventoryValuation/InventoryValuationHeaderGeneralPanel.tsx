@@ -1,11 +1,10 @@
-// @ts-nocheck
 import React from 'react';
 import { FastField, Field } from 'formik';
 import { DateInput } from '@blueprintjs/datetime';
 import { FormGroup, Position } from '@blueprintjs/core';
 
 import {
-  FormattedMessage as T,
+
   ItemsMultiSelect,
   Row,
   Col,
@@ -23,12 +22,13 @@ import {
   InventoryValuationGeneralPanelProvider,
   useInventoryValuationGeneralPanelContext,
 } from './InventoryValuationHeaderGeneralPanelProvider';
-import FinancialStatementsFilter from '../FinancialStatementsFilter';
+import { FinancialStatementsFilter } from '../FinancialStatementsFilter';
+import intl from 'react-intl-universal';
 
 /**
  * Inventory valuation - Drawer Header - General panel.
  */
-export default function InventoryValuationHeaderGeneralPanel() {
+export function InventoryValuationHeaderGeneralPanel() {
   return (
     <InventoryValuationGeneralPanelProvider>
       <InventoryValuationHeaderGeneralPanelContent />
@@ -47,9 +47,9 @@ function InventoryValuationHeaderGeneralPanelContent() {
       <Row>
         <Col xs={4}>
           <FastField name={'asDate'}>
-            {({ form, field: { value }, meta: { error } }) => (
+            {({ form, field: { value }, meta: { error } }: any) => (
               <FormGroup
-                label={<T id={'as_date'} />}
+                label={intl.get('as_date')}
                 labelInfo={<FieldHint />}
                 fill={true}
                 intent={inputIntent({ error })}
@@ -57,7 +57,7 @@ function InventoryValuationHeaderGeneralPanelContent() {
                 <DateInput
                   {...momentFormatter('YYYY/MM/DD')}
                   value={tansformDateValue(value)}
-                  onChange={handleDateChange((selectedDate) => {
+                  onChange={handleDateChange((selectedDate: Date) => {
                     form.setFieldValue('asDate', selectedDate);
                   })}
                   popoverProps={{ position: Position.BOTTOM, minimal: true }}
@@ -74,7 +74,7 @@ function InventoryValuationHeaderGeneralPanelContent() {
         <Col xs={4}>
           <FinancialStatementsFilter
             items={filterInventoryValuationOptions}
-            label={<T id={'items.label_filter_items'} />}
+            label={intl.get('items.label_filter_items')}
             initialSelectedItem={'all-items'}
           />
         </Col>
@@ -82,7 +82,7 @@ function InventoryValuationHeaderGeneralPanelContent() {
 
       <Row>
         <Col xs={4}>
-          <FFormGroup name={'itemsIds'} label={<T id={'Specific items'} />}>
+          <FFormGroup name={'itemsIds'} label={intl.get('Specific items')}>
             <ItemsMultiSelect name={'itemsIds'} items={items} />
           </FFormGroup>
         </Col>

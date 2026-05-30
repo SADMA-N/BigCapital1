@@ -1,22 +1,20 @@
-// @ts-nocheck
 import React from 'react';
-
-import ProfitLossSheetTable from './ProfitLossSheetTable';
+import * as R from 'ramda';
+import { ProfitLossSheetTable } from './ProfitLossSheetTable';
 import { FinancialSheetSkeleton } from '@/components';
 import { FinancialReportBody } from '../FinancialReportPage';
 import { useProfitLossSheetContext } from './ProfitLossProvider';
-
-import { withCurrentOrganization } from '@/containers/Organization/withCurrentOrganization';
-
+import {
+  withCurrentOrganization,
+  WithCurrentOrganizationProps,
+} from '@/containers/Organization/withCurrentOrganization';
 import { compose } from '@/utils';
 
-/**
- * @returns {React.JSX}
- */
-function ProfitLossBodyJSX({
-  // #withPreferences
-  organizationName,
-}) {
+interface ProfitLossBodyProps {
+  organizationName: WithCurrentOrganizationProps['organization']['name'];
+}
+
+function ProfitLossBodyJSX({ organizationName }: ProfitLossBodyProps) {
   const { isLoading } = useProfitLossSheetContext();
 
   return (

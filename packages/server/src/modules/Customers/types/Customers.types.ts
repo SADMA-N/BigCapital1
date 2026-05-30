@@ -61,7 +61,7 @@ export interface ICustomersFilter extends IDynamicListFilter {
 }
 
 export interface GetCustomersResponse {
-  customers: Customer[];
+  data: Customer[];
   pagination: IPaginationMeta;
   filterMeta: IFilterMeta;
 }

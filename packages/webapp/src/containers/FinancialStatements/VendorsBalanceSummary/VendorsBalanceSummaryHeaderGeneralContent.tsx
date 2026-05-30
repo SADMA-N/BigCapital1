@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react';
 import { FastField } from 'formik';
 import { DateInput } from '@blueprintjs/datetime';
@@ -8,7 +7,7 @@ import {
   Row,
   Col,
   FieldHint,
-  FormattedMessage as T,
+
   FFormGroup,
   VendorsMultiSelect,
 } from '@/components';
@@ -20,12 +19,13 @@ import {
   handleDateChange,
 } from '@/utils';
 import { useVendorsBalanceSummaryGeneralPanelContext } from './VendorsBalanceSummaryHeaderGeneralProvider';
-import FinancialStatementsFilter from '../FinancialStatementsFilter';
+import { FinancialStatementsFilter } from '../FinancialStatementsFilter';
+import intl from 'react-intl-universal';
 
 /**
  * Vendors balance header - General panel - Content.
  */
-export default function VendorsBalanceSummaryHeaderGeneralContent() {
+export function VendorsBalanceSummaryHeaderGeneralContent() {
   const { vendors } = useVendorsBalanceSummaryGeneralPanelContext();
 
   return (
@@ -33,9 +33,9 @@ export default function VendorsBalanceSummaryHeaderGeneralContent() {
       <Row>
         <Col xs={5}>
           <FastField name={'asDate'}>
-            {({ form, field: { value }, meta: { error } }) => (
+            {({ form, field: { value }, meta: { error } }: { form: any; field: { value: any }; meta: { error: any } }) => (
               <FormGroup
-                label={<T id={'as_date'} />}
+                label={intl.get('as_date')}
                 labelInfo={<FieldHint />}
                 fill={true}
                 intent={inputIntent({ error })}
@@ -43,7 +43,7 @@ export default function VendorsBalanceSummaryHeaderGeneralContent() {
                 <DateInput
                   {...momentFormatter('YYYY/MM/DD')}
                   value={tansformDateValue(value)}
-                  onChange={handleDateChange((selectedDate) => {
+                  onChange={handleDateChange((selectedDate: Date) => {
                     form.setFieldValue('asDate', selectedDate);
                   })}
                   popoverProps={{ position: Position.BOTTOM, minimal: true }}
@@ -59,12 +59,12 @@ export default function VendorsBalanceSummaryHeaderGeneralContent() {
       <Row>
         <Col xs={5}>
           <FastField name={'percentage_column'} type={'checkbox'}>
-            {({ field }) => (
+            {({ field }: { field: any }) => (
               <FormGroup labelInfo={<FieldHint />}>
                 <Checkbox
                   inline={true}
                   small={true}
-                  label={<T id={'percentage_of_column'} />}
+                  label={intl.get('percentage_of_column')}
                   name={'percentage_column'}
                   {...field}
                 />
@@ -78,7 +78,7 @@ export default function VendorsBalanceSummaryHeaderGeneralContent() {
         <Col xs={5}>
           <FinancialStatementsFilter
             items={filterVendorsOptions}
-            label={<T id={'vendors.label_filter_vendors'} />}
+            label={intl.get('vendors.label_filter_vendors')}
             initialSelectedItem={'with-transactions'}
           />
         </Col>
@@ -86,7 +86,7 @@ export default function VendorsBalanceSummaryHeaderGeneralContent() {
 
       <Row>
         <Col xs={5}>
-          <FFormGroup label={<T id={'specific_vendors'} />} name={'vendorsIds'}>
+          <FFormGroup label={intl.get('specific_vendors')} name={'vendorsIds'}>
             <VendorsMultiSelect name={'vendorsIds'} items={vendors} />
           </FFormGroup>
         </Col>

@@ -3,10 +3,10 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import * as qs from 'qs';
 import { useHistory } from 'react-router';
 
-export interface QueryStringResult {
-  [0]: Record<string, any>;
-  [1]: Dispatch<SetStateAction<Record<string, any>>>;
-}
+export type QueryStringResult = [
+  Record<string, any>,
+  Dispatch<SetStateAction<Record<string, any>>>,
+];
 
 type NavigateCallback = (
   pathnameWithParams: string,
@@ -132,8 +132,8 @@ export function useQueryString(
  * @returns {QueryStringResult}
  */
 export const useAppQueryString = (
-  navigate: NavigateCallback,
-  parseOptions: ParseOptions = {},
+  navigate?: NavigateCallback,
+  parseOptions?: ParseOptions = {},
 ): QueryStringResult => {
   const history = useHistory();
 

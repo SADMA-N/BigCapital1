@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react';
 
 import { filterProjectProfitabilityOptions } from './constants';
@@ -6,16 +5,17 @@ import { Classes } from '@blueprintjs/core';
 import { ProjectMultiSelect } from '@/containers/Projects/components';
 import { Row, Col, FFormGroup, FormattedMessage as T } from '@/components';
 
-import FinancialStatementDateRange from '../FinancialStatementDateRange';
-import FinancialStatementsFilter from '../FinancialStatementsFilter';
-import RadiosAccountingBasis from '../RadiosAccountingBasis';
+import { FinancialStatementDateRange } from '../FinancialStatementDateRange';
+import { FinancialStatementsFilter } from '../FinancialStatementsFilter';
+import { RadiosAccountingBasis } from '../RadiosAccountingBasis';
 
 import { useProjectProfitabilitySummaryContext } from './ProjectProfitabilitySummaryProvider';
+import intl from 'react-intl-universal';
 
 /**
  * Project profitability summary header - General panal.
  */
-export default function ProjectProfitabilitySummaryHeaderGeneralPanal() {
+export function ProjectProfitabilitySummaryHeaderGeneralPanal() {
   const { projects } = useProjectProfitabilitySummaryContext();
 
   return (
@@ -36,7 +36,7 @@ export default function ProjectProfitabilitySummaryHeaderGeneralPanal() {
         <Col xs={4}>
           <FFormGroup
             name={'projectsIds'}
-            label={<T id={'projects_multi_select.label'} />}
+            label={intl.get('projects_multi_select.label')}
             className={Classes.FILL}
           >
             <ProjectMultiSelect name={'projectsIds'} projects={projects} />

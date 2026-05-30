@@ -27,7 +27,7 @@ export class GetSaleInvoicesService {
   public async getSaleInvoices(
     filterDTO: GetSaleInvoicesQueryDto,
   ): Promise<{
-    salesInvoices: SaleInvoice[];
+    data: SaleInvoice[];
     pagination: IPaginationMeta;
     filterMeta: IFilterMeta;
   }> {
@@ -58,13 +58,13 @@ export class GetSaleInvoicesService {
       .pagination(filter.page - 1, filter.pageSize);
 
     // Retrieves the transformed sale invoices.
-    const salesInvoices = await this.transformer.transform(
+    const data = await this.transformer.transform(
       results,
       new SaleInvoiceTransformer(),
     );
 
     return {
-      salesInvoices,
+      data,
       pagination,
       filterMeta: dynamicFilter.getResponseMeta(),
     };

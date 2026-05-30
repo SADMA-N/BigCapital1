@@ -1,5 +1,4 @@
-// @ts-nocheck
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import intl from 'react-intl-universal';
 import { NonIdealState } from '@blueprintjs/core';
 import {
@@ -9,10 +8,9 @@ import {
   FinancialStatement,
 } from '@/components';
 import { AbilitySubject, AuditLogAction } from '@/constants/abilityOption';
-
 import { AuditLogProvider } from './AuditLogProvider';
-import AuditLogHeader from './AuditLogHeader';
-import AuditLogActionsBar from './AuditLogActionsBar';
+import { AuditLogHeader } from './AuditLogHeader';
+import { AuditLogActionsBar } from './AuditLogActionsBar';
 import { AuditLogLoadingBar } from './components';
 import { AuditLogBody } from './AuditLogBody';
 import { useAuditLogQuery } from './common';
@@ -25,15 +23,15 @@ function AuditLogReportContent() {
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
 
   const handleFilterSubmit = useCallback(
-    (filter) => {
+    (filter: Record<string, unknown>) => {
       setLocationQuery(filter);
     },
-    [setLocationQuery]
+    [setLocationQuery],
   );
 
-  const toggleFilterDrawer = useCallback((toggle) => {
+  const toggleFilterDrawer = useCallback((toggle?: boolean) => {
     setIsFilterDrawerOpen((prev) =>
-      typeof toggle !== 'undefined' ? toggle : !prev
+      typeof toggle !== 'undefined' ? toggle : !prev,
     );
   }, []);
 
@@ -51,14 +49,14 @@ function AuditLogReportContent() {
 
       <DashboardPageContent>
         <FinancialStatement>
-          <AuditLogHeader
+          {/* <AuditLogHeader
             pageFilter={query}
             onSubmitFilter={handleFilterSubmit}
             isFilterDrawerOpen={isFilterDrawerOpen}
             toggleFilterDrawer={toggleFilterDrawer}
           />
           <AuditLogLoadingBar />
-          <AuditLogBody />
+          <AuditLogBody /> */}
         </FinancialStatement>
       </DashboardPageContent>
     </AuditLogProvider>
@@ -68,7 +66,7 @@ function AuditLogReportContent() {
 /**
  * Audit Log Report page (in Financial Reports section).
  */
-function AuditLogReport() {
+export function AuditLogReport() {
   return (
     <>
       <Can I={AuditLogAction.View} a={AbilitySubject.AuditLog}>
@@ -86,4 +84,3 @@ function AuditLogReport() {
   );
 }
 
-export default AuditLogReport;

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react';
 import styled from 'styled-components';
 import { useFormikContext } from 'formik';
@@ -7,7 +6,7 @@ import {
   Flex,
   FlexItem,
   FieldHint,
-  FormattedMessage as T,
+
   FFormGroup,
   FCheckbox,
 } from '@/components';
@@ -20,6 +19,7 @@ import {
   handlePreviousPeriodChangeCheckboxChange,
   handlePreviousPeriodPercentageCheckboxChange,
 } from './utils';
+import intl from 'react-intl-universal';
 
 /**
  * Profit/loss comparisons panel fields.
@@ -35,7 +35,7 @@ function ProfitLossComaprsionPanelFields() {
         <FCheckbox
           inline={true}
           small={true}
-          label={<T id={'profit_loss_sheet.previous_year'} />}
+          label={intl.get('profit_loss_sheet.previous_year')}
           name={'previousYear'}
           onChange={handlePreviousYearCheckBoxChange(form)}
         />
@@ -50,7 +50,7 @@ function ProfitLossComaprsionPanelFields() {
             <FCheckbox
               inline={true}
               small={true}
-              label={<T id={'profit_loss_sheet.total_change'} />}
+              label={intl.get('profit_loss_sheet.total_change')}
               name={'previousYearAmountChange'}
               onChange={handlePreviousYearChangeCheckboxChange(form)}
             />
@@ -64,7 +64,7 @@ function ProfitLossComaprsionPanelFields() {
             <FCheckbox
               inline={true}
               small={true}
-              label={<T id={'profit_loss_sheet.perentage_change'} />}
+              label={intl.get('profit_loss_sheet.perentage_change')}
               name={'previousYearPercentageChange'}
               onChange={handlePreviousYearPercentageCheckboxChange(form)}
             />
@@ -77,7 +77,7 @@ function ProfitLossComaprsionPanelFields() {
         <FCheckbox
           inline={true}
           small={true}
-          label={<T id={'profit_loss_sheet.previous_period'} />}
+          label={intl.get('profit_loss_sheet.previous_period')}
           name={'previousPeriod'}
           onChange={handlePreviousPeriodCheckBoxChange(form)}
         />
@@ -92,7 +92,7 @@ function ProfitLossComaprsionPanelFields() {
             <FCheckbox
               inline={true}
               small={true}
-              label={<T id={'profit_loss_sheet.total_change'} />}
+              label={intl.get('profit_loss_sheet.total_change')}
               name={'previousPeriodAmountChange'}
               onChange={handlePreviousPeriodChangeCheckboxChange(form)}
             />
@@ -106,7 +106,7 @@ function ProfitLossComaprsionPanelFields() {
             <FCheckbox
               inline={true}
               small={true}
-              label={<T id={'profit_loss_sheet.perentage_change'} />}
+              label={intl.get('profit_loss_sheet.perentage_change')}
               name={'previousPeriodPercentageChange'}
               onChange={handlePreviousPeriodPercentageCheckboxChange(form)}
             />
@@ -119,7 +119,7 @@ function ProfitLossComaprsionPanelFields() {
         <FCheckbox
           inline={true}
           small={true}
-          label={<T id={'profit_loss_sheet.percentage_of_column'} />}
+          label={intl.get('profit_loss_sheet.percentage_of_column')}
           name={'percentageColumn'}
         />
       </FFormGroup>
@@ -129,7 +129,7 @@ function ProfitLossComaprsionPanelFields() {
         <FCheckbox
           inline={true}
           small={true}
-          label={<T id={'profit_loss_sheet.percentage_of_row'} />}
+          label={intl.get('profit_loss_sheet.percentage_of_row')}
           name={'percentageRow'}
         />
       </FFormGroup>
@@ -139,7 +139,7 @@ function ProfitLossComaprsionPanelFields() {
         <FCheckbox
           inline={true}
           small={true}
-          label={<T id={'profit_loss_sheet.percentage_of_expense'} />}
+          label={intl.get('profit_loss_sheet.percentage_of_expense')}
           name={'percentageExpense'}
         />
       </FFormGroup>
@@ -149,7 +149,7 @@ function ProfitLossComaprsionPanelFields() {
         <FCheckbox
           inline={true}
           small={true}
-          label={<T id={'profit_loss_sheet.percentage_of_income'} />}
+          label={intl.get('profit_loss_sheet.percentage_of_income')}
           name={'percentageIncome'}
         />
       </FFormGroup>
@@ -160,7 +160,7 @@ function ProfitLossComaprsionPanelFields() {
 /**
  * ProfitLoss sheet header -comparison panel.
  */
-export default function ProfitLossSheetHeaderComparisonPanel() {
+export function ProfitLossSheetHeaderComparisonPanel() {
   return (
     <ProfitLossSheetComparisonWrap>
       <ProfitLossComaprsionFieldsWrap>

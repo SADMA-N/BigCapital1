@@ -460,12 +460,18 @@ export function isBlank(value) {
   return (_.isEmpty(value) && !_.isNumber(value)) || _.isNaN(value);
 }
 
+interface GetColumnWidthOptions {
+  maxWidth?: number;
+  minWidth?: number;
+  magicSpacing?: number;
+}
+
 export const getColumnWidth = (
-  rows,
-  accessor,
-  { maxWidth, minWidth, magicSpacing = 14 },
-  headerText = '',
-) => {
+  rows: unknown[],
+  accessor: string,
+  { maxWidth, minWidth, magicSpacing = 14 }: GetColumnWidthOptions,
+  headerText: string = '',
+): number => {
   const cellLength = Math.max(
     ...rows.map((row) => (`${_.get(row, accessor)}` || '').length),
     headerText.length,
@@ -478,7 +484,7 @@ export const getColumnWidth = (
   return result;
 };
 
-export const getForceWidth = (text, magicSpacing = 14) => {
+export const getForceWidth = (text: string, magicSpacing: number = 14): number => {
   const textLength = text.length;
   const result = textLength * magicSpacing;
 
@@ -570,15 +576,6 @@ export const isTableEmptyStatus = ({ data, pagination, filterMeta }) => {
   ].every((cond) => cond === true);
 };
 
-/**
- * Transformes the pagination meta to table props.
- */
-export function getPagesCountFromPaginationMeta(pagination) {
-  const { pageSize, total } = pagination;
-
-  return Math.ceil(total / pageSize);
-}
-
 function transformFilterRoles(filterRoles) {
   return JSON.stringify(filterRoles);
 }
@@ -616,18 +613,6 @@ export function transformTableStateToQuery(tableState) {
 export function globalTableStateToTable(globalState) {
   return {
     ..._.omit(globalState, ['customViewId']),
-  };
-}
-
-/**
- * Transformes the pagination meta repsonse.
- */
-export function transformPagination(pagination) {
-  const transformed = transformResponse(pagination);
-
-  return {
-    ...transformed,
-    pagesCount: getPagesCountFromPaginationMeta(transformed),
   };
 }
 
