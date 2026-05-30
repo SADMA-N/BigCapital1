@@ -28,7 +28,7 @@ export function DashboardSockets() {
       client.invalidateQueries({ queryKey: ['GetSubscriptions'] });
     });
     socket.current.on('WORKSPACES_CHANGED', () => {
-      client.invalidateQueries(['workspaces']);
+      client.invalidateQueries({ queryKey: ['workspaces'] });
     });
     return () => {
       socket.current.removeAllListeners();

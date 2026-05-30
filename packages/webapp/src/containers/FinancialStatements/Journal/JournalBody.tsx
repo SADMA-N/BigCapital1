@@ -1,16 +1,14 @@
 import React from 'react';
 import * as R from 'ramda';
-
 import { FinancialReportBody } from '../FinancialReportPage';
 import { FinancialSheetSkeleton } from '@/components';
 import { JournalTable } from './JournalTable';
 import { useJournalSheetContext } from './JournalProvider';
-
 import { withCurrentOrganization } from '@/containers/Organization/withCurrentOrganization';
 import type { WithCurrentOrganizationProps } from '@/containers/Organization/withCurrentOrganization';
 
 interface JournalBodyJSXProps {
-  organizationName: WithCurrentOrganizationProps['organization'];
+  organizationName: WithCurrentOrganizationProps['organization']['name'];
 }
 
 /**

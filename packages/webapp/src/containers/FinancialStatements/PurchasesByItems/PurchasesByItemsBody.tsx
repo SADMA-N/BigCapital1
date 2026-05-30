@@ -1,15 +1,13 @@
 import React from 'react';
 import * as R from 'ramda';
-
 import { PurchasesByItemsTable } from './PurchasesByItemsTable';
 import { FinancialReportBody } from '../FinancialReportPage';
 import { FinancialSheetSkeleton } from '@/components';
 import { usePurchaseByItemsContext } from './PurchasesByItemsProvider';
-
 import { withCurrentOrganization, WithCurrentOrganizationProps } from '@/containers/Organization/withCurrentOrganization';
 
 interface PurchasesByItemsBodyJSXProps {
-  organizationName: WithCurrentOrganizationProps['organization'];
+  organizationName: WithCurrentOrganizationProps['organization']['name'];
 }
 
 /**

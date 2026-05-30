@@ -9,7 +9,7 @@ import { useAPAgingSummaryContext } from './APAgingSummaryProvider';
 import { withCurrentOrganization, WithCurrentOrganizationProps } from '@/containers/Organization/withCurrentOrganization';
 
 interface APAgingSummaryBodyProps {
-  organizationName: WithCurrentOrganizationProps['organization'];
+  organizationName: WithCurrentOrganizationProps['organization']['name'];
 }
 
 function APAgingSummaryBodyJSX({

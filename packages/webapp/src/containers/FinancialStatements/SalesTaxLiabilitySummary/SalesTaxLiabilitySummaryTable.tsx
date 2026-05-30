@@ -1,16 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-import { compose } from 'ramda';
-
 import { TableStyle } from '@/constants';
 import { ReportDataTable, FinancialSheet } from '@/components';
 import { defaultExpanderReducer, tableRowTypesToClassnames } from '@/utils';
 import { useSalesTaxLiabilitySummaryContext } from './SalesTaxLiabilitySummaryBoot';
 import { withCurrentOrganization, WithCurrentOrganizationProps } from '@/containers/Organization/withCurrentOrganization';
 import { useSalesTaxLiabilitySummaryColumns } from './utils';
+import { compose } from 'ramda';
 
 interface SalesTaxLiabilitySummaryTableRootProps {
-  organizationName: WithCurrentOrganizationProps['organization'];
+  organizationName: WithCurrentOrganizationProps['organization']['name'];
 }
 
 /**

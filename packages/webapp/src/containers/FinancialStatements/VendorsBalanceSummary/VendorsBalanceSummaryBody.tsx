@@ -1,15 +1,13 @@
 import React from 'react';
 import * as R from 'ramda';
-
 import { VendorsBalanceSummaryTable } from './VendorsBalanceSummaryTable';
 import { FinancialSheetSkeleton } from '@/components/FinancialSheet';
 import { FinancialReportBody } from '../FinancialReportPage';
 import { useVendorsBalanceSummaryContext } from './VendorsBalanceSummaryProvider';
-
 import { withCurrentOrganization, WithCurrentOrganizationProps } from '@/containers/Organization/withCurrentOrganization';
 
 interface VendorsBalanceSummaryBodyJSXProps {
-  organizationName: WithCurrentOrganizationProps['organization'];
+  organizationName: WithCurrentOrganizationProps['organization']['name'];
 }
 
 /**

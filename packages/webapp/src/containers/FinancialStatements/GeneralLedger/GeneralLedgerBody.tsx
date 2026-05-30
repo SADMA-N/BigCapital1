@@ -1,11 +1,8 @@
 import React from 'react';
-
 import { GeneralLedgerTable } from './GeneralLedgerTable';
-
 import { FinancialSheetSkeleton } from '@/components/FinancialSheet';
 import { FinancialReportBody } from '../FinancialReportPage';
 import { useGeneralLedgerContext } from './GeneralLedgerProvider';
-
 import {
   withCurrentOrganization,
   WithCurrentOrganizationProps,

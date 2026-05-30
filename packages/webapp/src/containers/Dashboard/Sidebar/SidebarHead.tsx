@@ -112,9 +112,9 @@ function SidebarHeadJSX({
                 backgroundColor="rgba(255, 255, 255, 0.05)"
                 borderRadius={4}
               >
-                {organization.metadata?.logoUri ? (
+                {organization.logo_uri ? (
                   <x.img
-                    src={organization.metadata.logoUri}
+                    src={organization.logo_uri}
                     alt={organization.name}
                     h={'60px'}
                     w={'60px'}

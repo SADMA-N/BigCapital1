@@ -1,23 +1,20 @@
 import React, { useEffect, useCallback } from 'react';
 import moment from 'moment';
-
 import { DashboardPageContent } from '@/components';
 import { InventoryValuationActionsBar } from './InventoryValuationActionsBar';
 import { InventoryValuationHeader } from './InventoryValuationHeader';
-
 import { InventoryValuationProvider } from './InventoryValuationProvider';
 import { InventoryValuationBody } from './InventoryValuationBody';
 import { InventoryValuationLoadingBar } from './components';
 import { useInventoryValuationQuery } from './utils';
 import { compose } from '@/utils';
-
 import { withInventoryValuationActions, WithInventoryValuationActionsProps } from './withInventoryValuationActions';
 import { withCurrentOrganization, WithCurrentOrganizationProps } from '@/containers/Organization/withCurrentOrganization';
 import { InventoryValuationDialogs } from './InventoryValuationDialogs';
 
 interface InventoryValuationProps {
   toggleInventoryValuationFilterDrawer: WithInventoryValuationActionsProps['toggleInventoryValuationFilterDrawer'];
-  organizationName: WithCurrentOrganizationProps['organization'];
+  organizationName: WithCurrentOrganizationProps['organization']['name'];
 }
 
 /**

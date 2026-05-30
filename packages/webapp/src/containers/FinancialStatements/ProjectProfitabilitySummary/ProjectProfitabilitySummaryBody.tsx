@@ -10,7 +10,7 @@ import { withCurrentOrganization, WithCurrentOrganizationProps } from '@/contain
 import { compose } from '@/utils';
 
 interface ProjectProfitabilitySummaryBodyProps {
-  organizationName: WithCurrentOrganizationProps['organization'];
+  organizationName: WithCurrentOrganizationProps['organization']['name'];
 }
 
 /**

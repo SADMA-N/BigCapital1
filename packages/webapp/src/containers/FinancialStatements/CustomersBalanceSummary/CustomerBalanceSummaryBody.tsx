@@ -10,7 +10,7 @@ import {
 } from '@/containers/Organization/withCurrentOrganization';
 
 interface CustomerBalanceSummaryBodyProps {
-  organizationName: WithCurrentOrganizationProps['organization'];
+  organizationName: WithCurrentOrganizationProps['organization']['name'];
 }
 
 function CustomerBalanceSummaryBodyJSX({

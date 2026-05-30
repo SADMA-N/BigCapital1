@@ -460,12 +460,18 @@ export function isBlank(value) {
   return (_.isEmpty(value) && !_.isNumber(value)) || _.isNaN(value);
 }
 
+interface GetColumnWidthOptions {
+  maxWidth?: number;
+  minWidth?: number;
+  magicSpacing?: number;
+}
+
 export const getColumnWidth = (
-  rows,
-  accessor,
-  { maxWidth, minWidth, magicSpacing = 14 },
-  headerText = '',
-) => {
+  rows: unknown[],
+  accessor: string,
+  { maxWidth, minWidth, magicSpacing = 14 }: GetColumnWidthOptions,
+  headerText: string = '',
+): number => {
   const cellLength = Math.max(
     ...rows.map((row) => (`${_.get(row, accessor)}` || '').length),
     headerText.length,
@@ -478,7 +484,7 @@ export const getColumnWidth = (
   return result;
 };
 
-export const getForceWidth = (text, magicSpacing = 14) => {
+export const getForceWidth = (text: string, magicSpacing: number = 14): number => {
   const textLength = text.length;
   const result = textLength * magicSpacing;
 

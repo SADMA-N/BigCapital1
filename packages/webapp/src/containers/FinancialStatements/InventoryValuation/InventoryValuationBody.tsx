@@ -1,15 +1,13 @@
 import React from 'react';
-
 import { InventoryValuationTable } from './InventoryValuationTable';
 import { useInventoryValuationContext } from './InventoryValuationProvider';
-
 import { FinancialReportBody } from '../FinancialReportPage';
 import { FinancialSheetSkeleton } from '@/components';
 import { withCurrentOrganization, WithCurrentOrganizationProps } from '@/containers/Organization/withCurrentOrganization';
 import { compose } from '@/utils';
 
 interface InventoryValuationBodyProps {
-  organizationName: WithCurrentOrganizationProps['organization'];
+  organizationName: WithCurrentOrganizationProps['organization']['name'];
 }
 
 /**

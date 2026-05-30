@@ -9,7 +9,7 @@ import { useARAgingSummaryContext } from './ARAgingSummaryProvider';
 import { withCurrentOrganization, WithCurrentOrganizationProps } from '@/containers/Organization/withCurrentOrganization';
 
 interface ARAgingSummaryBodyProps {
-  organizationName: WithCurrentOrganizationProps['organization'];
+  organizationName: WithCurrentOrganizationProps['organization']['name'];
 }
 
 function ARAgingSummaryBodyJSX({

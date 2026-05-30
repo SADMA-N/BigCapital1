@@ -12,7 +12,7 @@ import {
 } from '@/containers/Organization/withCurrentOrganization';
 
 interface CashFlowStatementBodyProps {
-  organizationName: WithCurrentOrganizationProps['organization'];
+  organizationName: WithCurrentOrganizationProps['organization']['name'];
 }
 
 function CashFlowStatementBodyJSX({ organizationName }: CashFlowStatementBodyProps) {

@@ -1,15 +1,13 @@
 import React from 'react';
 import * as R from 'ramda';
-
 import { FinancialReportBody } from '../FinancialReportPage';
 import { FinancialSheetSkeleton } from '@/components/FinancialSheet';
 import { useSalesByItemsContext } from './SalesByItemProvider';
-
 import { SalesByItemsTable } from './SalesByItemsTable';
 import { withCurrentOrganization, WithCurrentOrganizationProps } from '@/containers/Organization/withCurrentOrganization';
 
 interface SalesByItemsBodyJSXProps {
-  organizationName: WithCurrentOrganizationProps['organization'];
+  organizationName: WithCurrentOrganizationProps['organization']['name'];
 }
 
 /**
@@ -25,7 +23,7 @@ function SalesByItemsBodyJSX({
       {isLoading ? (
         <FinancialSheetSkeleton />
       ) : (
-        <SalesByItemsTable companyName={organizationName?.name} />
+        <SalesByItemsTable companyName={organizationName} />
       )}
     </FinancialReportBody>
   );
@@ -33,6 +31,6 @@ function SalesByItemsBodyJSX({
 
 export const SalesByItemsBody = R.compose(
   withCurrentOrganization(({ organization }) => ({
-    organizationName: organization,
+    organizationName: organization.name,
   })),
 )(SalesByItemsBodyJSX);
