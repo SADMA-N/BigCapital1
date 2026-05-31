@@ -1,19 +1,15 @@
-// @ts-nocheck
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-
 import { Button, Intent } from '@blueprintjs/core';
 import { Icon, FormattedMessage as T } from '@/components';
-
-import { withDialogActions } from '@/containers/Dialog/withDialogActions';
+import { withDialogActions, type WithDialogActionsProps } from '@/containers/Dialog/withDialogActions';
 import { compose } from '@/utils';
 
-function UsersActionsInner({ openDialog, closeDialog }) {
+function UsersActionsInner({ openDialog }: WithDialogActionsProps) {
   const history = useHistory();
   const onClickNewUser = () => {
     openDialog('invite-user');
   };
-
   const onClickNewRole = () => {
     history.push('/preferences/roles');
   };
