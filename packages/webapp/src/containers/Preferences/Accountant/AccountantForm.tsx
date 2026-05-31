@@ -20,7 +20,7 @@ import { useAccountantFormContext } from './AccountantFormProvider';
 /**
  * Accountant form.
  */
-export default function AccountantForm() {
+export function AccountantForm() {
   const history = useHistory();
   const { accounts } = useAccountantFormContext();
   const { isSubmitting } = useFormikContext();

@@ -5,7 +5,7 @@ import { AccountantFormProvider } from './AccountantFormProvider';
 /**
  * Accountant preferences.
  */
-export default function AccountantPreferences() {
+export function AccountantPreferences() {
   return (
     <AccountantFormProvider>
       <AccountantFormPage />

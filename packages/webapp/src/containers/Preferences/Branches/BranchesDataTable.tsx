@@ -19,7 +19,7 @@ import { compose } from '@/utils';
 /**
  * Branches data table.
  */
-function BranchesDataTable({
+function BranchesDataTableInner({
   // #withDialogAction
   openDialog,
 
@@ -73,7 +73,7 @@ function BranchesDataTable({
   );
 }
 
-export default compose(withDialogActions, withAlertActions)(BranchesDataTable);
+export const BranchesDataTable = compose(withDialogActions, withAlertActions)(BranchesDataTableInner);
 
 const BranchesTableCard = styled(Card)`
   padding: 0;

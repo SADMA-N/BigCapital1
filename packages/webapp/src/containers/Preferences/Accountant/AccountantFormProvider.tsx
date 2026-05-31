@@ -6,7 +6,7 @@ import type { AccountsList } from '@bigcapital/sdk-ts';
 import { Card } from '@/components';
 import { CLASSES } from '@/constants/classes';
 import { useAccounts, useSaveSettings, useSettings } from '@/hooks/query';
-import PreferencesPageLoader from '../PreferencesPageLoader';
+import { PreferencesPageLoader } from '../PreferencesPageLoader';
 
 interface AccountantFormContextValue {
   accounts: AccountsList | undefined;

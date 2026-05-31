@@ -9,7 +9,11 @@ import { withAlertActions, type WithAlertActionsProps } from '@/containers/Alert
 import { useRolesContext } from './RolesListProvider';
 import { compose } from '@/utils';
 
+/**
+ * Roles data table.
+ */
 function RolesDataTableInner({
+  // #withAlertActions
   openAlert,
 }: WithAlertActionsProps) {
   const history = useHistory();
