@@ -21,11 +21,11 @@ export function InventoryValuationTable({
   companyName,
 }: InventoryValuationTableProps) {
   // Inventory valuation context.
-  const { inventoryValuation, isLoading } = useInventoryValuationContext();
+  const { inventoryValuation } = useInventoryValuationContext();
 
   // Null-safe access for SDK opaque type.
-  const table = (inventoryValuation as any)?.table;
-  const meta = (inventoryValuation as any)?.meta;
+  const table = inventoryValuation?.table;
+  const meta = inventoryValuation?.meta;
 
   // Inventory valuation table columns.
   const columns = useInventoryValuationColumns();
@@ -35,7 +35,6 @@ export function InventoryValuationTable({
       companyName={companyName}
       sheetType={intl.get('inventory_valuation')}
       dateText={meta?.formatted_date_range ?? meta?.formatted_as_date}
-      loading={isLoading}
     >
       <InventoryValuationDataTable
         columns={columns}

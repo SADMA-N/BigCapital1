@@ -62,21 +62,10 @@ const BillFormContext = createContext<BillFormContextValue | undefined>(
 
 // Filter all purchasable items only.
 const stringifiedFilterRoles = JSON.stringify([
-  {
-    index: 1,
-    fieldKey: 'purchasable',
-    value: true,
-    condition: '&&',
-    comparator: 'equals',
-  },
-  {
-    index: 2,
-    fieldKey: 'active',
-    value: true,
-    condition: '&&',
-    comparator: 'equals',
-  },
+  { index: 1, fieldKey: 'purchasable', value: true, condition: '&&', comparator: 'equals' },
+  { index: 2, fieldKey: 'active', value: true, condition: '&&', comparator: 'equals' },
 ]);
+
 
 type BillFormProviderProps = {
   billId?: number;
@@ -100,13 +89,11 @@ function BillFormProvider({ billId, ...props }: BillFormProviderProps) {
   const { data: vendorsData, isLoading: isVendorsLoading } = useVendors({
     page_size: 10000,
   });
-
   // Handle fetch Items data table or list
   const { data: itemsData, isLoading: isItemsLoading } = useItems({
     page_size: 10000,
     stringified_filter_roles: stringifiedFilterRoles,
   });
-
   // Handle fetch bill details.
   const { data: bill, isLoading: isBillLoading } = useBill(billId, {
     enabled: !!billId,
@@ -156,8 +143,8 @@ function BillFormProvider({ billId, ...props }: BillFormProviderProps) {
 
   const provider: BillFormContextValue = {
     accounts: accounts ?? [],
-    vendors: (vendorsData as any)?.vendors,
-    items: (itemsData as any)?.items,
+    vendors: vendorsData?.data ?? [],
+    items: itemsData?.data ?? [],
     bill,
     warehouses: warehouses ?? [],
     branches: branches ?? [],

@@ -7113,20 +7113,6 @@ export interface components {
              */
             active: boolean;
         };
-        PaymentReceivedHtmlContentResponseDto: {
-            /**
-             * @description The HTML content of the payment received
-             * @example <html>...</html>
-             */
-            htmlContent: string;
-        };
-        PaymentReceivedStateResponseDto: {
-            /**
-             * @description The ID of the default PDF template for payment received
-             * @example 1
-             */
-            defaultTemplateId: number | null;
-        };
         PaymentReceivedEntryResponseDto: {
             /**
              * @description ID of the entry
@@ -7320,6 +7306,73 @@ export interface components {
              *     ]
              */
             attachments?: components["schemas"]["AttachmentLinkDto"][];
+        };
+        PaymentReceivePageEntryDto: {
+            /**
+             * @description The invoice ID
+             * @example 1
+             */
+            invoiceId: number;
+            /**
+             * @description The entry type
+             * @example invoice
+             */
+            entryType: string;
+            /**
+             * @description The invoice number
+             * @example INV-001
+             */
+            invoiceNo: string;
+            /**
+             * @description The outstanding due amount
+             * @example 1500
+             */
+            dueAmount: number;
+            /**
+             * @description The total invoice amount
+             * @example 2000
+             */
+            amount: number;
+            /**
+             * @description The total payment amount applied
+             * @example 500
+             */
+            totalPaymentAmount: number;
+            /**
+             * @description The payment amount for this entry
+             * @example 500
+             */
+            paymentAmount: number;
+            /**
+             * @description The currency code
+             * @example USD
+             */
+            currencyCode: string;
+            /**
+             * @description The invoice date
+             * @example 2024-03-15
+             */
+            date: string;
+        };
+        PaymentReceiveEditPageResponseDto: {
+            /** @description The payment received details */
+            data: components["schemas"]["PaymentReceivedResponseDto"];
+            /** @description The receivable invoice entries */
+            entries: components["schemas"]["PaymentReceivePageEntryDto"][];
+        };
+        PaymentReceivedHtmlContentResponseDto: {
+            /**
+             * @description The HTML content of the payment received
+             * @example <html>...</html>
+             */
+            htmlContent: string;
+        };
+        PaymentReceivedStateResponseDto: {
+            /**
+             * @description The ID of the default PDF template for payment received
+             * @example 1
+             */
+            defaultTemplateId: number | null;
         };
         CreatePaymentReceivedDto: {
             /**
@@ -17758,12 +17811,14 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description The payment received edit page has been successfully retrieved. */
+            /** @description The payment received edit page data. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["PaymentReceiveEditPageResponseDto"];
+                };
             };
         };
     };

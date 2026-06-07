@@ -4802,7 +4802,14 @@
         ],
         "responses": {
           "200": {
-            "description": "The payment received edit page has been successfully retrieved."
+            "description": "The payment received edit page data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentReceiveEditPageResponseDto"
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -27404,33 +27411,6 @@
           "active"
         ]
       },
-      "PaymentReceivedHtmlContentResponseDto": {
-        "type": "object",
-        "properties": {
-          "htmlContent": {
-            "type": "string",
-            "description": "The HTML content of the payment received",
-            "example": "<html>...</html>"
-          }
-        },
-        "required": [
-          "htmlContent"
-        ]
-      },
-      "PaymentReceivedStateResponseDto": {
-        "type": "object",
-        "properties": {
-          "defaultTemplateId": {
-            "type": "number",
-            "description": "The ID of the default PDF template for payment received",
-            "example": 1,
-            "nullable": true
-          }
-        },
-        "required": [
-          "defaultTemplateId"
-        ]
-      },
       "PaymentReceivedEntryResponseDto": {
         "type": "object",
         "properties": {
@@ -27675,6 +27655,118 @@
           "createdAt",
           "formattedCreatedAt",
           "entries"
+        ]
+      },
+      "PaymentReceivePageEntryDto": {
+        "type": "object",
+        "properties": {
+          "invoiceId": {
+            "type": "number",
+            "description": "The invoice ID",
+            "example": 1
+          },
+          "entryType": {
+            "type": "string",
+            "description": "The entry type",
+            "example": "invoice"
+          },
+          "invoiceNo": {
+            "type": "string",
+            "description": "The invoice number",
+            "example": "INV-001"
+          },
+          "dueAmount": {
+            "type": "number",
+            "description": "The outstanding due amount",
+            "example": 1500
+          },
+          "amount": {
+            "type": "number",
+            "description": "The total invoice amount",
+            "example": 2000
+          },
+          "totalPaymentAmount": {
+            "type": "number",
+            "description": "The total payment amount applied",
+            "example": 500
+          },
+          "paymentAmount": {
+            "type": "number",
+            "description": "The payment amount for this entry",
+            "example": 500
+          },
+          "currencyCode": {
+            "type": "string",
+            "description": "The currency code",
+            "example": "USD"
+          },
+          "date": {
+            "type": "string",
+            "description": "The invoice date",
+            "example": "2024-03-15"
+          }
+        },
+        "required": [
+          "invoiceId",
+          "entryType",
+          "invoiceNo",
+          "dueAmount",
+          "amount",
+          "totalPaymentAmount",
+          "paymentAmount",
+          "currencyCode",
+          "date"
+        ]
+      },
+      "PaymentReceiveEditPageResponseDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "description": "The payment received details",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PaymentReceivedResponseDto"
+              }
+            ]
+          },
+          "entries": {
+            "description": "The receivable invoice entries",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PaymentReceivePageEntryDto"
+            }
+          }
+        },
+        "required": [
+          "data",
+          "entries"
+        ]
+      },
+      "PaymentReceivedHtmlContentResponseDto": {
+        "type": "object",
+        "properties": {
+          "htmlContent": {
+            "type": "string",
+            "description": "The HTML content of the payment received",
+            "example": "<html>...</html>"
+          }
+        },
+        "required": [
+          "htmlContent"
+        ]
+      },
+      "PaymentReceivedStateResponseDto": {
+        "type": "object",
+        "properties": {
+          "defaultTemplateId": {
+            "type": "number",
+            "description": "The ID of the default PDF template for payment received",
+            "example": 1,
+            "nullable": true
+          }
+        },
+        "required": [
+          "defaultTemplateId"
         ]
       },
       "CreatePaymentReceivedDto": {
