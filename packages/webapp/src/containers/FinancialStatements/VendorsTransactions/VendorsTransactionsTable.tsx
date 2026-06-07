@@ -37,7 +37,7 @@ export function VendorsTransactionsTable({
     <FinancialSheet
       companyName={companyName}
       sheetType={intl.get('vendors_transactions')}
-      dateText={meta?.formatted_date_range ?? meta?.formatted_as_date}
+      dateText={meta?.formattedDateRange ?? meta?.formattedAsDate}
       fullWidth={true}
     >
       <VendorsTransactionsDataTable

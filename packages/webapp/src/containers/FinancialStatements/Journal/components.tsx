@@ -52,7 +52,7 @@ export function JournalSheetAlerts() {
     return null;
   }
   // Can't continue if the cost compute job is running.
-  if (!(journalSheet as any)?.meta?.is_cost_compute_running) {
+  if (!(journalSheet as any)?.meta?.isCostComputeRunning) {
     return null;
   }
   return (

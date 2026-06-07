@@ -27,7 +27,7 @@ export function ARAgingSummaryTable({
     <FinancialSheet
       companyName={organizationName}
       sheetType={intl.get('receivable_aging_summary')}
-      dateText={meta?.formatted_date_range ?? meta?.formatted_as_date}
+      dateText={meta?.formattedDateRange ?? meta?.formattedAsDate}
     >
       <ARAgingSummaryDataTable
         columns={columns}

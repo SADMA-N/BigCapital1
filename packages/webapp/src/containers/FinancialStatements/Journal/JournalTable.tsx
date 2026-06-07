@@ -40,7 +40,7 @@ export function JournalTable({ companyName }: JournalTableProps) {
     <FinancialSheet
       companyName={companyName}
       sheetType={intl.get('journal_sheet')}
-      dateText={meta?.formatted_date_range ?? meta?.formatted_as_date}
+      dateText={meta?.formattedDateRange ?? meta?.formattedAsDate}
       fullWidth={true}
     >
       <JournalDataTable

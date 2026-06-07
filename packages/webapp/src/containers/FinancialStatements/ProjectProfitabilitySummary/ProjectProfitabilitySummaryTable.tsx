@@ -33,7 +33,7 @@ export function ProjectProfitabilitySummaryTable({
     <FinancialSheet
       companyName={companyName}
       sheetType={intl.get('project_profitability_summary')}
-      dateText={meta?.formatted_date_range ?? meta?.formatted_as_date}
+      dateText={meta?.formattedDateRange ?? meta?.formattedAsDate}
       basis={query.basis}
       name="project-profitability-summary"
     >

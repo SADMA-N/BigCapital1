@@ -63,7 +63,7 @@ export const dynamicColumns = (columns: Record<string, any>[], data: any[]) => {
     return R.compose(
       R.cond([
         [R.pathEq(['key'], 'name'), characterColumn(data, index)],
-        [R.pathEq(['key'], 'customer_name'), characterColumn(data, index)],
+        [R.pathEq(['key'], 'customerName'), characterColumn(data, index)],
         [R.pathEq(['key'], 'income'), numericColumn(data, index)],
         [R.pathEq(['key'], 'expenses'), numericColumn(data, index)],
         [R.pathEq(['key'], 'profit'), numericColumn(data, index)],

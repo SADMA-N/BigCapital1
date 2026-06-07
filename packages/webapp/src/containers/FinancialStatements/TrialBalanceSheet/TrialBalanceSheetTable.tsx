@@ -32,7 +32,7 @@ export function TrialBalanceSheetTable({
     <FinancialSheet
       companyName={companyName}
       sheetType={intl.get('trial_balance_sheet')}
-      dateText={meta?.formatted_date_range ?? meta?.formatted_as_date}
+      dateText={meta?.formattedDateRange ?? meta?.formattedAsDate}
       basis={'cash'}
     >
       <TrialBalanceDataTable

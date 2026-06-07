@@ -1,11 +1,9 @@
 import React from 'react';
 import intl from 'react-intl-universal';
 import styled from 'styled-components';
-
 import { TableStyle } from '@/constants';
 import { ReportDataTable, FinancialSheet } from '@/components';
 import { tableRowTypesToClassnames } from '@/utils';
-
 import { useInventoryValuationContext } from './InventoryValuationProvider';
 import { useInventoryValuationColumns } from './dynamicColumns';
 
@@ -34,7 +32,7 @@ export function InventoryValuationTable({
     <InventoryValuationSheet
       companyName={companyName}
       sheetType={intl.get('inventory_valuation')}
-      dateText={meta?.formatted_date_range ?? meta?.formatted_as_date}
+      dateText={meta?.formattedDateRange ?? meta?.formattedAsDate}
     >
       <InventoryValuationDataTable
         columns={columns}

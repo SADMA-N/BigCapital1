@@ -27,7 +27,7 @@ export function APAgingSummaryTable({
     <FinancialSheet
       companyName={organizationName}
       sheetType={intl.get('payable_aging_summary')}
-      dateText={meta?.formatted_date_range ?? meta?.formatted_as_date}
+      dateText={meta?.formattedDateRange ?? meta?.formattedAsDate}
     >
       <APAgingSummaryDataTable
         columns={columns}

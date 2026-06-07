@@ -37,7 +37,7 @@ export function InventoryItemDetailsTable({
     <FinancialSheet
       companyName={companyName}
       sheetType={intl.get('inventory_item_details')}
-      dateText={meta?.formatted_date_range ?? meta?.formatted_as_date}
+      dateText={meta?.formattedDateRange ?? meta?.formattedAsDate}
       fullWidth={true}
     >
       <InventoryItemDetailsDataTable
