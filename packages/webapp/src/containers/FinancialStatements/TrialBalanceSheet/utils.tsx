@@ -4,6 +4,7 @@ import { castArray } from 'lodash';
 import { useAppQueryString } from '@/hooks';
 import { transformToForm } from '@/utils';
 import { transformFilterFormToQuery } from '../common';
+import { TrialBalanceTableQuery } from '@bigcapital/sdk-ts';
 
 /**
  * Retrieves the default trial balance query.
@@ -24,7 +25,7 @@ export function getDefaultTrialBalanceQuery() {
  */
 const parseTrialBalanceSheetQuery = (
   locationQuery: Record<string, unknown>,
-) => {
+): TrialBalanceTableQuery => {
   const defaultQuery = getDefaultTrialBalanceQuery();
 
   const transformed = {

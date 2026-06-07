@@ -3360,6 +3360,11 @@
                 "schema": {
                   "$ref": "#/components/schemas/SaleInvoiceResponseDto"
                 }
+              },
+              "application/json+html": {
+                "schema": {
+                  "$ref": "#/components/schemas/SaleInvoiceHtmlContentResponseDto"
+                }
               }
             }
           },
@@ -3697,6 +3702,17 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "The sale invoice HTML content has been successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "<html>...</html>"
+                }
+              }
+            }
+          },
           "404": {
             "description": "The sale invoice not found."
           }
@@ -9009,6 +9025,11 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/SaleReceiptResponseDto"
+                }
+              },
+              "application/json+html": {
+                "schema": {
+                  "$ref": "#/components/schemas/SaleReceiptHtmlContentResponseDto"
                 }
               }
             }
@@ -14736,6 +14757,18 @@
             }
           },
           {
+            "name": "branchesIds",
+            "required": false,
+            "in": "query",
+            "description": "Filter out branches (if multiple branches feature is enabled)",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          },
+          {
             "name": "displayColumnsType",
             "required": true,
             "in": "query",
@@ -17046,6 +17079,18 @@
             }
           },
           {
+            "name": "branchesIds",
+            "required": false,
+            "in": "query",
+            "description": "Filter out branches (if multiple branches feature is enabled)",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          },
+          {
             "name": "basis",
             "required": false,
             "in": "query",
@@ -18363,6 +18408,18 @@
             }
           },
           {
+            "name": "branchesIds",
+            "required": false,
+            "in": "query",
+            "description": "Filter out branches (if multiple branches feature is enabled)",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          },
+          {
             "name": "fromDate",
             "required": false,
             "in": "query",
@@ -19459,6 +19516,18 @@
             }
           },
           {
+            "name": "branchesIds",
+            "required": false,
+            "in": "query",
+            "description": "Filter out branches (if multiple branches feature is enabled)",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          },
+          {
             "name": "agingDaysBefore",
             "required": false,
             "in": "query",
@@ -19876,6 +19945,18 @@
             "required": true,
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "branchesIds",
+            "required": false,
+            "in": "query",
+            "description": "Filter out branches (if multiple branches feature is enabled)",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
             }
           },
           {
@@ -20666,6 +20747,18 @@
             }
           },
           {
+            "name": "branchesIds",
+            "required": false,
+            "in": "query",
+            "description": "Filter out branches (if multiple branches feature is enabled)",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          },
+          {
             "description": "Whether to hide cents in the number format",
             "required": false,
             "name": "noCents",
@@ -21058,6 +21151,18 @@
             "required": true,
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "branchesIds",
+            "required": false,
+            "in": "query",
+            "description": "Filter out branches (if multiple branches feature is enabled)",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
             }
           },
           {
@@ -21563,6 +21668,18 @@
             "required": true,
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "branchesIds",
+            "required": false,
+            "in": "query",
+            "description": "Filter out branches (if multiple branches feature is enabled)",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
             }
           },
           {
@@ -26482,6 +26599,19 @@
           "costs"
         ]
       },
+      "SaleInvoiceHtmlContentResponseDto": {
+        "type": "object",
+        "properties": {
+          "htmlContent": {
+            "type": "string",
+            "description": "The HTML content of the sale invoice",
+            "example": "<html>...</html>"
+          }
+        },
+        "required": [
+          "htmlContent"
+        ]
+      },
       "InvoicePaymentTransactionDto": {
         "type": "object",
         "properties": {
@@ -30972,6 +31102,19 @@
           "discount",
           "discountType",
           "adjustment"
+        ]
+      },
+      "SaleReceiptHtmlContentResponseDto": {
+        "type": "object",
+        "properties": {
+          "htmlContent": {
+            "type": "string",
+            "description": "The HTML content of the sale receipt",
+            "example": "<html>...</html>"
+          }
+        },
+        "required": [
+          "htmlContent"
         ]
       },
       "SaleReceiptStateResponseDto": {

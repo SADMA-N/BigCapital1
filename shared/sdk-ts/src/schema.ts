@@ -6398,6 +6398,13 @@ export interface components {
             /** @description List of item costs */
             costs: components["schemas"]["InventoryItemCostDto"][];
         };
+        SaleInvoiceHtmlContentResponseDto: {
+            /**
+             * @description The HTML content of the sale invoice
+             * @example <html>...</html>
+             */
+            htmlContent: string;
+        };
         InvoicePaymentTransactionDto: {
             /**
              * @description The invoice ID
@@ -9386,6 +9393,13 @@ export interface components {
              * @example 1
              */
             adjustment: number;
+        };
+        SaleReceiptHtmlContentResponseDto: {
+            /**
+             * @description The HTML content of the sale receipt
+             * @example <html>...</html>
+             */
+            htmlContent: string;
         };
         SaleReceiptStateResponseDto: {
             /**
@@ -16846,6 +16860,7 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["SaleInvoiceResponseDto"];
+                    "application/json+html": components["schemas"]["SaleInvoiceHtmlContentResponseDto"];
                 };
             };
             /** @description The sale invoice not found. */
@@ -17143,6 +17158,15 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
+            /** @description The sale invoice HTML content has been successfully retrieved. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
             /** @description The sale invoice not found. */
             404: {
                 headers: {
@@ -20107,6 +20131,7 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["SaleReceiptResponseDto"];
+                    "application/json+html": components["schemas"]["SaleReceiptHtmlContentResponseDto"];
                 };
             };
             /** @description The sale receipt not found. */
@@ -23297,6 +23322,8 @@ export interface operations {
     BalanceSheetStatementController_balanceSheet: {
         parameters: {
             query: {
+                /** @description Filter out branches (if multiple branches feature is enabled) */
+                branchesIds?: number[];
                 /** @description Type of columns to display in the balance sheet */
                 displayColumnsType: "total" | "date_periods";
                 /** @description Time period for column display */
@@ -24891,6 +24918,8 @@ export interface operations {
     GeneralLedgerController_getGeneralLedger: {
         parameters: {
             query?: {
+                /** @description Filter out branches (if multiple branches feature is enabled) */
+                branchesIds?: number[];
                 /** @description Accounting basis for the report (e.g., cash, accrual) */
                 basis?: string;
                 /** @description Number of decimal places to display */
@@ -26102,6 +26131,8 @@ export interface operations {
     TrialBalanceSheetController_getTrialBalanceSheet: {
         parameters: {
             query?: {
+                /** @description Filter out branches (if multiple branches feature is enabled) */
+                branchesIds?: number[];
                 /** @description Start date for the trial balance sheet */
                 fromDate?: string;
                 /** @description End date for the trial balance sheet */
@@ -26852,6 +26883,8 @@ export interface operations {
     ARAgingSummaryController_get: {
         parameters: {
             query?: {
+                /** @description Filter out branches (if multiple branches feature is enabled) */
+                branchesIds?: number[];
                 /** @description Number of days before the aging period starts */
                 agingDaysBefore?: number;
                 /** @description Number of aging periods to calculate */
@@ -27164,6 +27197,8 @@ export interface operations {
     APAgingSummaryController_get: {
         parameters: {
             query?: {
+                /** @description Filter out branches (if multiple branches feature is enabled) */
+                branchesIds?: number[];
                 /** @description Number of days before the aging period starts */
                 agingDaysBefore?: number;
                 /** @description Number of aging periods to calculate */
@@ -27522,6 +27557,8 @@ export interface operations {
     JournalSheetController_journalSheet: {
         parameters: {
             query?: {
+                /** @description Filter out branches (if multiple branches feature is enabled) */
+                branchesIds?: number[];
                 /** @description Whether to hide cents in the number format */
                 noCents?: boolean;
                 /** @description Whether to divide numbers by 1000 */
@@ -27844,6 +27881,8 @@ export interface operations {
     ProfitLossSheetController_profitLossSheet: {
         parameters: {
             query: {
+                /** @description Filter out branches (if multiple branches feature is enabled) */
+                branchesIds?: number[];
                 /** @description The basis for the profit and loss sheet */
                 basis: string;
                 /** @description Number of decimal places to display */
@@ -28156,6 +28195,8 @@ export interface operations {
     CashflowController_getCashflow: {
         parameters: {
             query?: {
+                /** @description Filter out branches (if multiple branches feature is enabled) */
+                branchesIds?: number[];
                 /** @description Start date for the cash flow statement period */
                 fromDate?: string;
                 /** @description End date for the cash flow statement period */
