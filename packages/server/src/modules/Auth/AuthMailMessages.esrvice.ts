@@ -23,16 +23,11 @@ export class AuthenticationMailMesssages {
     const baseURL = this.configService.get('app.baseUrl');
 
     return new Mail()
-      .setSubject('Bigcapital - Password Reset')
+      .setSubject(
+        `${process.env.AGENCY_NAME || 'TravelBooks'} - Password Reset`,
+      )
       .setView('mail/ResetPassword.html')
       .setTo(user.email)
-      .setAttachments([
-        {
-          filename: 'bigcapital.png',
-          path: path.join(global.__static_dirname, `/images/bigcapital.png`),
-          cid: 'bigcapital_logo',
-        },
-      ])
       .setData({
         resetPasswordUrl: `${baseURL}/auth/reset_password/${token}`,
         first_name: user.firstName,
@@ -58,16 +53,11 @@ export class AuthenticationMailMesssages {
     const verifyUrl = `${baseURL}/auth/email_confirmation?token=${token}&email=${email}`;
 
     return new Mail()
-      .setSubject('Bigcapital - Verify your email')
+      .setSubject(
+        `${process.env.AGENCY_NAME || 'TravelBooks'} - Verify your email`,
+      )
       .setView('mail/SignupVerifyEmail.html')
       .setTo(email)
-      .setAttachments([
-        {
-          filename: 'bigcapital.png',
-          path: path.join(global.__static_dirname, `/images/bigcapital.png`),
-          cid: 'bigcapital_logo',
-        },
-      ])
       .setData({ verifyUrl, fullName });
   }
 
