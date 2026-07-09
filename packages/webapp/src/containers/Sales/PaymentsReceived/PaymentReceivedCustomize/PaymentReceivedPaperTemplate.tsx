@@ -64,7 +64,7 @@ export function PaymentReceivedPaperTemplate({
   companyLogoUri,
 
   // # Company name
-  companyName = 'Bigcapital Technology, Inc.',
+  companyName = import.meta.env.VITE_AGENCY_NAME || 'TravelBooks',
 
   // # Customer address
   showCustomerAddress = true,

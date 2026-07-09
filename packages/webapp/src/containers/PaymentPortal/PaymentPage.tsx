@@ -113,10 +113,12 @@ export function InvoicePaymentPage({
   payInvoiceButtonProps,
 
   // # Buy note
-  buyNote = 'By confirming your payment, you allow Bigcapital Technology, Inc. to charge you for this payment and save your payment information in accordance with their terms.',
+  buyNote = `By confirming your payment, you allow ${import.meta.env.VITE_AGENCY_NAME || 'TravelBooks'} to charge you for this payment and save your payment     
+  information in accordance with their terms.`,
 
   // # Copyright
-  copyrightText = `© 2024 Bigcapital Technology, Inc. <br /> All rights reserved.`,
+  copyrightText = `© ${new Date().getFullYear()} ${import.meta.env.VITE_AGENCY_NAME || 'TravelBooks'} <br /> All rights reserved.`,
+
   classNames,
 }: PaymentPageProps) {
   return (

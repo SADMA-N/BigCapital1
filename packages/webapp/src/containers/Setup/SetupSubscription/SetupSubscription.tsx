@@ -19,13 +19,15 @@ function SetupSubscriptionInner({
   }, [initSubscriptionPlans]);
 
   useEffect(() => {
-    window.LemonSqueezy.Setup({
-      eventHandler: (event) => {
-        // Do whatever you want with this event data
-        if (event.event === 'Checkout.Success') {
-        }
-      },
-    });
+    if (window.LemonSqueezy) {
+      window.LemonSqueezy.Setup({
+        eventHandler: (event) => {
+          // Do whatever you want with this event data
+          if (event.event === 'Checkout.Success') {
+          }
+        },
+      });
+    }
   }, []);
 
   return (

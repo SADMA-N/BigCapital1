@@ -196,9 +196,10 @@ export function PaymentPortal() {
         </Stack>
 
         <Text className={clsx(Classes.TEXT_MUTED, styles.buyNote)}>
-          By confirming your payment, you allow Bigcapital Technology, Inc. to
-          charge you for this payment and save your payment information in
-          accordance with their terms.
+          By confirming your payment, you allow{' '}
+          {import.meta.env.VITE_AGENCY_NAME || 'TravelBooks'} to charge you for
+          this payment and save your payment information in accordance with
+          their terms.
         </Text>
       </Stack>
 
@@ -210,9 +211,11 @@ export function PaymentPortal() {
         ></Box>
 
         <Stack spacing={0} className={styles.footerText}>
-          © 2024 Bigcapital Technology, Inc.
-          <br />
-          All rights reserved.
+          <div>
+            © {new Date().getFullYear()}{' '}
+            {import.meta.env.VITE_AGENCY_NAME || 'TravelBooks'}
+          </div>
+          <div>All rights reserved.</div>
         </Stack>
       </Stack>
     </Box>

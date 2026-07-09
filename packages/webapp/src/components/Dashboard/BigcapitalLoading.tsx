@@ -1,7 +1,6 @@
 // @ts-nocheck
 import React from 'react';
 import classNames from 'classnames';
-import { Icon } from '@/components';
 
 import '@/style/components/BigcapitalLoading.scss';
 import { useIsDarkMode } from '@/hooks/useDarkMode';
@@ -10,21 +9,33 @@ import { useIsDarkMode } from '@/hooks/useDarkMode';
  * Bigcapital logo loading.
  */
 export default function BigcapitalLoading({ className }) {
-  const isDarkmode = useIsDarkMode();
+  const isDarkMode = useIsDarkMode();
 
   return (
     <div className={classNames('bigcapital-loading', className)}>
-      <div class="center">
-        {isDarkmode ? (
-          <Icon
-            icon="bigcapital-alt"
-            height={37}
-            width={228}
-            color="#fff"
-            className="bigcapital-logo"
+      <div className="center">
+        {import.meta.env.VITE_AGENCY_LOGO_URL ? (
+          <img
+            src={import.meta.env.VITE_AGENCY_LOGO_URL}
+            alt={import.meta.env.VITE_AGENCY_NAME || 'Loading...'}
+            style={{
+              maxHeight: '40px',
+              maxWidth: '214px',
+              objectFit: 'contain',
+            }}
           />
         ) : (
-          <Icon icon="bigcapital" height={37} width={228} />
+          <h1
+            style={{
+              color: isDarkMode ? 'rgba(255,255,255,0.85)' : '#111827',
+              margin: 0,
+              fontSize: '32px',
+              opacity: 0.7,
+              animation: 'pulse 2s infinite',
+            }}
+          >
+            {import.meta.env.VITE_AGENCY_NAME || 'TravelBooks'}
+          </h1>
         )}
       </div>
     </div>

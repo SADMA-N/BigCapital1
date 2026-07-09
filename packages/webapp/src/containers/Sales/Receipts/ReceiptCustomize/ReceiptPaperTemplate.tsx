@@ -86,7 +86,7 @@ export function ReceiptPaperTemplate({
   companyLogoUri,
 
   // # Company name
-  companyName = 'Bigcapital Technology, Inc.',
+  companyName = import.meta.env.VITE_AGENCY_NAME || 'TravelBooks',
 
   // # Address
   showCustomerAddress = true,

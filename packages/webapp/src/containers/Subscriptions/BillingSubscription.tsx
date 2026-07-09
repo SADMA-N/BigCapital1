@@ -25,9 +25,12 @@ function SubscriptionRoot({ openAlert, openDrawer }) {
     openAlert('resume-main-subscription');
   };
   const handleUpdatePaymentMethod = () => {
-    window.LemonSqueezy.Url.Open(
-      mainSubscription.lemonUrls?.updatePaymentMethod,
-    );
+    const checkoutUrl = mainSubscription.lemonUrls?.updatePaymentMethod;
+    if (window.LemonSqueezy) {
+      window.LemonSqueezy.Url.Open(checkoutUrl);
+    } else if (checkoutUrl) {
+      window.open(checkoutUrl, '_blank');
+    }
   };
   // Handle upgrade button click.
   const handleUpgradeBtnClick = () => {

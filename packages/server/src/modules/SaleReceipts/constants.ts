@@ -72,7 +72,7 @@ export const SaleReceiptsSampleData = [
 export const defaultSaleReceiptBrandingAttributes = {
   primaryColor: '',
   secondaryColor: '',
-  companyName: 'Bigcapital Technology, Inc.',
+  companyName: import.meta.env.VITE_AGENCY_NAME || 'TravelBooks',
 
   // # Company logo
   showCompanyLogo: true,

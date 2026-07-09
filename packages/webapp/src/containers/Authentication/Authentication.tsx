@@ -12,7 +12,6 @@ import { AuthMetaBootProvider } from './AuthMetaBoot';
 
 import '@/style/pages/Authentication/Auth.scss';
 import { useIsDarkMode } from '@/hooks/useDarkMode';
-import { BigcapitalAlt } from '@/components/Icons/BigcapitalAlt';
 
 export function Authentication() {
   const isDarkMode = useIsDarkMode();
@@ -22,14 +21,26 @@ export function Authentication() {
       <AuthPage>
         <AuthInsider>
           <AuthLogo>
-            {isDarkMode ? (
-              <BigcapitalAlt
-                color={'rgba(255, 255, 255, 0.6)'}
-                height={37}
-                width={214}
+            {import.meta.env.VITE_AGENCY_LOGO_URL ? (
+              <img
+                src={import.meta.env.VITE_AGENCY_LOGO_URL}
+                alt={import.meta.env.VITE_AGENCY_NAME || 'Agency Logo'}
+                style={{
+                  maxHeight: '40px',
+                  maxWidth: '214px',
+                  objectFit: 'contain',
+                }}
               />
             ) : (
-              <Icon icon="bigcapital" height={37} width={214} />
+              <h1
+                style={{
+                  color: isDarkMode ? 'rgba(255,255,255,0.85)' : '#111827',
+                  margin: 0,
+                  fontSize: '24px',
+                }}
+              >
+                {import.meta.env.VITE_AGENCY_NAME || 'TravelBooks'}
+              </h1>
             )}
           </AuthLogo>
 

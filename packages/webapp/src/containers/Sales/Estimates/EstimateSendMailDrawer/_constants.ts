@@ -1,5 +1,5 @@
 export const defaultEstimateMailReceiptProps = {
-  companyName: 'Bigcapital Technology, Inc.',
+  companyName: import.meta.env.VITE_AGENCY_NAME || 'TravelBooks',
   companyLogoUri: ' ',
 
   total: '$1,000.00',

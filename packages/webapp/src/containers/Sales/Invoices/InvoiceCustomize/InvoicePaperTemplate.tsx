@@ -105,7 +105,7 @@ export function InvoicePaperTemplate({
   primaryColor,
   secondaryColor,
 
-  companyName = 'Bigcapital Technology, Inc.',
+  companyName = import.meta.env.VITE_AGENCY_NAME || 'TravelBooks',
 
   showCompanyLogo = true,
   companyLogoUri = '',
